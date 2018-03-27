@@ -1,6 +1,7 @@
 package com.xqlh.heartsmart.ui.Guide.activity;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,10 +9,10 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-import com.xqlh.heartsmart.MainActivity;
 import com.xqlh.heartsmart.R;
-import com.xqlh.heartsmart.base.SimpleActivity;
+import com.xqlh.heartsmart.base.BaseActivity;
 import com.xqlh.heartsmart.ui.Guide.adapter.GuidePageAdapter;
+import com.xqlh.heartsmart.ui.welcome.WelcomeActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +26,7 @@ import butterknife.OnClick;
  * @date 2018-3-16   16th March,2018
  */
 
-public class GuideActivity extends SimpleActivity {
+public class GuideActivity extends BaseActivity {
     @BindView(R.id.guide_vp)
     ViewPager guide_vp;
     @BindView(R.id.guide_ib_start)
@@ -41,18 +42,32 @@ public class GuideActivity extends SimpleActivity {
     private ImageView iv_point;
     private ImageView[] ivPointArray;
 
-    protected int getLayout() {
+    @Override
+    public int setContent() {
         return R.layout.activity_guide;
     }
 
     @Override
-    protected void initEventAndData() {
+    public boolean setFullScreen() {
+        //返回true设置为全屏
+        // return true means full screen
+        return true;
+    }
+
+    @Override
+    public void init() {
         //加载ViewPager
         initViewPager();
 
         //加载底部圆点
         initPoint();
     }
+
+    @Override
+    public void bindView(Bundle savedInstanceState) {
+
+    }
+
 
     /**
      * 加载底部圆点
@@ -71,15 +86,13 @@ public class GuideActivity extends SimpleActivity {
             ivPointArray[i] = iv_point;
             //第一个页面需要设置为选中状态，这里采用两张不同的图片
             if (i == 0) {
-//                iv_point.setBackgroundResource(R.mipmap.full_holo);
+                iv_point.setBackgroundResource(R.drawable.full_holo);
             } else {
-//                iv_point.setBackgroundResource(R.mipmap.empty_holo);
+                iv_point.setBackgroundResource(R.drawable.empty_holo);
             }
             //将数组中的ImageView加入到ViewGroup
             vg.addView(ivPointArray[i]);
         }
-
-
     }
 
     /**
@@ -87,7 +100,7 @@ public class GuideActivity extends SimpleActivity {
      */
     private void initViewPager() {
         //实例化图片资源
-//        imageIdArray = new int[]{R.mipmap.guide1, R.mipmap.guide2, R.mipmap.guide3};
+        imageIdArray = new int[]{R.drawable.guidepage1, R.drawable.guidepage1, R.drawable.guidepage1, R.drawable.guidepage1};
         viewList = new ArrayList<>();
         //获取一个Layout参数，设置为全屏
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
@@ -112,13 +125,6 @@ public class GuideActivity extends SimpleActivity {
     }
 
 
-    @Override
-    public boolean setFullScreen() {
-        //返回true设置为全屏
-        // return true means full screen
-        return true;
-    }
-
     public class MyOnPageChangeListener implements ViewPager.OnPageChangeListener {
 
         @Override
@@ -131,9 +137,9 @@ public class GuideActivity extends SimpleActivity {
             //循环设置当前页的标记图
             int length = imageIdArray.length;
             for (int i = 0; i < length; i++) {
-//                ivPointArray[position].setBackgroundResource(R.mipmap.full_holo);
+                ivPointArray[position].setBackgroundResource(R.drawable.full_holo);
                 if (position != i) {
-//                    ivPointArray[i].setBackgroundResource(R.mipmap.empty_holo);
+                    ivPointArray[i].setBackgroundResource(R.drawable.empty_holo);
                 }
             }
 
@@ -155,7 +161,7 @@ public class GuideActivity extends SimpleActivity {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.guide_ib_start:
-                startActivity(new Intent(GuideActivity.this, MainActivity.class));
+                startActivity(new Intent(GuideActivity.this, WelcomeActivity.class));
                 break;
         }
     }

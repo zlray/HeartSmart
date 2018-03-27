@@ -45,6 +45,9 @@ dependencies {
     implementation rootProject.ext.dependencies["rxjava"]
     implementation rootProject.ext.dependencies["rxandroid"]
     implementation rootProject.ext.dependencies["rxpermissions"]
+    implementation rootProject.ext.dependencies["rxlifecycle2"]
+    implementation rootProject.ext.dependencies["rxlifecomponents"]
+
     //network
     implementation rootProject.ext.dependencies["gson"]
     implementation rootProject.ext.dependencies["retrofit"]
@@ -56,20 +59,14 @@ dependencies {
     implementation rootProject.ext.dependencies["glide-okhttp3-integration"]
     implementation rootProject.ext.dependencies["jsoup"]
     //di
-    implementation rootProject.ext.dependencies["dagger"]
-    implementation rootProject.ext.dependencies["dagger-compiler"]
     implementation rootProject.ext.dependencies["butterknife"]
     annotationProcessor rootProject.ext.dependencies["butterknife-compiler"]
     implementation rootProject.ext.dependencies["annotation"]
     //other
-    implementation rootProject.ext.dependencies["multidex"]
-    implementation rootProject.ext.dependencies["logger"]
     implementation rootProject.ext.dependencies["fragmentation"]
-    implementation rootProject.ext.dependencies["crashreport"]
     //canary
-    debugCompile rootProject.ext.dependencies["blockcanary-android"]
-    releaseCompile rootProject.ext.dependencies["blockcanary-no-op"]
-    debugCompile rootProject.ext.dependencies["leakcanary-android"]
-    releaseCompile rootProject.ext.dependencies["leakcanary-android-no-op"]
     implementation files('libs/tbs_sdk_thirdapp_v2.2.0.1096_36549_sharewithdownload_withoutGame_obfs_20160830_211645.jar')
+
+    implementation 'com.github.vondear:RxTools:v1.7.7.3'
+    implementation 'com.github.GrenderG:Toasty:1.2.8'
 }

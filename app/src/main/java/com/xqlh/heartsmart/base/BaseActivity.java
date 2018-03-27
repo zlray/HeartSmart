@@ -1,87 +1,90 @@
 package com.xqlh.heartsmart.base;
 
-import android.support.v7.app.AppCompatDelegate;
-import android.view.ViewGroup;
+import android.content.Context;
+import android.content.pm.ActivityInfo;
+import android.os.Bundle;
+import android.view.Window;
+import android.view.WindowManager;
 
-import com.xqlh.heartsmart.app.App;
-import com.xqlh.heartsmart.daggerUtil.component.ActivityComponent;
-import com.xqlh.heartsmart.daggerUtil.component.DaggerActivityComponent;
-import com.xqlh.heartsmart.daggerUtil.module.ActivityModule;
-import com.xqlh.heartsmart.utils.SnackbarUtil;
-
-import javax.inject.Inject;
+import butterknife.ButterKnife;
 
 /**
- * Created by codeest on 2016/8/2.
- * MVP activity基类
+ * Created by Administrator on 2018/3/22.
  */
-public abstract class BaseActivity<T extends BasePresenter> extends SimpleActivity implements BaseView {
 
-    @Inject
-    protected T mPresenter;
+public abstract class BaseActivity extends SupportActivity {
 
-    protected ActivityComponent getActivityComponent(){
-        return  DaggerActivityComponent.builder()
-                .appComponent(App.getAppComponent())
-                .activityModule(getActivityModule())
-                .build();
-    }
-
-    protected ActivityModule getActivityModule(){
-        return new ActivityModule(this);
-    }
+    /**
+     * 定义一个成员变量
+     * Define a  member arivable that is isFullScreen.
+     * it's default value is false,which means not full-screen.
+     */
+    private boolean isFullScreen = false;
+    protected static final String TAG = "lz";
+    public Context mContext;
 
     @Override
-    protected void onViewCreated() {
-        super.onViewCreated();
-        initInject();
-        if (mPresenter != null)
-            mPresenter.attachView(this);
-    }
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        /**
+         * 必须设置在加载布局前
+         * Must be set before loading the Layout
+         */
+        isFullScreen = setFullScreen();
 
-    @Override
-    protected void onDestroy() {
-        if (mPresenter != null)
-            mPresenter.detachView();
-        super.onDestroy();
-    }
+        if (isFullScreen) {
+            /**
+             * 设置为无标题，全屏
+             *
+             * setting to Untitled,Full Screen
+             */
+            requestWindowFeature(Window.FEATURE_NO_TITLE);
 
-    @Override
-    public void showErrorMsg(String msg) {
-        SnackbarUtil.show(((ViewGroup) findViewById(android.R.id.content)).getChildAt(0), msg);
-    }
+            getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                    WindowManager.LayoutParams.FLAG_FULLSCREEN
+            );
 
-    @Override
-    public void useNightMode(boolean isNight) {
-        if (isNight) {
-            AppCompatDelegate.setDefaultNightMode(
-                    AppCompatDelegate.MODE_NIGHT_YES);
         } else {
-            AppCompatDelegate.setDefaultNightMode(
-                    AppCompatDelegate.MODE_NIGHT_NO);
+            /**
+             * 设置为无标题
+             * set to Untitled
+             */
+            requestWindowFeature(Window.FEATURE_NO_TITLE);
         }
-        recreate();
+        if (getRequestedOrientation() != ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE) {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        }
+
+        setContentView(setContent());
+        ButterKnife.bind(this);
+        mContext = BaseActivity.this;
+        bindView(savedInstanceState);
+
+        init();
     }
 
-    @Override
-    public void stateError() {
 
-    }
+    /**
+     * @return
+     * @description 加载该Acitivit的布局
+     * loading the layout of current Activity
+     */
+    public abstract int setContent();
 
-    @Override
-    public void stateEmpty() {
+    /**
+     * @description 是否设置当前Activity为全屏
+     * Weather to set the current Activity to full screen
+     */
+    public abstract boolean setFullScreen();
 
-    }
+    /**
+     * @description 加载当前Activity的控件
+     * Loading Controls of current Activity
+     */
+    public abstract void init();
 
-    @Override
-    public void stateLoading() {
-
-    }
-
-    @Override
-    public void stateMain() {
-
-    }
-
-    protected abstract void initInject();
+    /**
+     *
+     */
+    public abstract void bindView(Bundle savedInstanceState);
 }

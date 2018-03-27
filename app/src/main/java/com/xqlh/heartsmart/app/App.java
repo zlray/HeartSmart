@@ -3,17 +3,11 @@ package com.xqlh.heartsmart.app;
 import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
-import android.support.multidex.MultiDex;
-import android.support.v7.app.AppCompatDelegate;
 import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.WindowManager;
 
-import com.xqlh.heartsmart.daggerUtil.component.AppComponent;
-import com.xqlh.heartsmart.daggerUtil.component.DaggerAppComponent;
-import com.xqlh.heartsmart.daggerUtil.module.AppModule;
-import com.xqlh.heartsmart.daggerUtil.module.HttpModule;
-import com.xqlh.heartsmart.utils.InitializeService;
+import com.vondear.rxtools.RxTool;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -29,7 +23,6 @@ import io.realm.Realm;
 public class App extends Application {
 
     private static App instance;
-    public static AppComponent appComponent;
     private Set<Activity> allActivities;
 
     public static int SCREEN_WIDTH = -1;
@@ -40,10 +33,6 @@ public class App extends Application {
     public static synchronized App getInstance() {
         return instance;
     }
-    static {
-        AppCompatDelegate.setDefaultNightMode(
-                AppCompatDelegate.MODE_NIGHT_NO);
-    }
 
     @Override
     public void onCreate() {
@@ -53,16 +42,16 @@ public class App extends Application {
         //初始化屏幕宽高
         getScreenSize();
 
+        RxTool.init(this);
+
         //初始化数据库
         Realm.init(getApplicationContext());
 
-        //在子线程中完成其他初始化
-        InitializeService.start(this);
     }
+
     //方法数超过64k
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
-        MultiDex.install(this);
     }
 
     public void addActivity(Activity act) {
@@ -91,7 +80,7 @@ public class App extends Application {
     }
 
     public void getScreenSize() {
-        WindowManager windowManager = (WindowManager)this.getSystemService(Context.WINDOW_SERVICE);
+        WindowManager windowManager = (WindowManager) this.getSystemService(Context.WINDOW_SERVICE);
         DisplayMetrics dm = new DisplayMetrics();
         Display display = windowManager.getDefaultDisplay();
         display.getMetrics(dm);
@@ -99,20 +88,11 @@ public class App extends Application {
         DIMEN_DPI = dm.densityDpi;
         SCREEN_WIDTH = dm.widthPixels;
         SCREEN_HEIGHT = dm.heightPixels;
-        if(SCREEN_WIDTH > SCREEN_HEIGHT) {
+        if (SCREEN_WIDTH > SCREEN_HEIGHT) {
             int t = SCREEN_HEIGHT;
             SCREEN_HEIGHT = SCREEN_WIDTH;
             SCREEN_WIDTH = t;
         }
     }
 
-    public static AppComponent getAppComponent(){
-        if (appComponent == null) {
-            appComponent = DaggerAppComponent.builder()
-                    .appModule(new AppModule(instance))
-                    .httpModule(new HttpModule())
-                    .build();
-        }
-        return appComponent;
-    }
 }
