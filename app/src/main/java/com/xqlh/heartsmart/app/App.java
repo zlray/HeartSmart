@@ -8,6 +8,7 @@ import android.view.Display;
 import android.view.WindowManager;
 
 import com.vondear.rxtools.RxTool;
+import com.xqlh.heartsmart.utils.Utils;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -43,10 +44,13 @@ public class App extends Application {
         getScreenSize();
 
         RxTool.init(this);
-
+        Utils.init(this);
         //初始化数据库
         Realm.init(getApplicationContext());
 
+    }
+    public  Context getContext(){
+        return getApplicationContext();
     }
 
     //方法数超过64k

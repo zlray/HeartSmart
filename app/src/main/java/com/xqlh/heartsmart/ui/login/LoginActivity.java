@@ -25,11 +25,18 @@ import com.vondear.rxtools.RxAnimationTool;
 import com.vondear.rxtools.RxKeyboardTool;
 import com.xqlh.heartsmart.MainActivity;
 import com.xqlh.heartsmart.R;
+import com.xqlh.heartsmart.api.RetrofitHelper;
+import com.xqlh.heartsmart.api.base.BaseObserval;
+import com.xqlh.heartsmart.api.bean.EntityLogin;
 import com.xqlh.heartsmart.base.BaseActivity;
+import com.xqlh.heartsmart.utils.ProgressUtils;
+import com.xqlh.heartsmart.utils.Utils;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 import es.dmoral.toasty.Toasty;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 
 public class LoginActivity extends BaseActivity {
 
@@ -68,6 +75,7 @@ public class LoginActivity extends BaseActivity {
 
     @BindView(R.id.iv_show_password)
     ImageView iv_show_password;
+
 
     private int screenHeight = 0;//屏幕高度
     private int keyHeight = 0; //软件盘弹起后所占高度
@@ -157,7 +165,6 @@ public class LoginActivity extends BaseActivity {
         public void onTextChanged(CharSequence s, int start, int before, int count) {
             String userAcoount = et_account.getText().toString().trim();
             String userPassword = et_password.getText().toString().trim();
-
             if (userAcoount.length() > 0 && userPassword.length() > 0) {
                 bt_login.setEnabled(true);
                 bt_login.setBackgroundResource(R.drawable.login_bt_bg);
@@ -188,7 +195,7 @@ public class LoginActivity extends BaseActivity {
     };
 
 
-    @OnClick({R.id.iv_clean_account, R.id.iv_clean_password, R.id.iv_show_password, R.id.bt_login})
+    @OnClick({R.id.iv_clean_account, R.id.iv_clean_password, R.id.iv_show_password, R.id.bt_login, R.id.bt_forget_password})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_clean_account:
@@ -211,9 +218,36 @@ public class LoginActivity extends BaseActivity {
                 break;
             case R.id.bt_login:
                 RxKeyboardTool.hideSoftInput(LoginActivity.this);
-                startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                //
+                login();
+
+                break;
+            case R.id.bt_forget_password:
+                startActivity(new Intent(LoginActivity.this, RetrievePasswordActivity.class));
                 break;
         }
+    }
+
+    public void login() {
+        // 18701662581
+        RetrofitHelper.getApiService()
+                .Login("xiaomeinv", "123456")
+                .subscribeOn(Schedulers.io())
+                .compose(this.<EntityLogin>bindToLifecycle())
+                .compose(ProgressUtils.<EntityLogin>applyProgressBar(this))
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseObserval<EntityLogin>() {
+                    @Override
+                    public void onSuccess(EntityLogin response) {
+                        if (response.getCode() == 1) {
+                            if (response.getMsg().equals("OK")) {
+                                Toasty.success(Utils.getContext(), "成功接收到Token,可存到本地", Toast.LENGTH_SHORT, true).show();
+                                startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                            }
+                        }
+                    }
+                });
+
     }
 
 }

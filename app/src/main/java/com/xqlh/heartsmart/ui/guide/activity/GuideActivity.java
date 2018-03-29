@@ -1,4 +1,4 @@
-package com.xqlh.heartsmart.ui.Guide.activity;
+package com.xqlh.heartsmart.ui.guide.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,7 +11,7 @@ import android.widget.LinearLayout;
 
 import com.xqlh.heartsmart.R;
 import com.xqlh.heartsmart.base.BaseActivity;
-import com.xqlh.heartsmart.ui.Guide.adapter.GuidePageAdapter;
+import com.xqlh.heartsmart.ui.guide.adapter.GuidePageAdapter;
 import com.xqlh.heartsmart.ui.welcome.WelcomeActivity;
 
 import java.util.ArrayList;

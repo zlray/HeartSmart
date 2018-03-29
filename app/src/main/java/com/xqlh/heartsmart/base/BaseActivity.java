@@ -50,6 +50,7 @@ public abstract class BaseActivity extends SupportActivity {
              * set to Untitled
              */
             requestWindowFeature(Window.FEATURE_NO_TITLE);
+
         }
         if (getRequestedOrientation() != ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE) {
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);

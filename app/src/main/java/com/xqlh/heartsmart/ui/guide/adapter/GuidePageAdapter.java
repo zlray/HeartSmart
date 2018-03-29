@@ -1,4 +1,4 @@
-package com.xqlh.heartsmart.ui.Guide.adapter;
+package com.xqlh.heartsmart.ui.guide.adapter;
 
 import android.support.v4.view.PagerAdapter;
 import android.view.View;
