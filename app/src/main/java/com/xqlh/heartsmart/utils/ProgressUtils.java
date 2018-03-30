@@ -44,11 +44,7 @@ public class ProgressUtils {
                 }).doOnSubscribe(new Consumer<Disposable>() {
                     @Override
                     public void accept(Disposable disposable) throws Exception {
-                        /*Activity context;
-                        if ((context = activityWeakReference.get()) != null
-                                && !context.isFinishing()) {
-                            dialogUtils.dismissProgress();
-                        }*/
+
                     }
                 });
             }

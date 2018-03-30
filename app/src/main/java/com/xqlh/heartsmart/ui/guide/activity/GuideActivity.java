@@ -29,8 +29,10 @@ import butterknife.OnClick;
 public class GuideActivity extends BaseActivity {
     @BindView(R.id.guide_vp)
     ViewPager guide_vp;
+
     @BindView(R.id.guide_ib_start)
     ImageButton guide_ib_start;
+
     @BindView(R.id.guide_ll_point)
     LinearLayout guide_ll_point;
 

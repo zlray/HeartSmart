@@ -1,5 +1,6 @@
 package com.xqlh.heartsmart.api.service;
 
+import com.xqlh.heartsmart.api.bean.EntityCheckPhone;
 import com.xqlh.heartsmart.api.bean.EntityLogin;
 
 import io.reactivex.Observable;
@@ -16,8 +17,7 @@ public interface ApiService {
     @GET("api/Account/token")
     Observable<EntityLogin> Login(@Query("username") String username, @Query("password") String password);
 
-
-//    @GET("api/data/Android/{p}/{page}")
-//    Call<ResponseBody> getAndroidInfo(@Path("page") int page, @Path("p") int p);
-
+    @GET("api/account/existstel")
+    Observable<EntityCheckPhone> CheckPhone(@Query("tel") String tel);
+    
 }

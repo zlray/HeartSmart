@@ -178,6 +178,7 @@ public class LoginActivity extends BaseActivity {
         public void afterTextChanged(Editable s) {
             String userAcoount = et_account.getText().toString().trim();
             String userPassword = et_password.getText().toString().trim();
+            //用户名框的操作
             if (!TextUtils.isEmpty(userAcoount) && iv_clean_account.getVisibility() == View.GONE) {
                 //显示清除按钮
                 iv_clean_account.setVisibility(View.VISIBLE);
@@ -185,11 +186,20 @@ public class LoginActivity extends BaseActivity {
                 iv_clean_account.setVisibility(View.GONE);
                 bt_login.setEnabled(false);
             }
+            //密码框的操作
             if (!TextUtils.isEmpty(userPassword) && iv_clean_password.getVisibility() == View.GONE) {
                 iv_clean_password.setVisibility(View.VISIBLE);
             } else if (TextUtils.isEmpty(userPassword)) {
                 iv_clean_password.setVisibility(View.GONE);
                 bt_login.setEnabled(false);
+            }
+
+            //检测密码框输入类型
+            if (userPassword.isEmpty())
+                return;
+            if (!userPassword.matches("[A-Za-z0-9]+")) {
+                Toasty.warning(Utils.getContext(), "请输入数字或字母", Toast.LENGTH_SHORT, true).show();
+                s.clear();
             }
         }
     };
@@ -241,6 +251,8 @@ public class LoginActivity extends BaseActivity {
                     public void onSuccess(EntityLogin response) {
                         if (response.getCode() == 1) {
                             if (response.getMsg().equals("OK")) {
+                                Log.i(TAG, "onSuccess: " + response.getResult());
+
                                 Toasty.success(Utils.getContext(), "成功接收到Token,可存到本地", Toast.LENGTH_SHORT, true).show();
                                 startActivity(new Intent(LoginActivity.this, MainActivity.class));
                             }
