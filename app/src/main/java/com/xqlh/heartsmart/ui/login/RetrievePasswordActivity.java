@@ -162,6 +162,7 @@ public class RetrievePasswordActivity extends BaseActivity {
                             if (response.getMsg().equals("OK")) {
                                 if (response.isResult()) {
                                     //获取验证码
+
                                 } else {
                                     showDoalog();
                                 }

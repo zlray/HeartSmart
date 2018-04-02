@@ -5,9 +5,9 @@ import android.os.Bundle;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
-import com.xqlh.heartsmart.MainActivity;
 import com.xqlh.heartsmart.R;
 import com.xqlh.heartsmart.base.BaseActivity;
+import com.xqlh.heartsmart.ui.login.LoginActivity;
 import com.xqlh.heartsmart.utils.ImageLoaderUtil;
 
 import java.util.concurrent.TimeUnit;
@@ -27,6 +27,7 @@ public class WelcomeActivity extends BaseActivity {
     CompositeDisposable mCompositeDisposable = new CompositeDisposable();
 
     @Override
+
     public int setContent() {
         return R.layout.activity_welcome;
     }
@@ -38,9 +39,9 @@ public class WelcomeActivity extends BaseActivity {
 
     @Override
     public void init() {
-        final int countTime = 1;
-
-        ImageLoaderUtil.LoadImage(WelcomeActivity.this, "http://api.dujin.org/bing/1920.php", welcome_iv);
+        final int countTime = 2;
+//        getWelcome();
+        ImageLoaderUtil.LoadImage(WelcomeActivity.this, "http://resources.bnuxq.com:8082/201803271144278180DO8UXQ.jpg", welcome_iv);
         mCompositeDisposable.add(Observable.interval(0, 1, TimeUnit.SECONDS)
                 .observeOn(AndroidSchedulers.mainThread())
                 .map(new Function<Long, Integer>() {
@@ -71,14 +72,43 @@ public class WelcomeActivity extends BaseActivity {
                             mCompositeDisposable.dispose();
                         }
                         Intent intent = new Intent();
-                        intent.setClass(WelcomeActivity.this, MainActivity.class);
+                        intent.setClass(WelcomeActivity.this, LoginActivity.class);
                         startActivity(intent);
                         finish();
                     }
                 })
         );
-
     }
+
+//    public void getWelcome() {
+//        RetrofitHelper.getApiService()
+//                .getWelcome(1)
+//                .subscribeOn(Schedulers.io())
+//                .compose(this.<EntityWelcome>bindToLifecycle())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(new BaseObserval<EntityWelcome>() {
+//                    @Override
+//                    public void onSuccess(EntityWelcome response) {
+//
+//
+//                        Glide.with(WelcomeActivity.this)
+//                                .load(response.getPicURL())
+//                                .listener(new RequestListener<String, GlideDrawable>() {
+//                                    @Override
+//                                    public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
+//                                        Log.d(TAG, "onException: " + e.toString() + "  model:" + model + " isFirstResource: " + isFirstResource);
+//                                        return false;
+//                                    }
+//
+//                                    @Override
+//                                    public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
+//                                        return false;
+//                                    }
+//                                })
+//                                .into(welcome_iv);
+//                    }
+//                });
+//    }
 
     @Override
     public void bindView(Bundle savedInstanceState) {

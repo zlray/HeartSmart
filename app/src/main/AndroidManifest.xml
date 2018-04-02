@@ -18,16 +18,18 @@
         <activity android:name=".MainActivity" />
 
         <!-- 引导页面 -->
-        <activity android:name=".ui.guide.activity.GuideActivity"></activity>
-
-        <!-- 欢迎页面 -->
-        <activity android:name=".ui.welcome.WelcomeActivity" />
-        <activity android:name=".ui.login.LoginActivity">
+        <activity android:name=".ui.guide.activity.GuideActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+
+        <!-- 欢迎页面 -->
+        <activity android:name=".ui.welcome.WelcomeActivity" />
+        <activity android:name=".ui.login.LoginActivity">
+
         </activity>
         <activity android:name=".ui.login.RetrievePasswordActivity" />
         <activity android:name=".ui.login.BindPhoneActivity"></activity>

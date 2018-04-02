@@ -14,5 +14,6 @@ public class Constants {
     public static final String BASE_URL = "http://open.bnuxq.com/";
     public static final int DEFAULT_TIMEOUT = 20000;
 
+    public static final String MESSAGE_TOKEN = "messageToken";
 
 }

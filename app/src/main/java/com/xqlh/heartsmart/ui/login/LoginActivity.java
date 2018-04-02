@@ -165,7 +165,8 @@ public class LoginActivity extends BaseActivity {
         public void onTextChanged(CharSequence s, int start, int before, int count) {
             String userAcoount = et_account.getText().toString().trim();
             String userPassword = et_password.getText().toString().trim();
-            if (userAcoount.length() > 0 && userPassword.length() > 0) {
+
+            if (userAcoount.length() > 0 && userPassword.length() >= 6) {
                 bt_login.setEnabled(true);
                 bt_login.setBackgroundResource(R.drawable.login_bt_bg);
             } else {
