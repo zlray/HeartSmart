@@ -29,7 +29,9 @@ import com.xqlh.heartsmart.api.RetrofitHelper;
 import com.xqlh.heartsmart.api.base.BaseObserval;
 import com.xqlh.heartsmart.api.bean.EntityLogin;
 import com.xqlh.heartsmart.base.BaseActivity;
+import com.xqlh.heartsmart.utils.Constants;
 import com.xqlh.heartsmart.utils.ProgressUtils;
+import com.xqlh.heartsmart.utils.SharedPreferencesHelper;
 import com.xqlh.heartsmart.utils.Utils;
 
 import butterknife.BindView;
@@ -81,7 +83,7 @@ public class LoginActivity extends BaseActivity {
     private int keyHeight = 0; //软件盘弹起后所占高度
     private float scale = 0.6f; //logo缩放比例
     private int height = 0;
-
+    private SharedPreferencesHelper sharedPreferencesHelper;
 
     @Override
     public int setContent() {
@@ -95,6 +97,8 @@ public class LoginActivity extends BaseActivity {
 
     @Override
     public void init() {
+        sharedPreferencesHelper = new SharedPreferencesHelper(
+                LoginActivity.this, "CheckLogin");
         initView();
         initEvent();
 
@@ -229,8 +233,7 @@ public class LoginActivity extends BaseActivity {
                 break;
             case R.id.bt_login:
                 RxKeyboardTool.hideSoftInput(LoginActivity.this);
-                //
-                login();
+                login(et_account.getText().toString().trim(), et_password.getText().toString().trim());
 
                 break;
             case R.id.bt_forget_password:
@@ -239,10 +242,10 @@ public class LoginActivity extends BaseActivity {
         }
     }
 
-    public void login() {
+    public void login(String username, String password) {
         // 18701662581
         RetrofitHelper.getApiService()
-                .Login("xiaomeinv", "123456")
+                .Login(username, password)
                 .subscribeOn(Schedulers.io())
                 .compose(this.<EntityLogin>bindToLifecycle())
                 .compose(ProgressUtils.<EntityLogin>applyProgressBar(this))
@@ -253,10 +256,11 @@ public class LoginActivity extends BaseActivity {
                         if (response.getCode() == 1) {
                             if (response.getMsg().equals("OK")) {
                                 Log.i(TAG, "onSuccess: " + response.getResult());
-
-                                Toasty.success(Utils.getContext(), "成功接收到Token,可存到本地", Toast.LENGTH_SHORT, true).show();
+                                sharedPreferencesHelper.put(Constants.LOGIN_TOKEN, response.getResult());
                                 startActivity(new Intent(LoginActivity.this, MainActivity.class));
                             }
+                        } else {
+                            Toasty.warning(Utils.getContext(), "用户名或者密码错误", Toast.LENGTH_SHORT, true).show();
                         }
                     }
                 });

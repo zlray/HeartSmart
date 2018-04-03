@@ -9,9 +9,9 @@ import com.xqlh.heartsmart.api.bean.EntityWelcome;
 
 import io.reactivex.Observable;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
-import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 /**
@@ -37,10 +37,15 @@ public interface ApiService {
     //验证短信
     @GET("api/account/checksmscode")
     Observable<EntityCheckMessage> CheckMessage(@Query("token") String token, @Query("telcode") String telcode);
-    //绑定手机号
-    @POST("api/account/telphone/{Telphone}/{token}/{telcode}")
-    Observable<EntityBindPhone> bindPhone(@Path("Telphone") String Telphone, @Path("token") String token, @Path("telcode") String telcode);
 
+    //绑定手机号
+    @POST("api/account/telphone/")
+    Observable<EntityBindPhone> bindPhone(@Header("Authorization") String Authorization,
+                                          @Query("Telphone") String Telphone,
+                                          @Query("token") String token,
+                                          @Query("telcode") String telcode);
+
+    //app启动页面
     @GET("api/clientapp/apphomepic")
     Observable<EntityWelcome> getWelcome(@Query("appType") int appType);
 }

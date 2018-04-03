@@ -4,6 +4,8 @@ import com.xqlh.heartsmart.app.App;
 
 import java.io.File;
 
+import okhttp3.MediaType;
+
 /**
  * Created by codeest on 2016/8/3.
  */
@@ -15,5 +17,8 @@ public class Constants {
     public static final int DEFAULT_TIMEOUT = 20000;
 
     public static final String MESSAGE_TOKEN = "messageToken";
+    public static final String LOGIN_TOKEN = "loginToken";
+
+    public static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
 
 }

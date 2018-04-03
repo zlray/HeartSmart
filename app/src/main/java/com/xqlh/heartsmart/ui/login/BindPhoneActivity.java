@@ -192,9 +192,11 @@ public class BindPhoneActivity extends BaseActivity {
     }
 
     public void bindPhone(String Telphone, String token, String telcode) {
-        Log.i(TAG, "bindPhone:");
         RetrofitHelper.getApiService()
-                .bindPhone(Telphone, token, telcode)
+                .bindPhone(sharedPreferencesHelper.getSharedPreference(Constants.LOGIN_TOKEN, "").toString().trim(),
+                        Telphone,
+                        token,
+                        telcode)
                 .subscribeOn(Schedulers.io())
                 .compose(this.<EntityBindPhone>bindToLifecycle())
                 .compose(ProgressUtils.<EntityBindPhone>applyProgressBar(this))

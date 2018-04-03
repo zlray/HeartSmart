@@ -58,6 +58,7 @@ public abstract class BaseObserval<T> implements Observer<T> {
 
     @Override
     public void onComplete() {
+
     }
 
     /**

@@ -1,19 +1,16 @@
 package com.xqlh.heartsmart.api.bean;
 
 /**
- * Created by Administrator on 2018/4/2.
+ * Created by Administrator on 2018/4/3.
  */
 
-public class EntityWelcome {
-
-
+public class a {
     /**
      * code : 1
      * msg : OK
-     * Result : {"ID":"bae545ccde3740448f71649b90b42e92","PicURL":"http://resources.bnuxq.com:8082/2018040206213179EFKCM9BD.jpg","AppType":1,"CreateTime":"2018-04-02T18:21:36+08:00"}
+     * Result : {"ID":"bae545ccde3740448f71649b90b42e92","PicURL":"http://resources.bnuxq.com:8082/2018040206213179EFKCM9BD.jpg","AppType":1,"CreateTime":"2018-04-02T18:21:36"}
      * ResultMsg : null
      */
-
     private int code;
     private String msg;
     private ResultBean Result;
@@ -56,7 +53,7 @@ public class EntityWelcome {
          * ID : bae545ccde3740448f71649b90b42e92
          * PicURL : http://resources.bnuxq.com:8082/2018040206213179EFKCM9BD.jpg
          * AppType : 1
-         * CreateTime : 2018-04-02T18:21:36+08:00
+         * CreateTime : 2018-04-02T18:21:36
          */
 
         private String ID;
