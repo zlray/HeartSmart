@@ -7,12 +7,16 @@ import com.xqlh.heartsmart.api.bean.EntityGetMessage;
 import com.xqlh.heartsmart.api.bean.EntityLogin;
 import com.xqlh.heartsmart.api.bean.EntityWelcome;
 
+import java.util.Map;
+
 import io.reactivex.Observable;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
+import retrofit2.http.QueryMap;
+import retrofit2.http.Url;
 
 /**
  * Created by Administrator on 2018/3/28.
@@ -39,11 +43,11 @@ public interface ApiService {
     Observable<EntityCheckMessage> CheckMessage(@Query("token") String token, @Query("telcode") String telcode);
 
     //绑定手机号
-    @POST("api/account/telphone/")
-    Observable<EntityBindPhone> bindPhone(@Header("Authorization") String Authorization,
-                                          @Query("Telphone") String Telphone,
-                                          @Query("token") String token,
-                                          @Query("telcode") String telcode);
+    @POST("api/account/telphone")
+    Observable<EntityBindPhone> bindPhone(@Header("Authorization") String Authorization, @Url String url, @QueryMap Map<String,String> map);
+//                                          @Part("Telphone") String Telphone,
+//                                          @Part("token") String token,
+//                                          @Part("telcode") String telcode);
 
     //app启动页面
     @GET("api/clientapp/apphomepic")

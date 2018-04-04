@@ -55,12 +55,10 @@ public abstract class BaseActivity extends SupportActivity {
         if (getRequestedOrientation() != ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE) {
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         }
-
         setContentView(setContent());
         ButterKnife.bind(this);
         mContext = BaseActivity.this;
         bindView(savedInstanceState);
-
         init();
     }
 

@@ -27,6 +27,7 @@ import com.xqlh.heartsmart.utils.SharedPreferencesHelper;
 import com.xqlh.heartsmart.utils.Utils;
 import com.xqlh.heartsmart.widget.TitleBar;
 
+import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
@@ -192,11 +193,14 @@ public class BindPhoneActivity extends BaseActivity {
     }
 
     public void bindPhone(String Telphone, String token, String telcode) {
+        HashMap<String,String> map = new HashMap<>();
+        map.put("Telphone",Telphone);
+        map.put("token",token);
+        map.put("telcode",telcode);
         RetrofitHelper.getApiService()
                 .bindPhone(sharedPreferencesHelper.getSharedPreference(Constants.LOGIN_TOKEN, "").toString().trim(),
-                        Telphone,
-                        token,
-                        telcode)
+                        "",
+                        map)
                 .subscribeOn(Schedulers.io())
                 .compose(this.<EntityBindPhone>bindToLifecycle())
                 .compose(ProgressUtils.<EntityBindPhone>applyProgressBar(this))

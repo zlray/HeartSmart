@@ -35,7 +35,7 @@ public class MainActivity extends BaseActivity {
 
     @Override
     public boolean setFullScreen() {
-        return false;
+        return true;
     }
 
     @Override

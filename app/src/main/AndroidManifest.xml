@@ -15,7 +15,9 @@
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
 
         <!-- Main -->
-        <activity android:name=".MainActivity" />
+        <activity android:name=".MainActivity">
+
+        </activity>
 
         <!-- 引导页面 -->
         <activity android:name=".ui.guide.activity.GuideActivity">
