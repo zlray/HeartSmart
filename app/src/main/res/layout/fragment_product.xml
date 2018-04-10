@@ -5,25 +5,50 @@
     android:orientation="vertical"
     tools:context="com.xqlh.heartsmart.ui.fragment.ProductFragment">
 
+    <com.xqlh.heartsmart.widget.TitleBar
+        android:id="@+id/product_fragmet_titlebar"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/color_title_bar"></com.xqlh.heartsmart.widget.TitleBar>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal"
         android:weightSum="4">
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/rv_sort"
+        <RelativeLayout
+            android:id="@+id/rv_left"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@color/baby_blue" />
+            android:background="@color/white">
 
-        <FrameLayout
-            android:id="@+id/lin_fragment"
+            <Button
+                android:id="@+id/bt_hardware"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:text="硬件" />
+
+            <Button
+                android:id="@+id/bt_software"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/bt_hardware"
+                android:text="软件" />
+        </RelativeLayout>
+
+
+        <LinearLayout
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/news_tv_source_color"></LinearLayout>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_right"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_marginLeft="10dp"
-            android:layout_weight="3"
-            android:background="@color/white"></FrameLayout>
+            android:layout_weight="3" />
     </LinearLayout>
 </LinearLayout>

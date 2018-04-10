@@ -98,10 +98,9 @@ public class LoginActivity extends BaseActivity {
     @Override
     public void init() {
         sharedPreferencesHelper = new SharedPreferencesHelper(
-                LoginActivity.this, "CheckLogin");
+                LoginActivity.this, Constants.CHECKlOGIN);
         initView();
         initEvent();
-
     }
 
     @Override
@@ -245,7 +244,7 @@ public class LoginActivity extends BaseActivity {
     public void login(String username, String password) {
         // 18701662581
         RetrofitHelper.getApiService()
-                .Login(username, password)
+                .Login("xiaomeinv", "123456")
                 .subscribeOn(Schedulers.io())
                 .compose(this.<EntityLogin>bindToLifecycle())
                 .compose(ProgressUtils.<EntityLogin>applyProgressBar(this))
@@ -256,6 +255,7 @@ public class LoginActivity extends BaseActivity {
                         if (response.getCode() == 1) {
                             if (response.getMsg().equals("OK")) {
                                 Log.i(TAG, "onSuccess: " + response.getResult());
+                                Log.i(TAG, "存储登录的Token" + response.getResult());
                                 sharedPreferencesHelper.put(Constants.LOGIN_TOKEN, response.getResult());
                                 startActivity(new Intent(LoginActivity.this, MainActivity.class));
                             }

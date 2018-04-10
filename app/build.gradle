@@ -70,4 +70,8 @@ dependencies {
 
     implementation 'com.github.vondear:RxTools:v1.7.7.3'
     implementation 'com.github.GrenderG:Toasty:1.2.8'
+
+    implementation 'com.yalantis:ucrop:2.2.0'
+
+
 }

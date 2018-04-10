@@ -34,7 +34,9 @@ public abstract class FlexibleLayout extends LinearLayout {
         setOrientation(VERTICAL);
         setClipToPadding(true);
         setFitsSystemWindows(true);
+        
         inflate(context, R.layout.layout_all, this);
+
         mSuccessView = initNormalView();
         title = mSuccessView.findViewWithTag("title");
         LayoutParams lp = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
@@ -131,11 +133,9 @@ public abstract class FlexibleLayout extends LinearLayout {
                 if (mLoadingView != null) {
                     mLoadingView.setVisibility(GONE);
                 }
-
                 if (mEmptyView != null) {
                     mEmptyView.setVisibility(GONE);
                 }
-
                 if (mNetworkErrorView == null) {
                     ViewStub viewStub = (ViewStub) findViewById(R.id.vs_error);
                     mNetworkErrorView = viewStub.inflate();

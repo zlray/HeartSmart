@@ -1,20 +1,105 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:myradio="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="com.xqlh.heartsmart.MainActivity">
 
-    <FrameLayout
-        android:id="@+id/main_container"
+    <android.support.v4.view.ViewPager
+        android:id="@+id/vp_main"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@+id/main_bottombar" />
+        android:layout_height="0dp"
+        android:layout_weight="1" />
 
-    <com.xqlh.heartsmart.widget.BottomBar
-        android:id="@+id/main_bottombar"
+    <RadioGroup
+        android:id="@+id/rg_main"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true" />
+        android:layout_alignParentBottom="true"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
 
-</RelativeLayout>
+        <com.xqlh.heartsmart.widget.MyRadioButton
+            android:id="@+id/rb_home"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="1"
+            android:button="@null"
+            android:clickable="true"
+            android:gravity="center"
+            android:text="首页"
+            android:textColor="@drawable/main_text_rb_select"
+            android:textSize="15sp"
+            myradio:drawableSize="30dp"
+            myradio:drawableTop="@drawable/main_home_rb_select" />
+
+        <com.xqlh.heartsmart.widget.MyRadioButton
+            android:id="@+id/rb_appraisal"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1"
+            android:button="@null"
+            android:clickable="true"
+            android:gravity="center"
+            android:text="测评"
+            android:textColor="@drawable/main_text_rb_select"
+            android:textSize="15sp"
+            myradio:drawableSize="30dp"
+            myradio:drawableTop="@drawable/main_appraisal_rb_select" />
+
+        <com.xqlh.heartsmart.widget.MyRadioButton
+            android:id="@+id/rb_product"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1"
+            android:button="@null"
+            android:clickable="true"
+            android:gravity="center"
+            android:text="产品"
+            android:textColor="@drawable/main_text_rb_select"
+            android:textSize="15sp"
+            myradio:drawableSize="30dp"
+            myradio:drawableTop="@drawable/main_product_rb_select" />
+
+        <com.xqlh.heartsmart.widget.MyRadioButton
+            android:id="@+id/rb_equipment"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1"
+            android:button="@null"
+            android:clickable="true"
+            android:gravity="center"
+            android:text="设备"
+            android:textColor="@drawable/main_text_rb_select"
+            android:textSize="15sp"
+            myradio:drawableSize="30dp"
+            myradio:drawableTop="@drawable/main_equipment_rb_select" />
+
+        <com.xqlh.heartsmart.widget.MyRadioButton
+            android:id="@+id/rb_mine"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1"
+            android:button="@null"
+            android:clickable="true"
+            android:gravity="center"
+            android:text="我的"
+            android:textColor="@drawable/main_text_rb_select"
+            android:textSize="15sp"
+            myradio:drawableSize="30dp"
+            myradio:drawableTop="@drawable/main_mine_rb_select" />
+    </RadioGroup>
+
+</LinearLayout>

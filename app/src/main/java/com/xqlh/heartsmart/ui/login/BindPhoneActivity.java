@@ -27,7 +27,6 @@ import com.xqlh.heartsmart.utils.SharedPreferencesHelper;
 import com.xqlh.heartsmart.utils.Utils;
 import com.xqlh.heartsmart.widget.TitleBar;
 
-import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
@@ -62,7 +61,9 @@ public class BindPhoneActivity extends BaseActivity {
     Button bt_bind;
 
 
-    private SharedPreferencesHelper sharedPreferencesHelper;
+    private SharedPreferencesHelper sp_message_token;
+
+    private SharedPreferencesHelper sp_login_token;
 
     private Disposable mdDisposable;
 
@@ -81,8 +82,11 @@ public class BindPhoneActivity extends BaseActivity {
     public void init() {
         initTtileBar();
 
-        sharedPreferencesHelper = new SharedPreferencesHelper(
-                BindPhoneActivity.this, "CheckMessage");
+        sp_message_token = new SharedPreferencesHelper(
+                BindPhoneActivity.this, Constants.CHECKMESSAGE);
+
+        sp_login_token = new SharedPreferencesHelper(
+                BindPhoneActivity.this, Constants.CHECKlOGIN);
 
 
         et_bind_phone.addTextChangedListener(textWatcherPhone);
@@ -141,7 +145,7 @@ public class BindPhoneActivity extends BaseActivity {
             case R.id.bt_bind:
                 //检验验证码，并绑定手机号
                 checkMessage(et_verification_code_input.getText().toString().trim(),
-                        sharedPreferencesHelper.getSharedPreference(Constants.MESSAGE_TOKEN, "").toString().trim());
+                        sp_message_token.getSharedPreference(Constants.MESSAGE_TOKEN, "").toString().trim());
                 break;
         }
     }
@@ -162,7 +166,7 @@ public class BindPhoneActivity extends BaseActivity {
                             if (response.getMsg().equals("OK")) {
                                 Log.i(TAG, "onSuccess: " + response.getResult());
                                 //存储
-                                sharedPreferencesHelper.put(Constants.MESSAGE_TOKEN, response.getResult());
+                                sp_message_token.put(Constants.MESSAGE_TOKEN, response.getResult());
                             }
                         }
                     }
@@ -182,7 +186,7 @@ public class BindPhoneActivity extends BaseActivity {
                     public void onSuccess(EntityCheckMessage response) {
                         if (response.getCode() == 1) {
                             bindPhone(et_bind_phone.getText().toString().trim(),
-                                    sharedPreferencesHelper.getSharedPreference(Constants.MESSAGE_TOKEN, "").toString().trim(),
+                                    sp_message_token.getSharedPreference(Constants.MESSAGE_TOKEN, "").toString().trim(),
                                     et_verification_code_input.getText().toString().trim()
                             );
                         } else {
@@ -193,14 +197,16 @@ public class BindPhoneActivity extends BaseActivity {
     }
 
     public void bindPhone(String Telphone, String token, String telcode) {
-        HashMap<String,String> map = new HashMap<>();
-        map.put("Telphone",Telphone);
-        map.put("token",token);
-        map.put("telcode",telcode);
+//        HashMap<String,String> map = new HashMap<>();
+//        map.put("Telphone",Telphone);
+//        map.put("token",token);
+//        map.put("telcode",telcode);
+        AAA aaa = new AAA(Telphone, token, telcode);
+
+        Log.i(TAG, "获取登录的Token: " + sp_login_token.getSharedPreference(Constants.LOGIN_TOKEN, "").toString().trim());
         RetrofitHelper.getApiService()
-                .bindPhone(sharedPreferencesHelper.getSharedPreference(Constants.LOGIN_TOKEN, "").toString().trim(),
-                        "",
-                        map)
+                .bindPhone(sp_login_token.getSharedPreference(Constants.LOGIN_TOKEN, "").toString().trim(),
+                        Telphone, token, telcode)
                 .subscribeOn(Schedulers.io())
                 .compose(this.<EntityBindPhone>bindToLifecycle())
                 .compose(ProgressUtils.<EntityBindPhone>applyProgressBar(this))

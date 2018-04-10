@@ -1,172 +1,158 @@
 package com.xqlh.heartsmart.ui.fragment;
 
-import android.os.Bundle;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.widget.DividerItemDecoration;
+import android.content.Intent;
+import android.graphics.Color;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.Toast;
 
-import com.google.gson.Gson;
 import com.xqlh.heartsmart.R;
+import com.xqlh.heartsmart.api.RetrofitHelper;
+import com.xqlh.heartsmart.api.base.BaseObserval;
+import com.xqlh.heartsmart.base.BaseLazyFragment;
 import com.xqlh.heartsmart.base.RvListener;
-import com.xqlh.heartsmart.ui.bean.SortBean;
-import com.xqlh.heartsmart.ui.fragment.adapter.CheckListener;
-import com.xqlh.heartsmart.ui.fragment.adapter.ItemHeaderDecoration;
-import com.xqlh.heartsmart.ui.fragment.adapter.SortAdapter;
+import com.xqlh.heartsmart.ui.bean.EntityCategory;
+import com.xqlh.heartsmart.ui.bean.EntityProductCategory;
+import com.xqlh.heartsmart.ui.fragment.adapter.AdapterLeft;
+import com.xqlh.heartsmart.ui.fragment.adapter.AdapterRight;
+import com.xqlh.heartsmart.ui.product.ProductDetailActivity;
+import com.xqlh.heartsmart.utils.ProgressUtils;
+import com.xqlh.heartsmart.utils.Utils;
+import com.xqlh.heartsmart.widget.TitleBar;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import me.yokeyword.fragmentation.SupportFragment;
+import butterknife.BindView;
+import butterknife.OnClick;
+import es.dmoral.toasty.Toasty;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 
 
-public class ProductFragment extends SupportFragment implements CheckListener {
-    private RecyclerView rvSort;
-    private SortAdapter mSortAdapter;
-    private SortDetailFragment mSortDetailFragment;
-    private LinearLayoutManager mLinearLayoutManager;
-    private int targetPosition;//点击左边某一个具体的item的位置
-    private boolean isMoved;
-    private SortBean mSortBean;
+public class ProductFragment extends BaseLazyFragment {
+    @BindView(R.id.product_fragmet_titlebar)
+    TitleBar product_fragmet_titlebar;
 
-    private View view;
+    @BindView(R.id.bt_hardware)
+    Button bt_hardware;
+    @BindView(R.id.bt_software)
+    Button bt_software;
 
-    public static ProductFragment newInstance() {
-        // Required empty public constructor
-        Bundle args = new Bundle();
-        ProductFragment fragment = new ProductFragment();
-        fragment.setArguments(args);
-        return fragment;
-    }
+    @BindView(R.id.rv_right)
+    RecyclerView rv_right;
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        view = inflater.inflate(R.layout.fragment_product, container, false);
-        initView();
-        initData();
-        return view;
-    }
+    private AdapterLeft adapterLeft;
+    private AdapterRight adapterRight;
 
-    private void initData() {
-        //获取asset目录下的资源文件
-        String assetsData = getAssetsData("sort.json");
+    List<EntityCategory> listCategory = new ArrayList<>();
 
-        Gson gson = new Gson();
-
-        mSortBean = gson.fromJson(assetsData, SortBean.class);
-
-        List<SortBean.CategoryOneArrayBean> categoryOneArray = mSortBean.getCategoryOneArray();
-
-        List<String> list = new ArrayList<>();
-        //初始化左侧列表数据
-
-        for (int i = 0; i < categoryOneArray.size(); i++) {
-            list.add(categoryOneArray.get(i).getName());
-        }
-        mSortAdapter = new SortAdapter(getActivity(), list, new RvListener() {
-            @Override
-            public void onItemClick(int id, int position) {
-                if (mSortDetailFragment != null) {
-                    isMoved = true;
-                    targetPosition = position;
-                    setChecked(position, true);
-                }
-            }
-        });
-
-        rvSort.setAdapter(mSortAdapter);
-
-        createFragment();
-    }
-
-    //从资源文件中获取分类json
-    private String getAssetsData(String path) {
-        String result = "";
-        try {
-            //获取输入流
-            InputStream mAssets = getActivity().getAssets().open(path);
-            //获取文件的字节数
-            int lenght = mAssets.available();
-            //创建byte数组
-            byte[] buffer = new byte[lenght];
-            //将文件中的数据写入到字节数组中
-            mAssets.read(buffer);
-            mAssets.close();
-            result = new String(buffer);
-            return result;
-        } catch (IOException e) {
-            e.printStackTrace();
-            Log.e("fuck", e.getMessage());
-            return result;
-        }
-    }
-
-    private void setChecked(int position, boolean isLeft) {
-        Log.d("p-------->", String.valueOf(position));
-        if (isLeft) {
-            mSortAdapter.setCheckedPosition(position);
-            //此处的位置需要根据每个分类的集合来进行计算
-            int count = 0;
-            for (int i = 0; i < position; i++) {
-                count += mSortBean.getCategoryOneArray().get(i).getCategoryTwoArray().size();
-            }
-            count += position;
-            mSortDetailFragment.setData(count);
-            ItemHeaderDecoration.setCurrentTag(String.valueOf(targetPosition));//凡是点击左边，将左边点击的位置作为当前的tag
-        } else {
-            if (isMoved) {
-                isMoved = false;
-            } else
-                mSortAdapter.setCheckedPosition(position);
-            ItemHeaderDecoration.setCurrentTag(String.valueOf(position));//如果是滑动右边联动左边，则按照右边传过来的位置作为tag
-
-        }
-        moveToCenter(position);
-
-    }
-    //将当前选中的item居中
-    private void moveToCenter(int position) {
-        //将点击的position转换为当前屏幕上可见的item的位置以便于计算距离顶部的高度，从而进行移动居中
-        View childAt = rvSort.getChildAt(position - mLinearLayoutManager.findFirstVisibleItemPosition());
-        if (childAt != null) {
-            int y = (childAt.getTop() - rvSort.getHeight() / 2);
-            rvSort.smoothScrollBy(0, y);
-        }
-
-    }
-
-    private void initView() {
-        rvSort = (RecyclerView) view.findViewById(R.id.rv_sort);
-        mLinearLayoutManager = new LinearLayoutManager(getActivity());
-        rvSort.setLayoutManager(mLinearLayoutManager);
-        DividerItemDecoration decoration = new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL);
-        rvSort.addItemDecoration(decoration);
-
-    }
-
-
-    public void createFragment() {
-        FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
-        mSortDetailFragment = new SortDetailFragment();
-        Bundle bundle = new Bundle();
-        bundle.putParcelableArrayList("right", mSortBean.getCategoryOneArray());
-        mSortDetailFragment.setArguments(bundle);
-        mSortDetailFragment.setListener(this);
-        fragmentTransaction.add(R.id.lin_fragment, mSortDetailFragment);
-        fragmentTransaction.commit();
-    }
+    List<EntityProductCategory.ResultBean> listProduct = new ArrayList<>();
 
 
     @Override
-    public void check(int position, boolean isScroll) {
-        setChecked(position, isScroll);
+    protected int setContentView() {
+        Log.i("lz", "产品fragment");
+        return R.layout.fragment_product;
     }
+
+    @Override
+    protected void init() {
+        initTtileBar();
+        rv_right.setLayoutManager(new LinearLayoutManager(getActivity()));
+        bt_hardware.setBackgroundColor(Color.BLUE);
+        bt_software.setBackgroundColor(Color.WHITE);
+    }
+
+    public void initTtileBar() {
+        product_fragmet_titlebar.setTitle("产品中心");
+        product_fragmet_titlebar.setTitleColor(Color.WHITE);
+        product_fragmet_titlebar.setLeftTextColor(Color.WHITE);
+    }
+
+    @Override
+    protected void lazyLoad() {
+        initHardData();
+
+    }
+
+    @OnClick({R.id.bt_hardware, R.id.bt_software})
+    public void OnClick(View view) {
+        switch (view.getId()) {
+            case R.id.bt_hardware:
+                bt_hardware.setBackgroundColor(Color.BLUE);
+                bt_software.setBackgroundColor(Color.WHITE);
+                initHardData();
+                break;
+            case R.id.bt_software:
+                bt_hardware.setBackgroundColor(Color.WHITE);
+                bt_software.setBackgroundColor(Color.BLUE);
+                initSoftdData();
+                break;
+        }
+
+    }
+
+    public void initHardData() {
+
+        RetrofitHelper.getApiService()
+                .getProductCategory(0, 3, 10)
+                .subscribeOn(Schedulers.io())
+                .compose(ProgressUtils.<EntityProductCategory>applyProgressBar(getActivity()))
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseObserval<EntityProductCategory>() {
+                    @Override
+                    public void onSuccess(final EntityProductCategory response) {
+                        if (response.getCode() == 1) {
+                            listProduct = response.getResult();
+                            adapterRight = new AdapterRight(getActivity(), listProduct, new RvListener() {
+                                @Override
+                                public void onItemClick(int id, int position) {
+                                    Intent intent = new Intent(getActivity(), ProductDetailActivity.class);
+                                    intent.putExtra("id", response.getResult().get(position).getID());
+                                    getActivity().startActivity(intent);
+                                }
+                            });
+                            rv_right.setAdapter(adapterRight);
+                            Log.i("lz", "aaaa" + listProduct.size());
+                        } else {
+                            Toasty.warning(Utils.getContext(), "服务器异常", Toast.LENGTH_SHORT, true).show();
+                        }
+                    }
+                });
+    }
+
+    public void initSoftdData() {
+
+        RetrofitHelper.getApiService()
+                .getProductCategory(1, 1, 100)
+                .subscribeOn(Schedulers.io())
+                .compose(ProgressUtils.<EntityProductCategory>applyProgressBar(getActivity()))
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseObserval<EntityProductCategory>() {
+                    @Override
+                    public void onSuccess(final EntityProductCategory response) {
+                        if (response.getCode() == 1) {
+                            listProduct = response.getResult();
+                            adapterRight = new AdapterRight(getActivity(), listProduct, new RvListener() {
+                                @Override
+                                public void onItemClick(int id, int position) {
+                                    Intent intent = new Intent(getActivity(), ProductDetailActivity.class);
+                                    intent.putExtra("id", response.getResult().get(position).getID());
+                                    getActivity().startActivity(intent);
+                                }
+                            });
+                            rv_right.setAdapter(adapterRight);
+                            Log.i("lz", "aaaa" + listProduct.size());
+                        } else {
+                            Toasty.warning(Utils.getContext(), "服务器异常", Toast.LENGTH_SHORT, true).show();
+                        }
+                    }
+                });
+    }
+
+
 }

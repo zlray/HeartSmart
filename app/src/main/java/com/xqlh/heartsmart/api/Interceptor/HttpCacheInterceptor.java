@@ -21,15 +21,18 @@ public class HttpCacheInterceptor implements Interceptor{
         public Response intercept(Chain chain) throws IOException {
             Request request = chain.request();
             if (!NetworkUtils.isConnected()) {  //没网强制从缓存读取
+
                 request = request.newBuilder()
                         .cacheControl(CacheControl.FORCE_CACHE)
                         .build();
+
                 LogUtils.d("Okhttp", "no network");
             }
 
             Response originalResponse = chain.proceed(request);
+
             if (NetworkUtils.isConnected()) {
-                //有网的时候读接口上的@Headers里的配置，你可以在这里进行统一的设置
+                //有网的时候读接口上的@Heade  rs里的配置，你可以在这里进行统一的设置
                 String cacheControl = request.cacheControl().toString();
 
                 return originalResponse.newBuilder()
@@ -38,6 +41,7 @@ public class HttpCacheInterceptor implements Interceptor{
                         .build();
             } else {
                 return originalResponse.newBuilder()
+                        //这里的设置的是我们的没有网络的缓存时间，想设置多少就是多少。
                         .header("Cache-Control", "public, only-if-cached, max-stale=2419200")
                         .removeHeader("Pragma")
                         .build();
