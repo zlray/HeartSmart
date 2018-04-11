@@ -16,10 +16,11 @@ import android.widget.Toast;
 import com.xqlh.heartsmart.R;
 import com.xqlh.heartsmart.api.RetrofitHelper;
 import com.xqlh.heartsmart.api.base.BaseObserval;
-import com.xqlh.heartsmart.api.bean.EntityBindPhone;
-import com.xqlh.heartsmart.api.bean.EntityCheckMessage;
-import com.xqlh.heartsmart.api.bean.EntityGetMessage;
 import com.xqlh.heartsmart.base.BaseActivity;
+import com.xqlh.heartsmart.ui.bean.EntityBindPhone;
+import com.xqlh.heartsmart.ui.bean.EntityCheckMessage;
+import com.xqlh.heartsmart.ui.bean.EntityCheckPhone;
+import com.xqlh.heartsmart.ui.bean.EntityGetMessage;
 import com.xqlh.heartsmart.utils.CommonUtil;
 import com.xqlh.heartsmart.utils.Constants;
 import com.xqlh.heartsmart.utils.ProgressUtils;
@@ -61,9 +62,8 @@ public class BindPhoneActivity extends BaseActivity {
     Button bt_bind;
 
 
-    private SharedPreferencesHelper sp_message_token;
+    private SharedPreferencesHelper sp_token;
 
-    private SharedPreferencesHelper sp_login_token;
 
     private Disposable mdDisposable;
 
@@ -82,11 +82,8 @@ public class BindPhoneActivity extends BaseActivity {
     public void init() {
         initTtileBar();
 
-        sp_message_token = new SharedPreferencesHelper(
-                BindPhoneActivity.this, Constants.CHECKMESSAGE);
-
-        sp_login_token = new SharedPreferencesHelper(
-                BindPhoneActivity.this, Constants.CHECKlOGIN);
+        sp_token = new SharedPreferencesHelper(
+                BindPhoneActivity.this, Constants.CHECKINFOR);
 
 
         et_bind_phone.addTextChangedListener(textWatcherPhone);
@@ -116,28 +113,8 @@ public class BindPhoneActivity extends BaseActivity {
     public void OnClick(View view) {
         switch (view.getId()) {
             case R.id.bt_verification_code_get:
+                checkPhone(et_bind_phone.getText().toString().trim());
                 //获取验证码
-                getMessage(et_bind_phone.getText().toString().trim());
-                mdDisposable = Flowable.intervalRange(0, 61, 0, 1, TimeUnit.SECONDS)
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .doOnNext(new Consumer<Long>() {
-                            @Override
-                            public void accept(Long aLong) throws Exception {
-                                bt_verification_code_get.setText((60 - aLong) + "s");
-                                bt_verification_code_get.setEnabled(false);
-                                bt_verification_code_get.setBackgroundResource(R.drawable.retrieve_countdown_click);
-                            }
-                        })
-                        .doOnComplete(new Action() {
-                            @Override
-                            public void run() throws Exception {
-                                //倒计时完毕置为可点击状态
-                                bt_verification_code_get.setEnabled(true);
-                                bt_verification_code_get.setText("重新获取");
-                                bt_verification_code_get.setBackgroundResource(R.drawable.retrieve_countdown_default);
-                            }
-                        })
-                        .subscribe();
                 break;
             case R.id.iv_clean_bind_phone:
                 et_bind_phone.setText("");
@@ -145,9 +122,59 @@ public class BindPhoneActivity extends BaseActivity {
             case R.id.bt_bind:
                 //检验验证码，并绑定手机号
                 checkMessage(et_verification_code_input.getText().toString().trim(),
-                        sp_message_token.getSharedPreference(Constants.MESSAGE_TOKEN, "").toString().trim());
+                        sp_token.getSharedPreference(Constants.MESSAGE_TOKEN, "").toString().trim());
                 break;
         }
+    }
+
+    /**
+     * 检测手机号是否注册
+     *
+     * @param phone
+     */
+    public void checkPhone(final String phone) {
+        RetrofitHelper.getApiService()
+                .CheckPhone(phone)
+                .subscribeOn(Schedulers.io())
+                .compose(this.<EntityCheckPhone>bindToLifecycle())
+                .compose(ProgressUtils.<EntityCheckPhone>applyProgressBar(this))
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseObserval<EntityCheckPhone>() {
+                    @Override
+                    public void onSuccess(EntityCheckPhone response) {
+                        if (response.getCode() == 1) {
+                            if (response.getMsg().equals("OK")) {
+                                if (response.isResult()) {
+                                    //
+                                    getMessage(phone);
+                                    mdDisposable = Flowable.intervalRange(0, 61, 0, 1, TimeUnit.SECONDS)
+                                            .observeOn(AndroidSchedulers.mainThread())
+                                            .doOnNext(new Consumer<Long>() {
+                                                @Override
+                                                public void accept(Long aLong) throws Exception {
+                                                    bt_verification_code_get.setText((60 - aLong) + "s");
+                                                    bt_verification_code_get.setEnabled(false);
+                                                    bt_verification_code_get.setBackgroundResource(R.drawable.retrieve_countdown_click);
+                                                }
+                                            })
+                                            .doOnComplete(new Action() {
+                                                @Override
+                                                public void run() throws Exception {
+                                                    //倒计时完毕置为可点击状态
+                                                    bt_verification_code_get.setEnabled(true);
+                                                    bt_verification_code_get.setText("重新获取");
+                                                    bt_verification_code_get.setBackgroundResource(R.drawable.retrieve_countdown_default);
+                                                }
+                                            })
+                                            .subscribe();
+                                } else {
+                                    Toasty.warning(Utils.getContext(), "该手机号已经被注册", Toast.LENGTH_SHORT, true).show();
+                                }
+                            }
+                        }
+                    }
+                });
+
     }
 
 
@@ -166,7 +193,7 @@ public class BindPhoneActivity extends BaseActivity {
                             if (response.getMsg().equals("OK")) {
                                 Log.i(TAG, "onSuccess: " + response.getResult());
                                 //存储
-                                sp_message_token.put(Constants.MESSAGE_TOKEN, response.getResult());
+                                sp_token.put(Constants.MESSAGE_TOKEN, response.getResult());
                             }
                         }
                     }
@@ -186,7 +213,7 @@ public class BindPhoneActivity extends BaseActivity {
                     public void onSuccess(EntityCheckMessage response) {
                         if (response.getCode() == 1) {
                             bindPhone(et_bind_phone.getText().toString().trim(),
-                                    sp_message_token.getSharedPreference(Constants.MESSAGE_TOKEN, "").toString().trim(),
+                                    sp_token.getSharedPreference(Constants.MESSAGE_TOKEN, "").toString().trim(),
                                     et_verification_code_input.getText().toString().trim()
                             );
                         } else {
@@ -201,11 +228,10 @@ public class BindPhoneActivity extends BaseActivity {
 //        map.put("Telphone",Telphone);
 //        map.put("token",token);
 //        map.put("telcode",telcode);
-        AAA aaa = new AAA(Telphone, token, telcode);
 
-        Log.i(TAG, "获取登录的Token: " + sp_login_token.getSharedPreference(Constants.LOGIN_TOKEN, "").toString().trim());
+        Log.i(TAG, "获取登录的Token: " + sp_token.getSharedPreference(Constants.LOGIN_TOKEN, "").toString().trim());
         RetrofitHelper.getApiService()
-                .bindPhone(sp_login_token.getSharedPreference(Constants.LOGIN_TOKEN, "").toString().trim(),
+                .bindPhone(sp_token.getSharedPreference(Constants.LOGIN_TOKEN, "").toString().trim(),
                         Telphone, token, telcode)
                 .subscribeOn(Schedulers.io())
                 .compose(this.<EntityBindPhone>bindToLifecycle())

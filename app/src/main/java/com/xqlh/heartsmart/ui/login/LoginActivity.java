@@ -27,8 +27,9 @@ import com.xqlh.heartsmart.MainActivity;
 import com.xqlh.heartsmart.R;
 import com.xqlh.heartsmart.api.RetrofitHelper;
 import com.xqlh.heartsmart.api.base.BaseObserval;
-import com.xqlh.heartsmart.api.bean.EntityLogin;
 import com.xqlh.heartsmart.base.BaseActivity;
+import com.xqlh.heartsmart.ui.bean.EntityCheckAccount;
+import com.xqlh.heartsmart.ui.bean.EntityLogin;
 import com.xqlh.heartsmart.utils.Constants;
 import com.xqlh.heartsmart.utils.ProgressUtils;
 import com.xqlh.heartsmart.utils.SharedPreferencesHelper;
@@ -98,7 +99,7 @@ public class LoginActivity extends BaseActivity {
     @Override
     public void init() {
         sharedPreferencesHelper = new SharedPreferencesHelper(
-                LoginActivity.this, Constants.CHECKlOGIN);
+                LoginActivity.this, Constants.CHECKINFOR);
         initView();
         initEvent();
     }
@@ -236,7 +237,11 @@ public class LoginActivity extends BaseActivity {
 
                 break;
             case R.id.bt_forget_password:
-                startActivity(new Intent(LoginActivity.this, RetrievePasswordActivity.class));
+                if (!TextUtils.isEmpty(et_account.getText().toString())) {
+                    checkAccount(et_account.getText().toString().trim());
+                } else {
+                    Toasty.warning(Utils.getContext(), "请输入用户名", Toast.LENGTH_SHORT, true).show();
+                }
                 break;
         }
     }
@@ -264,7 +269,29 @@ public class LoginActivity extends BaseActivity {
                         }
                     }
                 });
+    }
 
+    //检测该用户名是否存在
+    public void checkAccount(String account) {
+        RetrofitHelper.getApiService()
+                .CheckAccount(account)
+                .subscribeOn(Schedulers.io())
+                .compose(this.<EntityCheckAccount>bindToLifecycle())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseObserval<EntityCheckAccount>() {
+                    @Override
+                    public void onSuccess(EntityCheckAccount response) {
+                        if (response.getCode() == 1) {
+                            if (response.isResult()) {
+                                Intent intent = new Intent(LoginActivity.this, RetrievePasswordActivity.class);
+                                intent.putExtra(Constants.ACCOUNT, et_account.getText().toString());
+                                startActivity(intent);
+                            } else {
+                                Toasty.warning(Utils.getContext(), "用户名为注册,请重新输入", Toast.LENGTH_SHORT, true).show();
+                            }
+                        }
+                    }
+                });
     }
 
 }

@@ -7,9 +7,7 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
-
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <!-- 外部存储 -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -26,7 +24,6 @@
     <!-- 许可调用相机自动对焦 -->
     <uses-feature android:name="android.hardware.camera.autofocus" />
 
-
     <application
         android:name=".app.App"
         android:allowBackup="true"
@@ -37,9 +34,7 @@
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
 
         <!-- Main -->
-        <activity android:name=".MainActivity">
-
-        </activity>
+        <activity android:name=".MainActivity"></activity>
 
         <!-- 引导页面 -->
         <activity android:name=".ui.guide.activity.GuideActivity">
@@ -56,13 +51,14 @@
         <activity android:name=".ui.login.RetrievePasswordActivity" />
         <activity android:name=".ui.login.BindPhoneActivity" />
         <activity android:name=".ui.product.ProductDetailActivity" />
-        <activity android:name=".ui.mine.MineActivity"></activity>
+        <activity android:name=".ui.mine.MineActivity" />
 
-        <!--头像上传功能-->
+        <!-- 头像上传功能 -->
         <activity
             android:name="com.yalantis.ucrop.UCropActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity android:name=".ui.mine.SettingActivity"></activity>
     </application>
 
 </manifest>

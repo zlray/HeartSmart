@@ -1,14 +1,14 @@
-package com.xqlh.heartsmart.api.bean;
+package com.xqlh.heartsmart.ui.bean;
 
 /**
- * Created by Administrator on 2018/4/2.
+ * Created by Administrator on 2018/4/11.
  */
 
-public class EntityBindPhone {
-    private int code;
+public class EntityCheckAccount {
+
+    private  int code;
     private String msg;
     private boolean Result;
-    private String ResultMsg;
 
     public int getCode() {
         return code;
@@ -32,13 +32,5 @@ public class EntityBindPhone {
 
     public void setResult(boolean result) {
         Result = result;
-    }
-
-    public String getResultMsg() {
-        return ResultMsg;
-    }
-
-    public void setResultMsg(String resultMsg) {
-        ResultMsg = resultMsg;
     }
 }

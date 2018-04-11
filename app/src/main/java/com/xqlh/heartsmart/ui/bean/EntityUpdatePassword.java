@@ -1,13 +1,17 @@
-package com.xqlh.heartsmart.api.bean;
+package com.xqlh.heartsmart.ui.bean;
 
 /**
- * Created by Administrator on 2018/3/30.
+ * Created by Administrator on 2018/4/11.
  */
 
-public class EntityCheckPhone {
+public class EntityUpdatePassword {
+//    code=1,----1.成功；0.失败
+//            msg = "OK",
+//            Result = null
+
     private int code;
     private String msg;
-    private boolean Result;
+    private String Result;
 
     public int getCode() {
         return code;
@@ -25,11 +29,11 @@ public class EntityCheckPhone {
         this.msg = msg;
     }
 
-    public boolean isResult() {
+    public String getResult() {
         return Result;
     }
 
-    public void setResult(boolean result) {
+    public void setResult(String result) {
         Result = result;
     }
 }

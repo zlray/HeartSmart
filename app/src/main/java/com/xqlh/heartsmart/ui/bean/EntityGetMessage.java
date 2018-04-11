@@ -1,14 +1,13 @@
-package com.xqlh.heartsmart.api.bean;
+package com.xqlh.heartsmart.ui.bean;
 
 /**
- * Created by Administrator on 2018/3/28.
+ * Created by Administrator on 2018/4/2.
  */
 
-public class EntityLogin {
+public class EntityGetMessage {
     private int code;
     private String msg;
-    private String Result;
-    private String ResultMsg;
+    private String Result; //临时令牌用于校验短信验证码
 
     public int getCode() {
         return code;
@@ -33,13 +32,4 @@ public class EntityLogin {
     public void setResult(String result) {
         Result = result;
     }
-
-    public String getResultMsg() {
-        return ResultMsg;
-    }
-
-    public void setResultMsg(String resultMsg) {
-        ResultMsg = resultMsg;
-    }
-
 }
