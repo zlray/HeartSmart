@@ -1,11 +1,12 @@
 package com.xqlh.heartsmart;
 
-import android.os.Bundle;
+import android.Manifest;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
+import com.vondear.rxtools.RxPermissionsTool;
 import com.xqlh.heartsmart.base.BaseActivity;
 import com.xqlh.heartsmart.ui.fragment.AppraisalFragment;
 import com.xqlh.heartsmart.ui.fragment.EquipmentFragment;
@@ -89,6 +90,16 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 
     @Override
     public void init() {
+        //统一处理多个权限
+        RxPermissionsTool.
+                with(MainActivity.this).
+                addPermission(Manifest.permission.ACCESS_FINE_LOCATION).
+                addPermission(Manifest.permission.ACCESS_COARSE_LOCATION).
+                addPermission(Manifest.permission.READ_EXTERNAL_STORAGE).
+                addPermission(Manifest.permission.CAMERA).
+                addPermission(Manifest.permission.CALL_PHONE).
+                addPermission(Manifest.permission.READ_PHONE_STATE).
+                initPermission();
 /**
  * 加载单选组，使用单选组不必给单选组内的每个RadioButton 设置监听
  */
@@ -131,10 +142,6 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
         mViewPager.addOnPageChangeListener(new MyOnPageChangeListener());
     }
 
-    @Override
-    public void bindView(Bundle savedInstanceState) {
-
-    }
 
     public class MyOnPageChangeListener implements ViewPager.OnPageChangeListener {
 

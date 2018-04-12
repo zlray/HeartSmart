@@ -7,10 +7,11 @@ import com.xqlh.heartsmart.ui.bean.EntityCheckPhone;
 import com.xqlh.heartsmart.ui.bean.EntityGetMessage;
 import com.xqlh.heartsmart.ui.bean.EntityGetPhoneByAccount;
 import com.xqlh.heartsmart.ui.bean.EntityLogin;
-import com.xqlh.heartsmart.ui.bean.EntityUpdatePassword;
-import com.xqlh.heartsmart.ui.bean.EntityWelcome;
 import com.xqlh.heartsmart.ui.bean.EntityProductCategory;
 import com.xqlh.heartsmart.ui.bean.EntityProductDetail;
+import com.xqlh.heartsmart.ui.bean.EntityUpdatePassword;
+import com.xqlh.heartsmart.ui.bean.EntityUserInfor;
+import com.xqlh.heartsmart.ui.bean.EntityWelcome;
 
 import io.reactivex.Observable;
 import retrofit2.http.Field;
@@ -79,7 +80,12 @@ public interface ApiService {
                                                          @Query("pageIndex") int pageIndex,
                                                          @Query("pageSize") int pageSize);
 
+    //获得产品信息信息
     @GET("api/product/productinfo")
     Observable<EntityProductDetail> getProductDetail(@Query("id") String id);
+
+    //获得用户的信息
+    @GET("api/account/userinfo")
+    Observable<EntityUserInfor> getUserInfor(@Header("Authorization") String Authorization);
 
 }

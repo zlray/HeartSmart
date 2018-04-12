@@ -1,14 +1,15 @@
 package com.xqlh.heartsmart.ui.mine;
 
-import android.content.ContentResolver;
 import android.content.Intent;
-import android.content.res.Resources;
+import android.graphics.Color;
 import android.net.Uri;
-import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.Priority;
@@ -16,10 +17,16 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.vondear.rxtools.RxPhotoTool;
 import com.vondear.rxtools.RxSPTool;
 import com.vondear.rxtools.view.dialog.RxDialogChooseImage;
-import com.vondear.rxtools.view.dialog.RxDialogScaleView;
 import com.xqlh.heartsmart.R;
+import com.xqlh.heartsmart.api.RetrofitHelper;
+import com.xqlh.heartsmart.api.base.BaseObserval;
 import com.xqlh.heartsmart.base.BaseActivity;
+import com.xqlh.heartsmart.ui.bean.EntityUserInfor;
+import com.xqlh.heartsmart.utils.Constants;
+import com.xqlh.heartsmart.utils.ProgressUtils;
+import com.xqlh.heartsmart.utils.SharedPreferencesHelper;
 import com.xqlh.heartsmart.utils.Utils;
+import com.xqlh.heartsmart.widget.TitleBar;
 import com.yalantis.ucrop.UCrop;
 import com.yalantis.ucrop.UCropActivity;
 
@@ -29,6 +36,10 @@ import java.util.Date;
 import java.util.Locale;
 
 import butterknife.BindView;
+import butterknife.OnClick;
+import es.dmoral.toasty.Toasty;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 
 import static com.vondear.rxtools.view.dialog.RxDialogChooseImage.LayoutType.TITLE;
@@ -37,7 +48,25 @@ public class MineActivity extends BaseActivity {
 
     @BindView(R.id.mine_iv_head)
     ImageView mine_iv_head;
+    @BindView(R.id.mine_titleBar)
+    TitleBar mine_titleBar;
+    @BindView(R.id.mine_tv_nickname)
+    TextView mine_tv_nickname;
+
+    @BindView(R.id.mine_tv_sex)
+    TextView mine_tv_sex;
+
+    @BindView(R.id.mine_tv_birthday)
+    TextView mine_tv_birthday;
+
+    @BindView(R.id.mine_tv_phone)
+    TextView mine_tv_phone;
+
+    @BindView(R.id.mine_update_infor)
+    Button mine_update_infor;
+
     private Uri resultUri;
+    private SharedPreferencesHelper sp_login_token;
 
     @Override
     public int setContent() {
@@ -51,23 +80,77 @@ public class MineActivity extends BaseActivity {
 
     @Override
     public void init() {
+        initTtileBar();
+        sp_login_token = new SharedPreferencesHelper(
+                this, Constants.CHECKINFOR);
+
+        getUserInfor();
+
         initView();
     }
 
-    @Override
-    public void bindView(Bundle savedInstanceState) {
+    public void initTtileBar() {
+        mine_titleBar.setTitle("我的信息");
+        mine_titleBar.setTitleColor(Color.WHITE);
+        mine_titleBar.setLeftText("返回");
+        mine_titleBar.setLeftTextColor(Color.WHITE);
+        mine_titleBar.setLeftImageResource(R.drawable.return_button);
+        mine_titleBar.setLeftClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+    }
 
+    public void getUserInfor() {
+        RetrofitHelper.getApiService()
+                .getUserInfor(sp_login_token.getSharedPreference(Constants.LOGIN_TOKEN, "").toString().trim())
+                .subscribeOn(Schedulers.io())
+                .compose(this.<EntityUserInfor>bindToLifecycle())
+                .compose(ProgressUtils.<EntityUserInfor>applyProgressBar(this))
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseObserval<EntityUserInfor>() {
+                    @Override
+                    public void onSuccess(EntityUserInfor response) {
+                        if (response.getCode() == 1) {
+                            mine_tv_nickname.setText(response.getResult().getName());
+                            Glide.with(MineActivity.this)
+                                    .load(response.getResult().getHeadimgurl())
+                                    .error(R.drawable.head_default)
+                                    .into(mine_iv_head);
+                            mine_tv_sex.setText(response.getResult().getSex());
+                            mine_tv_birthday.setText(response.getResult().getBirthDate());
+                            mine_tv_phone.setText(response.getResult().getTelephone());
+                        } else {
+                            Toasty.warning(Utils.getContext(), "服务器异常", Toast.LENGTH_SHORT, true).show();
+                        }
+                    }
+                });
+    }
+
+    @OnClick({R.id.mine_update_infor})
+    public void OnClick(View view) {
+        switch (view.getId()) {
+            case R.id.mine_update_infor:
+                Intent intent = new Intent(MineActivity.this, UpdateUserInforActivity.class);
+                intent.putExtra("nickname", mine_tv_nickname.getText().toString());
+                intent.putExtra("sex", mine_tv_sex.getText().toString());
+                intent.putExtra("birthday", mine_tv_birthday.getText().toString());
+                startActivity(intent);
+                break;
+        }
     }
 
     public void initView() {
-        Resources r = Utils.getContext().getResources(); //获得resouce
-        //
-        resultUri = Uri.parse(ContentResolver.SCHEME_ANDROID_RESOURCE + "://"
-                + r.getResourcePackageName(R.drawable.head_default) + "/"
-                + r.getResourceTypeName(R.drawable.head_default) + "/"
-                + r.getResourceEntryName(R.drawable.head_default));
-
-        Log.i(TAG, "resultUri结果uri" + resultUri);
+//        Resources r = Utils.getContext().getResources(); //获得resouce
+//        //
+//        resultUri = Uri.parse(ContentResolver.SCHEME_ANDROID_RESOURCE + "://"
+//                + r.getResourcePackageName(R.drawable.head_default) + "/"
+//                + r.getResourceTypeName(R.drawable.head_default) + "/"
+//                + r.getResourceEntryName(R.drawable.head_default));
+//
+//        Log.i(TAG, "resultUri结果uri为:" + resultUri);
 
         //
         mine_iv_head.setOnClickListener(new View.OnClickListener() {
@@ -76,16 +159,15 @@ public class MineActivity extends BaseActivity {
                 initDialogChooseImage();
             }
         });
-        mine_iv_head.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View view) {
-//                RxImageTool.showBigImageView(mContext, resultUri);
-                RxDialogScaleView rxDialogScaleView = new RxDialogScaleView(Utils.getContext());
-                rxDialogScaleView.setImageUri(resultUri);
-                rxDialogScaleView.show();
-                return false;
-            }
-        });
+//        mine_iv_head.setOnLongClickListener(new View.OnLongClickListener() {
+//            @Override
+//            public boolean onLongClick(View view) {
+//                RxDialogScaleView rxDialogScaleView = new RxDialogScaleView(Utils.getContext());
+//                rxDialogScaleView.setImageUri(resultUri);
+//                rxDialogScaleView.show();
+//                return false;
+//            }
+//        });
     }
 
     private void initDialogChooseImage() {
@@ -98,36 +180,37 @@ public class MineActivity extends BaseActivity {
         switch (requestCode) {
             case RxPhotoTool.GET_IMAGE_FROM_PHONE://选择相册之后的处理
                 if (resultCode == RESULT_OK) {
-                    //
+                    Log.i(TAG, "" +
+                            "选择相册data为:" + data.getData());
                     initUCrop(data.getData());
                 }
                 break;
             case RxPhotoTool.GET_IMAGE_BY_CAMERA://选择照相机之后的处理
                 if (resultCode == RESULT_OK) {
-                   /* data.getExtras().get("data");*/
-
+                    Log.i(TAG, "选择相机为" + RxPhotoTool.imageUriFromCamera);
                     initUCrop(RxPhotoTool.imageUriFromCamera);
                 }
 
                 break;
             case RxPhotoTool.CROP_IMAGE://普通裁剪后的处理
+                Log.i(TAG, "普通裁剪" + RxPhotoTool.cropImageUri);
                 Glide.with(this).
                         load(RxPhotoTool.cropImageUri).
-                        diskCacheStrategy(DiskCacheStrategy.RESULT). //缓存的尺寸
+                        diskCacheStrategy(DiskCacheStrategy.ALL). //缓存的尺寸
                         bitmapTransform(new CropCircleTransformation(this)). //裁剪圆角
                         thumbnail(0.5f).
-                        placeholder(R.drawable.head_default).
+                        placeholder(mine_iv_head.getDrawable()).//预加载
+                        dontAnimate().
                         priority(Priority.LOW).
                         error(R.drawable.head_default).//错误图片显示
-                        fallback(R.drawable.head_default).
+                        fallback(R.drawable.head_default).//url为空的显示的 图片
                         into(mine_iv_head);
-
-
                 break;
 
             case UCrop.REQUEST_CROP://UCrop裁剪之后的处理
                 if (resultCode == RESULT_OK) {
                     resultUri = UCrop.getOutput(data);
+                    Log.i(TAG, "UCrop裁剪之后的处理" + resultUri);
                     roadImageView(resultUri, mine_iv_head);
                     RxSPTool.putContent(this, "AVATAR", resultUri.toString());
                 } else if (resultCode == UCrop.RESULT_ERROR) {
@@ -145,15 +228,17 @@ public class MineActivity extends BaseActivity {
 
     //从Uri中加载图片 并将其转化成File文件返回
     private File roadImageView(Uri uri, ImageView imageView) {
+        Log.i(TAG, "加载图片的uri为" + uri);
         Glide.with(this).
                 load(uri).
                 diskCacheStrategy(DiskCacheStrategy.RESULT).
                 bitmapTransform(new CropCircleTransformation(this)).
                 thumbnail(0.5f).
-                placeholder(R.drawable.head_default).
+                placeholder(mine_iv_head.getDrawable()). //待加载
+                dontAnimate().
                 priority(Priority.LOW).
-                error(R.drawable.head_default).
-                fallback(R.drawable.head_default).
+                error(R.drawable.head_default). //错误加载
+                fallback(R.drawable.head_default). // uri为空时加载的图片
                 into(imageView);
 
         return (new File(RxPhotoTool.getImageAbsolutePath(this, uri)));
@@ -167,17 +252,15 @@ public class MineActivity extends BaseActivity {
         String imageName = timeFormatter.format(new Date(time));
         Log.i(TAG, "图片名称" + imageName);
 
-
         Uri destinationUri = Uri.fromFile(new File(this.getCacheDir(), imageName + ".jpeg"));
-        Log.i(TAG, "destinationUri" + destinationUri);
+        Log.i(TAG, "目的地的uri为" + destinationUri);
+
 
         UCrop.Options options = new UCrop.Options();
         //设置裁剪图片可操作的手势
         options.setAllowedGestures(UCropActivity.SCALE, UCropActivity.ROTATE, UCropActivity.ALL);
-        //设置隐藏底部容器，默认显示
-        //options.setHideBottomControls(true);
         //设置toolbar颜色
-        options.setToolbarColor(ActivityCompat.getColor(this, R.color.colorPrimary));
+        options.setToolbarColor(ActivityCompat.getColor(this, R.color.color_title_bar));
         //设置状态栏颜色
 //        options.setStatusBarColor(ActivityCompat.getColor(this, R.color.colorPrimaryDark));
 
@@ -186,19 +269,8 @@ public class MineActivity extends BaseActivity {
         options.setMaxScaleMultiplier(5);
         //设置图片在切换比例时的动画
         options.setImageToCropBoundsAnimDuration(666);
-        //设置裁剪窗口是否为椭圆
-        //options.setOvalDimmedLayer(true);
-        //设置是否展示矩形裁剪框
-        // options.setShowCropFrame(false);
-        //设置裁剪框横竖线的宽度
-        //options.setCropGridStrokeWidth(20);
-        //设置裁剪框横竖线的颜色
-        //options.setCropGridColor(Color.GREEN);
-        //设置竖线的数量
-        //options.setCropGridColumnCount(2);
-        //设置横线的数量
-        //options.setCropGridRowCount(1);
 
+        //图片来源uri 设置到目的地
         UCrop.of(uri, destinationUri)
                 .withAspectRatio(1, 1)
                 .withMaxResultSize(1000, 1000)

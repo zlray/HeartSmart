@@ -58,7 +58,6 @@ public abstract class BaseActivity extends SupportActivity {
         setContentView(setContent());
         ButterKnife.bind(this);
         mContext = BaseActivity.this;
-        bindView(savedInstanceState);
         init();
     }
 
@@ -82,8 +81,5 @@ public abstract class BaseActivity extends SupportActivity {
      */
     public abstract void init();
 
-    /**
-     *
-     */
-    public abstract void bindView(Bundle savedInstanceState);
+
 }

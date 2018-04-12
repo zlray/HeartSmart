@@ -71,10 +71,7 @@ public class ProductDetailActivity extends BaseActivity {
                 });
     }
 
-    @Override
-    public void bindView(Bundle savedInstanceState) {
 
-    }
 
     public void initTtileBar() {
         product_detail_titleBar.setLeftImageResource(R.drawable.return_button);

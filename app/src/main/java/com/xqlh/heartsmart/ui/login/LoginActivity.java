@@ -2,7 +2,6 @@ package com.xqlh.heartsmart.ui.login;
 
 import android.animation.ObjectAnimator;
 import android.content.Intent;
-import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextUtils;
@@ -42,6 +41,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
 public class LoginActivity extends BaseActivity {
+
 
     @BindView(R.id.logo)
     ImageView mLogo;
@@ -84,7 +84,7 @@ public class LoginActivity extends BaseActivity {
     private int keyHeight = 0; //软件盘弹起后所占高度
     private float scale = 0.6f; //logo缩放比例
     private int height = 0;
-    private SharedPreferencesHelper sharedPreferencesHelper;
+    private SharedPreferencesHelper sp_login_token;
 
     @Override
     public int setContent() {
@@ -98,16 +98,13 @@ public class LoginActivity extends BaseActivity {
 
     @Override
     public void init() {
-        sharedPreferencesHelper = new SharedPreferencesHelper(
+        sp_login_token = new SharedPreferencesHelper(
                 LoginActivity.this, Constants.CHECKINFOR);
         initView();
         initEvent();
     }
 
-    @Override
-    public void bindView(Bundle savedInstanceState) {
 
-    }
 
     private void initView() {
         screenHeight = this.getResources().getDisplayMetrics().heightPixels; //获取屏幕高度
@@ -261,7 +258,7 @@ public class LoginActivity extends BaseActivity {
                             if (response.getMsg().equals("OK")) {
                                 Log.i(TAG, "onSuccess: " + response.getResult());
                                 Log.i(TAG, "存储登录的Token" + response.getResult());
-                                sharedPreferencesHelper.put(Constants.LOGIN_TOKEN, response.getResult());
+                                sp_login_token.put(Constants.LOGIN_TOKEN, response.getResult());
                                 startActivity(new Intent(LoginActivity.this, MainActivity.class));
                             }
                         } else {
@@ -271,6 +268,7 @@ public class LoginActivity extends BaseActivity {
                 });
     }
 
+    //    18610977715
     //检测该用户名是否存在
     public void checkAccount(String account) {
         RetrofitHelper.getApiService()
@@ -287,7 +285,7 @@ public class LoginActivity extends BaseActivity {
                                 intent.putExtra(Constants.ACCOUNT, et_account.getText().toString());
                                 startActivity(intent);
                             } else {
-                                Toasty.warning(Utils.getContext(), "用户名为注册,请重新输入", Toast.LENGTH_SHORT, true).show();
+                                Toasty.warning(Utils.getContext(), "用户名未注册,请重新输入", Toast.LENGTH_SHORT, true).show();
                             }
                         }
                     }

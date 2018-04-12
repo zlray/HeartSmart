@@ -2,7 +2,6 @@ package com.xqlh.heartsmart.ui.login;
 
 import android.content.Intent;
 import android.graphics.Color;
-import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -41,6 +40,7 @@ import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
 public class RetrievePasswordActivity extends BaseActivity {
+
     @BindView(R.id.retrieve_titleBar)
     TitleBar retrieve_titleBar;
 
@@ -78,9 +78,16 @@ public class RetrievePasswordActivity extends BaseActivity {
 
     @BindView(R.id.bt_submit)
     Button bt_submit;
+
     String account;
     SharedPreferencesHelper sp_token;
     private Disposable mdDisposable;
+
+    private int screenHeight = 0;//屏幕高度
+    private int keyHeight = 0; //软件盘弹起后所占高度
+    private float scale = 0.6f; //logo缩放比例
+    private int height = 0;
+
 
     @Override
     public int setContent() {
@@ -102,11 +109,6 @@ public class RetrievePasswordActivity extends BaseActivity {
         getPhoneByAccount(account);
         et_password_fist.addTextChangedListener(textWatcher);
         et_password_second.addTextChangedListener(textWatcher);
-    }
-
-    @Override
-    public void bindView(Bundle savedInstanceState) {
-
     }
 
     public void initTtileBar() {
@@ -253,7 +255,6 @@ public class RetrievePasswordActivity extends BaseActivity {
                     }
                 });
     }
-
 
 
     //获取验证码

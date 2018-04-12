@@ -34,7 +34,7 @@
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
 
         <!-- Main -->
-        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".MainActivity" />
 
         <!-- 引导页面 -->
         <activity android:name=".ui.guide.activity.GuideActivity">
@@ -58,7 +58,8 @@
             android:name="com.yalantis.ucrop.UCropActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-        <activity android:name=".ui.mine.SettingActivity"></activity>
+        <activity android:name=".ui.mine.SettingActivity" />
+        <activity android:name=".ui.mine.UpdateUserInforActivity"></activity>
     </application>
 
 </manifest>

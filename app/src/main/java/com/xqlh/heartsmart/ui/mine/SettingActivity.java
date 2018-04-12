@@ -1,7 +1,5 @@
 package com.xqlh.heartsmart.ui.mine;
 
-import android.os.Bundle;
-
 import com.xqlh.heartsmart.R;
 import com.xqlh.heartsmart.base.BaseActivity;
 
@@ -23,8 +21,4 @@ public class SettingActivity extends BaseActivity {
 
     }
 
-    @Override
-    public void bindView(Bundle savedInstanceState) {
-
-    }
 }

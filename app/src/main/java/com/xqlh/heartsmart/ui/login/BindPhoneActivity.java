@@ -90,10 +90,6 @@ public class BindPhoneActivity extends BaseActivity {
         et_verification_code_input.addTextChangedListener(textWatcherCode);
     }
 
-    @Override
-    public void bindView(Bundle savedInstanceState) {
-
-    }
 
     public void initTtileBar() {
         bind_titleBar.setLeftImageResource(R.drawable.return_button);

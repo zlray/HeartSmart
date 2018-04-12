@@ -65,10 +65,7 @@ public class GuideActivity extends BaseActivity {
         initPoint();
     }
 
-    @Override
-    public void bindView(Bundle savedInstanceState) {
 
-    }
 
 
     /**

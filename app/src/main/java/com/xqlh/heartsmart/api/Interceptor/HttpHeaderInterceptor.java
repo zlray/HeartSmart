@@ -18,7 +18,6 @@ public class HttpHeaderInterceptor implements Interceptor {
         String tokenType = "tokenType";
         Request request = chain.request().newBuilder()
                 .header("app_key", "appId")
-                .header("Authorization", tokenType + " " + accessToken)
                 .header("Content-Type", "application/json")
                 .addHeader("Connection", "close")
                 .addHeader("Accept-Encoding", "identity")

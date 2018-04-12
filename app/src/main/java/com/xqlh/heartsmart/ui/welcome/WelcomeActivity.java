@@ -107,10 +107,7 @@ public class WelcomeActivity extends BaseActivity {
                 });
     }
 
-    @Override
-    public void bindView(Bundle savedInstanceState) {
 
-    }
 
 
     @Override
