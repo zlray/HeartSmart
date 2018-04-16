@@ -5,6 +5,7 @@
 
     //main drawer
     <string name="login_text">登录</string>
+    <string name="update">确认修改</string>
     <string name="retrieve_commit_text">提交</string>
     <string name="bind_text">绑定</string>
 

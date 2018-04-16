@@ -1,18 +1,15 @@
-package com.xqlh.heartsmart.ui.fragment;
+package com.xqlh.heartsmart.ui.article;
 
-
-import android.app.Fragment;
 import android.content.Context;
-import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.view.View;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.xqlh.heartsmart.R;
-import com.xqlh.heartsmart.base.BaseLazyFragment;
-import com.xqlh.heartsmart.ui.article.ArticleHomeActivity;
+import com.xqlh.heartsmart.base.BaseActivity;
+import com.xqlh.heartsmart.widget.TitleBar;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.Transformer;
@@ -22,49 +19,50 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.OnClick;
 
-/**
- * A simple {@link Fragment} subclass.
- */
-public class HomeFragment extends BaseLazyFragment {
-
-    @BindView(R.id.ib_article)
-    ImageButton ib_article;
+public class ArticleHomeActivity extends BaseActivity {
+    @BindView(R.id.article_titlebar)
+    TitleBar article_titlebar;
     @BindView(R.id.banner)
     Banner banner;
     private List<Uri> mList = new ArrayList<>();
+
     @Override
-    protected int setContentView() {
-        return R.layout.fragment_home;
+    public int setContent() {
+        return R.layout.activity_article_home;
     }
 
     @Override
-    protected void init() {
+    public boolean setFullScreen() {
+        return false;
+    }
+
+    @Override
+    public void init() {
+        initTtileBar();
         initBanner();
 
     }
 
-    @Override
-    protected void lazyLoad() {
-
+    public void initTtileBar() {
+        article_titlebar.setLeftImageResource(R.drawable.return_button);
+        article_titlebar.setTitle("心理文章");
+        article_titlebar.setTitleColor(Color.WHITE);
+        article_titlebar.setLeftTextColor(Color.WHITE);
+        article_titlebar.setLeftClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
-
-    @OnClick({R.id.ib_article})
-    public void OnClick(View view) {
-        switch (view.getId()) {
-            case R.id.ib_article:
-                startActivity(new Intent(getActivity(), ArticleHomeActivity.class));
-                break;
-        }
-    }
     public void initBanner() {
 
-        mList.add(Uri.parse("android.resource://" + getActivity().getPackageName() + "/" + R.drawable.banner));
-        mList.add(Uri.parse("android.resource://" + getActivity().getPackageName() + "/" + R.drawable.banner));
-        mList.add(Uri.parse("android.resource://" + getActivity().getPackageName() + "/" + R.drawable.banner));
-        mList.add(Uri.parse("android.resource://" + getActivity().getPackageName() + "/" + R.drawable.banner));
+        mList.add(Uri.parse("android.resource://" + getPackageName() + "/" + R.drawable.banner));
+        mList.add(Uri.parse("android.resource://" + getPackageName() + "/" + R.drawable.banner));
+        mList.add(Uri.parse("android.resource://" + getPackageName() + "/" + R.drawable.banner));
+        mList.add(Uri.parse("android.resource://" + getPackageName() + "/" + R.drawable.banner));
 
         //设置图片集合 18245096128
         banner.setImages(mList);
@@ -80,7 +78,7 @@ public class HomeFragment extends BaseLazyFragment {
 
         //设置标题集合（当banner样式有显示title时）
 //        banner.setBannerTitles(titles);
-
+        
         //设置自动轮播，默认为true
         banner.isAutoPlay(true);
 
@@ -93,6 +91,7 @@ public class HomeFragment extends BaseLazyFragment {
         //banner设置方法全部调用完毕时最后调用
         banner.start();
     }
+
     public class GlideImageLoader extends ImageLoader {
         @Override
         public void displayImage(Context context, Object path, ImageView imageView) {
@@ -103,4 +102,17 @@ public class HomeFragment extends BaseLazyFragment {
         }
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        //开始轮播
+        banner.startAutoPlay();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        //结束轮播
+        banner.stopAutoPlay();
+    }
 }

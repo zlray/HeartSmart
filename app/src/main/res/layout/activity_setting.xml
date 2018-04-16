@@ -1,9 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.xqlh.heartsmart.ui.mine.SettingActivity">
+
+    <com.xqlh.heartsmart.widget.TitleBar
+        android:id="@+id/setting_titleBar"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/color_title_bar"></com.xqlh.heartsmart.widget.TitleBar>
+
+    <RelativeLayout
+        android:id="@+id/setting_rv_update_password"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@+id/setting_titleBar"
+        android:layout_marginTop="20dp"
+        android:background="@color/white">
+
+        <TextView
+            android:id="@+id/setting_update_password"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@+id/mine_iv_head"
+            android:gravity="center"
+            android:text="修改密码"
+            android:textSize="14sp" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="15dp"
+            android:background="@drawable/arrow_right"
+            android:padding="3dp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/setting_rv_update_phone"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/setting_rv_update_password"
+        android:layout_marginTop="16dp"
+        android:background="@color/white">
+
+        <TextView
+            android:id="@+id/setting_update_phone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@+id/mine_iv_head"
+            android:gravity="center"
+            android:text="修改手机号"
+            android:textSize="14sp" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="15dp"
+            android:background="@drawable/arrow_right"
+            android:padding="3dp" />
+    </RelativeLayout>
 
 </RelativeLayout>

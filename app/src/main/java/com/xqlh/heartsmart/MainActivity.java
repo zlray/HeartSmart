@@ -77,7 +77,6 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
      * 绑定控件
      */
 
-
     @Override
     public int setContent() {
         return R.layout.activity_main;

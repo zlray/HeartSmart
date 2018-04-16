@@ -200,7 +200,7 @@ public class RetrievePasswordActivity extends BaseActivity {
         switch (view.getId()) {
             case R.id.bt_verification_code_get:
                 //验证手机号
-                getMessage(tv_phone.getText().toString().trim());
+                getMessage(sp_token.getSharedPreference(Constants.GET_PHONE_BY_ACCOUNT_TOKEN, "").toString());
 
                 Log.i(TAG, "显示的手机号: " + tv_phone.getText().toString().trim());
                 mdDisposable = Flowable.intervalRange(0, 61, 0, 1, TimeUnit.SECONDS)
@@ -241,7 +241,7 @@ public class RetrievePasswordActivity extends BaseActivity {
 
     public void updatePassword(String TelephoneToken, String VerCode, String password, String token) {
         RetrofitHelper.getApiService()
-                .updatePassword(TelephoneToken, VerCode, password, token)
+                .ForgetUpdatePassword(TelephoneToken, VerCode, password, token)
                 .subscribeOn(Schedulers.io())
                 .compose(this.<EntityUpdatePassword>bindToLifecycle())
                 .compose(ProgressUtils.<EntityUpdatePassword>applyProgressBar(this))
@@ -258,10 +258,10 @@ public class RetrievePasswordActivity extends BaseActivity {
 
 
     //获取验证码
-    public void getMessage(String phone) {
+    public void getMessage(String tocken) {
         Log.i(TAG, "获取验证码");
         RetrofitHelper.getApiService()
-                .GetMessage(phone)
+                .GetMessage2(tocken)
                 .subscribeOn(Schedulers.io())
                 .compose(this.<EntityGetMessage>bindToLifecycle())
                 .observeOn(AndroidSchedulers.mainThread())

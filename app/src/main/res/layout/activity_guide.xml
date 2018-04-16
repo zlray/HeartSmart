@@ -19,12 +19,16 @@
         android:gravity="center_horizontal"
         android:orientation="horizontal"></LinearLayout>
 
-    <ImageButton
+    <Button
         android:id="@+id/guide_ib_start"
         android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_height="30dp"
+        android:text="跳转"
+        android:textSize="14sp"
+        android:textColor="@color/baby_blue"
         android:layout_above="@+id/guide_ll_point"
         android:layout_centerHorizontal="true"
-        android:background="@color/colorAccent"
+        android:layout_marginBottom="150dp"
+        android:background="@color/white"
         android:visibility="gone" />
 </RelativeLayout>

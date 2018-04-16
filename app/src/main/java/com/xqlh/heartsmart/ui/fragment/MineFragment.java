@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -16,6 +17,7 @@ import com.xqlh.heartsmart.api.base.BaseObserval;
 import com.xqlh.heartsmart.base.BaseLazyFragment;
 import com.xqlh.heartsmart.ui.bean.EntityUserInfor;
 import com.xqlh.heartsmart.ui.mine.MineActivity;
+import com.xqlh.heartsmart.ui.mine.SettingActivity;
 import com.xqlh.heartsmart.utils.Constants;
 import com.xqlh.heartsmart.utils.ImageLoaderUtil;
 import com.xqlh.heartsmart.utils.SharedPreferencesHelper;
@@ -39,6 +41,9 @@ public class MineFragment extends BaseLazyFragment {
     ImageView mine_iv_head;
     @BindView(R.id.mine_tv_name)
     TextView mine_tv_name;
+    @BindView(R.id.rv_setting)
+    RelativeLayout rv_setting;
+
 
     private SharedPreferencesHelper sp_login_token;
 
@@ -53,6 +58,14 @@ public class MineFragment extends BaseLazyFragment {
         initTtileBar();
         sp_login_token = new SharedPreferencesHelper(
                 getActivity(), Constants.CHECKINFOR);
+    }
+    @OnClick({R.id.rv_setting})
+    public void onClikc(View view){
+        switch (view.getId()){
+            case R.id.rv_setting:
+                startActivity(new Intent(getActivity(), SettingActivity.class));
+                break;
+        }
     }
 
     @Override

@@ -83,17 +83,16 @@ public class ProductFragment extends BaseLazyFragment {
     public void OnClick(View view) {
         switch (view.getId()) {
             case R.id.bt_hardware:
-                bt_hardware.setBackgroundColor(Color.BLUE);
+                bt_hardware.setBackgroundColor(Color.GRAY);
                 bt_software.setBackgroundColor(Color.WHITE);
                 initHardData();
                 break;
             case R.id.bt_software:
                 bt_hardware.setBackgroundColor(Color.WHITE);
-                bt_software.setBackgroundColor(Color.BLUE);
+                bt_software.setBackgroundColor(Color.GRAY);
                 initSoftdData();
                 break;
         }
-
     }
 
     public void initHardData() {

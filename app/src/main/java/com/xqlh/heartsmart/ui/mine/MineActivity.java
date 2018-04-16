@@ -143,31 +143,13 @@ public class MineActivity extends BaseActivity {
     }
 
     public void initView() {
-//        Resources r = Utils.getContext().getResources(); //获得resouce
-//        //
-//        resultUri = Uri.parse(ContentResolver.SCHEME_ANDROID_RESOURCE + "://"
-//                + r.getResourcePackageName(R.drawable.head_default) + "/"
-//                + r.getResourceTypeName(R.drawable.head_default) + "/"
-//                + r.getResourceEntryName(R.drawable.head_default));
-//
-//        Log.i(TAG, "resultUri结果uri为:" + resultUri);
 
-        //
         mine_iv_head.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 initDialogChooseImage();
             }
         });
-//        mine_iv_head.setOnLongClickListener(new View.OnLongClickListener() {
-//            @Override
-//            public boolean onLongClick(View view) {
-//                RxDialogScaleView rxDialogScaleView = new RxDialogScaleView(Utils.getContext());
-//                rxDialogScaleView.setImageUri(resultUri);
-//                rxDialogScaleView.show();
-//                return false;
-//            }
-//        });
     }
 
     private void initDialogChooseImage() {

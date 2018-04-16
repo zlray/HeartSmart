@@ -1,11 +1,10 @@
 package com.xqlh.heartsmart.ui.guide.activity;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
@@ -31,7 +30,7 @@ public class GuideActivity extends BaseActivity {
     ViewPager guide_vp;
 
     @BindView(R.id.guide_ib_start)
-    ImageButton guide_ib_start;
+    Button guide_ib_start;
 
     @BindView(R.id.guide_ll_point)
     LinearLayout guide_ll_point;

@@ -50,13 +50,26 @@ public interface ApiService {
     @GET("api/account/sendsms")
     Observable<EntityGetMessage> GetMessage(@Query("tel") String tel);
 
+    //获取短信
+    @GET("api/account/smscodev2")
+    Observable<EntityGetMessage> GetMessage2(@Query("string") String string);
+
+
     //修改密码
     @FormUrlEncoded
     @POST("api/account/resetpassword")
-    Observable<EntityUpdatePassword> updatePassword(@Field("TelephoneToken") String TelephoneToken,
-                                                    @Field("VerCode") String VerCode,
-                                                    @Field("password") String password,
-                                                    @Field("token") String token);
+    Observable<EntityUpdatePassword> ForgetUpdatePassword(@Field("TelephoneToken") String TelephoneToken,
+                                                          @Field("VerCode") String VerCode,
+                                                          @Field("password") String password,
+                                                          @Field("token") String token);
+
+    //登录后修改密码
+
+    @FormUrlEncoded
+    @POST("api/account/cpassword")
+    Observable<EntityUpdatePassword> UpdatePassword(@Header("Authorization") String Authorization,
+                                                    @Field("Password") String Password,
+                                                    @Field("RPassword") String RPassword);
 
 
     //验证短信
