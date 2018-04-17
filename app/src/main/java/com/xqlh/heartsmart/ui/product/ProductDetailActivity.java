@@ -2,7 +2,7 @@ package com.xqlh.heartsmart.ui.product;
 
 import android.content.Intent;
 import android.graphics.Color;
-import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -65,6 +65,7 @@ public class ProductDetailActivity extends BaseActivity {
                         if (response.getCode() == 1) {
                             name = response.getResult().getName();
                             product_detail_wb.loadData(response.getResult().getDescribeStr(), "text/html", "UTF-8");
+                            Log.i(TAG, "H5的内容: " + response.getResult().getDescribeStr());
                             product_detail_titleBar.setTitle(name);
                         }
                     }
@@ -75,9 +76,7 @@ public class ProductDetailActivity extends BaseActivity {
 
     public void initTtileBar() {
         product_detail_titleBar.setLeftImageResource(R.drawable.return_button);
-        product_detail_titleBar.setLeftText("返回");
         product_detail_titleBar.setTitleColor(Color.WHITE);
-        product_detail_titleBar.setLeftTextColor(Color.WHITE);
         product_detail_titleBar.setLeftClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

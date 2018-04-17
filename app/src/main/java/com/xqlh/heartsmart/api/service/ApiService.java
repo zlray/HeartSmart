@@ -1,5 +1,7 @@
 package com.xqlh.heartsmart.api.service;
 
+import com.xqlh.heartsmart.ui.bean.EntityArticleDetail;
+import com.xqlh.heartsmart.ui.bean.EntityArticleNewest;
 import com.xqlh.heartsmart.ui.bean.EntityBindPhone;
 import com.xqlh.heartsmart.ui.bean.EntityCheckAccount;
 import com.xqlh.heartsmart.ui.bean.EntityCheckMessage;
@@ -101,4 +103,16 @@ public interface ApiService {
     @GET("api/account/userinfo")
     Observable<EntityUserInfor> getUserInfor(@Header("Authorization") String Authorization);
 
-}
+    //通过查询文章接口 来获取最新的文章
+    @FormUrlEncoded
+    @POST("api/article/aritclelist")
+    Observable<EntityArticleNewest> getArticleNewest(@Field("keywords") String keywords,
+                                                     @Field("ArticleTypeID") String ArticleTypeID,
+                                                     @Field("LabelIds") String[] LabelIds,
+                                                     @Field("pageIndex") int pageIndex,
+                                                     @Field("pageSize") int pageSize,
+                                                     @Field("orderbytype") int orderbytype);
+
+    @GET("api/article/aritcle")
+    Observable<EntityArticleDetail> getArticleDetail(@Query("id") String id);
+ }

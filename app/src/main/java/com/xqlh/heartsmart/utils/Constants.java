@@ -3,6 +3,12 @@ package com.xqlh.heartsmart.utils;
 import com.xqlh.heartsmart.app.App;
 
 import java.io.File;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 import okhttp3.MediaType;
 
@@ -27,5 +33,21 @@ public class Constants {
 
 
     public static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+
+    public static String getYYD(String time){
+        DateFormat formatter=new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        Date date=null;
+        try {
+            date=formatter.parse(time);
+
+        } catch (ParseException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        GregorianCalendar calendar=new GregorianCalendar();
+        calendar.setTime(date);
+        return calendar.get(Calendar.YEAR)+"-"+(calendar.get(Calendar.MONTH)+1)+"-"+calendar.get(Calendar.DAY_OF_MONTH);
+//        System.out.println((date.getYear()+1900)+"-"+(date.getMonth()+1)+"-"+(date.getDay()+12));
+    }
 
 }

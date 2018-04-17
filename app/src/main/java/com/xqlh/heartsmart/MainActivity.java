@@ -84,7 +84,7 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 
     @Override
     public boolean setFullScreen() {
-        return true;
+        return false;
     }
 
     @Override

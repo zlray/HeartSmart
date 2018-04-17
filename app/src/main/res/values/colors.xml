@@ -13,4 +13,5 @@
     <color name="me_black">#1e1d1d</color>
     <color name="main_text_rb_click">#3A84E5</color>
     <color name="main_text_rb_default">#1e1d1d</color>
+    <color name="transparent">#00000000</color>
 </resources>

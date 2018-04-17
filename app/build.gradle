@@ -77,5 +77,7 @@ dependencies {
 
     compile 'com.youth.banner:banner:1.4.10'
 
+    compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-4'
+
 
 }

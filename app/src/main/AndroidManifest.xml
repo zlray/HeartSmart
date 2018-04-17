@@ -43,9 +43,7 @@
         </activity>
 
         <!-- 引导页面 -->
-        <activity android:name=".ui.guide.activity.GuideActivity">
-
-        </activity>
+        <activity android:name=".ui.guide.activity.GuideActivity"></activity>
 
         <!-- 欢迎页面 -->
         <activity android:name=".ui.welcome.WelcomeActivity" />
@@ -63,7 +61,8 @@
         <activity android:name=".ui.mine.SettingActivity" />
         <activity android:name=".ui.mine.UpdateUserInforActivity" />
         <activity android:name=".ui.login.UpdatePasswordActivity" />
-        <activity android:name=".ui.article.ArticleHomeActivity"></activity>
+        <activity android:name=".ui.article.ArticleHomeActivity" />
+        <activity android:name=".ui.article.ArticleDetailActivity"></activity>
     </application>
 
 </manifest>
