@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -53,6 +54,10 @@ public class HomeFragment extends BaseLazyFragment {
     @BindView(R.id.rv_article_newest)
     RecyclerView rv_article_newest;
 
+    //点击查看更多文章
+    @BindView(R.id.rv_more_article)
+    RelativeLayout rv_more_article;
+
     @Override
     protected int setContentView() {
         mList.add(Uri.parse("android.resource://" + getActivity().getPackageName() + "/" + R.drawable.banner));
@@ -75,7 +80,7 @@ public class HomeFragment extends BaseLazyFragment {
 
     public void getNewest() {
         RetrofitHelper.getApiService()
-                .getArticleNewest("","",new String[]{""},1, 2, 0)
+                .getArticleQuery("", "", new String[]{""}, 1, 6, 0)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseObserval<EntityArticleNewest>() {
@@ -97,10 +102,14 @@ public class HomeFragment extends BaseLazyFragment {
                     }
                 });
     }
-    @OnClick({R.id.ib_article})
+
+    @OnClick({R.id.ib_article,R.id.rv_more_article})
     public void OnClick(View view) {
         switch (view.getId()) {
             case R.id.ib_article:
+                startActivity(new Intent(getActivity(), ArticleHomeActivity.class));
+                break;
+            case R.id.rv_more_article:
                 startActivity(new Intent(getActivity(), ArticleHomeActivity.class));
                 break;
         }

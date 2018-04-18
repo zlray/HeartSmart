@@ -103,16 +103,18 @@ public interface ApiService {
     @GET("api/account/userinfo")
     Observable<EntityUserInfor> getUserInfor(@Header("Authorization") String Authorization);
 
-    //通过查询文章接口 来获取最新的文章
+    //通过查询文章接口 来获取最新的文章,浏览次数最多等
     @FormUrlEncoded
     @POST("api/article/aritclelist")
-    Observable<EntityArticleNewest> getArticleNewest(@Field("keywords") String keywords,
+    Observable<EntityArticleNewest> getArticleQuery(@Field("keywords") String keywords,
                                                      @Field("ArticleTypeID") String ArticleTypeID,
                                                      @Field("LabelIds") String[] LabelIds,
                                                      @Field("pageIndex") int pageIndex,
                                                      @Field("pageSize") int pageSize,
                                                      @Field("orderbytype") int orderbytype);
 
+
+    //获取文章的详细内容
     @GET("api/article/aritcle")
     Observable<EntityArticleDetail> getArticleDetail(@Query("id") String id);
- }
+}

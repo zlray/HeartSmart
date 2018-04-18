@@ -2,7 +2,6 @@ package com.xqlh.heartsmart.ui.article;
 
 import android.content.Intent;
 import android.graphics.Color;
-import android.text.Html;
 import android.util.Log;
 import android.view.View;
 import android.webkit.WebSettings;
@@ -47,6 +46,7 @@ public class ArticleDetailActivity extends BaseActivity {
         Intent intent = getIntent();
         id = intent.getStringExtra("id");
         setWebView();
+        initTtileBar();
         getData(id);
     }
 
@@ -66,22 +66,31 @@ public class ArticleDetailActivity extends BaseActivity {
         RetrofitHelper.getApiService()
                 .getArticleDetail(id)
                 .subscribeOn(Schedulers.io())
-                .compose(ProgressUtils.<EntityArticleDetail>applyProgressBar(this))
                 .compose(this.<EntityArticleDetail>bindToLifecycle())
+                .compose(ProgressUtils.<EntityArticleDetail>applyProgressBar(this))
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseObserval<EntityArticleDetail>() {
                     @Override
                     public void onSuccess(EntityArticleDetail response) {
                         if (response.getCode() == 1) {
-                            article_detail_wb.loadDataWithBaseURL(null, Html.fromHtml(response.getResult().getContent()) +"", "text/html", "UTF-8",null);
-                            article_detail_titleBar.setTitle(response.getResult().getArticleTitle());
-                            Log.i(TAG, "H5的内容: " + response.getResult().getContent());
-                        }else{
-                            Toasty.warning(ArticleDetailActivity.this,"服务器异常", Toast.LENGTH_SHORT,true).show();
+                            if (response.getMsg().equals("OK")) {
+//                                article_detail_wb.loadDataWithBaseURL(null, Html.fromHtml(response.getResult().getContent()) + "", "text/html", "UTF-8", null);
+
+//                                article_detail_wb.loadData(response.getResult().getContent(), "text/html", "UTF-8");
+
+                                article_detail_titleBar.setTitle(response.getResult().getArticleTitle());
+
+                                Log.i(TAG, "标题: " + response.getResult().getArticleTitle());
+
+                                Log.i(TAG, "H5的内容: " + response.getResult().getContent());
+                            }
+                        } else {
+                            Toasty.warning(ArticleDetailActivity.this, "服务器异常", Toast.LENGTH_SHORT, true).show();
                         }
                     }
                 });
     }
+
     private void setWebView() {
         final WebSettings webSettings = article_detail_wb.getSettings();
         webSettings.setJavaScriptEnabled(true);

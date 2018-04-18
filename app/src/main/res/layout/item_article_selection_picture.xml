@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:padding="10dp">
+
+    <ImageView
+        android:id="@+id/iv_article_selection"
+        android:layout_width="120dp"
+        android:layout_height="100dp" />
+
+    <ImageView
+        android:layout_width="120dp"
+        android:layout_height="20dp"
+        android:layout_alignBottom="@+id/iv_article_selection"
+        android:background="@drawable/coverage" />
+
+    <TextView
+        android:id="@+id/tv_reading_number"
+        android:layout_width="120dp"
+        android:layout_height="20dp"
+        android:layout_alignBottom="@+id/iv_article_selection"
+        android:gravity="right|center"
+        android:text="918人阅读"
+        android:textColor="@color/white"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="120dp"
+        android:layout_height="20dp"
+        android:layout_below="@+id/iv_article_selection"
+        android:ellipsize="end"
+        android:singleLine="true"
+        android:text="人阅读人阅读人阅读人阅读人阅读人阅读人阅读人阅读"
+        android:textColor="@color/black"
+        android:textSize="14sp" />
+
+</RelativeLayout>
