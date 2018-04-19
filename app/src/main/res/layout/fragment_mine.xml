@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.xqlh.heartsmart.ui.fragment.MineFragment">
+    tools:context="com.xqlh.heartsmart.ui.mine.ui.MineFragment">
 
     <com.xqlh.heartsmart.widget.TitleBar
         android:id="@+id/mine_titleBar"

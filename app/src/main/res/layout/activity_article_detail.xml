@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.xqlh.heartsmart.ui.article.ArticleDetailActivity">
+    tools:context="com.xqlh.heartsmart.ui.home.ui.ArticleDetailActivity">
 
 
     <com.xqlh.heartsmart.widget.TitleBar

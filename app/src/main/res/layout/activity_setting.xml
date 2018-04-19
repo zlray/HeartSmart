@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.xqlh.heartsmart.ui.mine.SettingActivity">
+    tools:context="com.xqlh.heartsmart.ui.mine.ui.SettingActivity">
 
     <com.xqlh.heartsmart.widget.TitleBar
         android:id="@+id/setting_titleBar"

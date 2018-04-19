@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.xqlh.heartsmart.ui.fragment.ProductFragment">
+    tools:context="com.xqlh.heartsmart.ui.product.ui.ProductFragment">
 
     <com.xqlh.heartsmart.widget.TitleBar
         android:id="@+id/product_fragmet_titlebar"

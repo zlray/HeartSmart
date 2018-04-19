@@ -1,19 +1,19 @@
 package com.xqlh.heartsmart.api.service;
 
-import com.xqlh.heartsmart.ui.bean.EntityArticleDetail;
-import com.xqlh.heartsmart.ui.bean.EntityArticleNewest;
-import com.xqlh.heartsmart.ui.bean.EntityBindPhone;
-import com.xqlh.heartsmart.ui.bean.EntityCheckAccount;
-import com.xqlh.heartsmart.ui.bean.EntityCheckMessage;
-import com.xqlh.heartsmart.ui.bean.EntityCheckPhone;
-import com.xqlh.heartsmart.ui.bean.EntityGetMessage;
-import com.xqlh.heartsmart.ui.bean.EntityGetPhoneByAccount;
-import com.xqlh.heartsmart.ui.bean.EntityLogin;
-import com.xqlh.heartsmart.ui.bean.EntityProductCategory;
-import com.xqlh.heartsmart.ui.bean.EntityProductDetail;
-import com.xqlh.heartsmart.ui.bean.EntityUpdatePassword;
-import com.xqlh.heartsmart.ui.bean.EntityUserInfor;
-import com.xqlh.heartsmart.ui.bean.EntityWelcome;
+import com.xqlh.heartsmart.bean.EntityArticleDetail;
+import com.xqlh.heartsmart.bean.EntityArticleNewest;
+import com.xqlh.heartsmart.bean.EntityBindPhone;
+import com.xqlh.heartsmart.bean.EntityCheckAccount;
+import com.xqlh.heartsmart.bean.EntityCheckMessage;
+import com.xqlh.heartsmart.bean.EntityCheckPhone;
+import com.xqlh.heartsmart.bean.EntityGetMessage;
+import com.xqlh.heartsmart.bean.EntityGetPhoneByAccount;
+import com.xqlh.heartsmart.bean.EntityLogin;
+import com.xqlh.heartsmart.bean.EntityProductCategory;
+import com.xqlh.heartsmart.bean.EntityProductDetail;
+import com.xqlh.heartsmart.bean.EntityUpdatePassword;
+import com.xqlh.heartsmart.bean.EntityUserInfor;
+import com.xqlh.heartsmart.bean.EntityWelcome;
 
 import io.reactivex.Observable;
 import retrofit2.http.Field;

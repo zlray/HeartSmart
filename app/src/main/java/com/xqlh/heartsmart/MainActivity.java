@@ -8,12 +8,12 @@ import android.widget.RadioGroup;
 
 import com.vondear.rxtools.RxPermissionsTool;
 import com.xqlh.heartsmart.base.BaseActivity;
-import com.xqlh.heartsmart.ui.fragment.AppraisalFragment;
-import com.xqlh.heartsmart.ui.fragment.EquipmentFragment;
-import com.xqlh.heartsmart.ui.fragment.HomeFragment;
-import com.xqlh.heartsmart.ui.fragment.MineFragment;
-import com.xqlh.heartsmart.ui.fragment.ProductFragment;
-import com.xqlh.heartsmart.ui.fragment.adapter.FragmentVpAdapter;
+import com.xqlh.heartsmart.ui.appraisal.ui.AppraisalFragment;
+import com.xqlh.heartsmart.ui.equipment.ui.EquipmentFragment;
+import com.xqlh.heartsmart.ui.home.ui.HomeFragment;
+import com.xqlh.heartsmart.ui.mine.ui.MineFragment;
+import com.xqlh.heartsmart.ui.product.ui.ProductFragment;
+import com.xqlh.heartsmart.adapter.FragmentVpAdapter;
 
 import java.util.ArrayList;
 

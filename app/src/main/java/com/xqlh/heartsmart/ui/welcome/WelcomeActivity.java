@@ -1,16 +1,15 @@
 package com.xqlh.heartsmart.ui.welcome;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.xqlh.heartsmart.R;
 import com.xqlh.heartsmart.api.RetrofitHelper;
 import com.xqlh.heartsmart.api.base.BaseObserval;
-import com.xqlh.heartsmart.ui.bean.EntityWelcome;
+import com.xqlh.heartsmart.bean.EntityWelcome;
 import com.xqlh.heartsmart.base.BaseActivity;
-import com.xqlh.heartsmart.ui.login.LoginActivity;
+import com.xqlh.heartsmart.ui.login.ui.LoginActivity;
 import com.xqlh.heartsmart.utils.ImageLoaderUtil;
 
 import java.util.concurrent.TimeUnit;

@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.xqlh.heartsmart.ui.product.ProductDetailActivity">
+    tools:context="com.xqlh.heartsmart.ui.product.ui.ProductDetailActivity">
 
     <com.xqlh.heartsmart.widget.TitleBar
         android:id="@+id/product_detail_titleBar"
