@@ -36,7 +36,7 @@
                     android:layout_below="@+id/article_titlebar"></com.youth.banner.Banner>
 
                 <android.support.v7.widget.RecyclerView
-                    android:id="@+id/rv_beautiful_article"
+                    android:id="@+id/rv_eight_button"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
