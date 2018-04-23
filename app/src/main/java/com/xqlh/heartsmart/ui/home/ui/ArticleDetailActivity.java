@@ -2,6 +2,7 @@ package com.xqlh.heartsmart.ui.home.ui;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.text.Html;
 import android.util.Log;
 import android.view.View;
 import android.webkit.WebSettings;
@@ -72,18 +73,17 @@ public class ArticleDetailActivity extends BaseActivity {
                 .subscribe(new BaseObserval<EntityArticleDetail>() {
                     @Override
                     public void onSuccess(EntityArticleDetail response) {
+                        Log.i(TAG, "标题: " + response.getResult().getArticleTitle());
+
+                        Log.i(TAG, "H5的内容: " + response.getResult().getContent());
                         if (response.getCode() == 1) {
-                            if (response.getMsg().equals("OK")) {
-//                                article_detail_wb.loadDataWithBaseURL(null, Html.fromHtml(response.getResult().getContent()) + "", "text/html", "UTF-8", null);
+                                article_detail_wb.loadDataWithBaseURL(null,
+                                        Html.fromHtml(response.getResult().getContent())+"",
+                                        "text/html", "UTF-8", null);
 
-//                                article_detail_wb.loadData(response.getResult().getContent(), "text/html", "UTF-8");
+//                            article_detail_wb.loadData(response.getResult().getContent(), "text/html; charset=UTF-8", null);
 
-                                article_detail_titleBar.setTitle(response.getResult().getArticleTitle());
-
-                                Log.i(TAG, "标题: " + response.getResult().getArticleTitle());
-
-                                Log.i(TAG, "H5的内容: " + response.getResult().getContent());
-                            }
+                            article_detail_titleBar.setTitle(response.getResult().getArticleTitle());
                         } else {
                             Toasty.warning(ArticleDetailActivity.this, "服务器异常", Toast.LENGTH_SHORT, true).show();
                         }
@@ -93,27 +93,34 @@ public class ArticleDetailActivity extends BaseActivity {
 
     private void setWebView() {
         final WebSettings webSettings = article_detail_wb.getSettings();
-        webSettings.setJavaScriptEnabled(true);
-        webSettings.setDomStorageEnabled(false);
-        // 打开屏幕时自适应
-        webSettings.setUseWideViewPort(true);
-        //设置此属性，可任意比例缩放
-        webSettings.setLoadWithOverviewMode(true);
-        // 支持页面缩放
-        webSettings.setBuiltInZoomControls(true);
-        webSettings.setSupportZoom(true);
-        webSettings.setDomStorageEnabled(true);
-        webSettings.setAppCacheEnabled(true);
-        webSettings.setDatabaseEnabled(true);
-        webSettings.setDefaultTextEncodingName("utf-8");
-        // 设置可以支持缩放
-        article_detail_wb.getSettings().setSupportZoom(true);
-        // 设置出现缩放工具
-        article_detail_wb.getSettings().setBuiltInZoomControls(true);
-        //扩大比例的缩放
-        article_detail_wb.getSettings().setUseWideViewPort(true);
-        //自适应屏幕
-        article_detail_wb.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
-        article_detail_wb.getSettings().setLoadWithOverviewMode(true);
+        webSettings.setDefaultTextEncodingName("UTF-8");
+
+//        webSettings.setJavaScriptEnabled(true);
+//        webSettings.setDomStorageEnabled(false);
+//        // 打开屏幕时自适应
+//        webSettings.setUseWideViewPort(true);
+//        //设置此属性，可任意比例缩放
+//        webSettings.setLoadWithOverviewMode(true);
+//        // 支持页面缩放
+//        webSettings.setBuiltInZoomControls(true);
+//
+//        webSettings.setSupportZoom(true);
+//
+//        webSettings.setDomStorageEnabled(true);
+//
+//        webSettings.setAppCacheEnabled(true);
+//
+//        webSettings.setDatabaseEnabled(true);
+//
+//
+//        // 设置可以支持缩放
+//        article_detail_wb.getSettings().setSupportZoom(true);
+//        // 设置出现缩放工具
+//        article_detail_wb.getSettings().setBuiltInZoomControls(true);
+//        //扩大比例的缩放
+//        article_detail_wb.getSettings().setUseWideViewPort(true);
+//        //自适应屏幕
+//        article_detail_wb.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
+//        article_detail_wb.getSettings().setLoadWithOverviewMode(true);
     }
 }

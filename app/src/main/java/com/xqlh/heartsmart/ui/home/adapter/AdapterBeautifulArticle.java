@@ -18,7 +18,6 @@ import java.util.List;
 public class AdapterBeautifulArticle extends BaseQuickAdapter<EntityArticleNewest.ResultBean, BaseViewHolder> {
 
     private Context mContext;
-    private List<EntityArticleNewest> list;
 
     public AdapterBeautifulArticle(int layoutResId, Context mContext, List<EntityArticleNewest.ResultBean> list) {
         super(layoutResId, list);
@@ -28,7 +27,8 @@ public class AdapterBeautifulArticle extends BaseQuickAdapter<EntityArticleNewes
     @Override
     protected void convert(BaseViewHolder helper, EntityArticleNewest.ResultBean item) {
         helper.setText(R.id.tv_title, item.getTitle())
-                .setText(R.id.tv_reading_number, item.getShowTimes()+"");
+                .setText(R.id.tv_reading_number, item.getShowTimes()+"人阅读");
+
         Glide.with(mContext).load(item.getTitlePic()).into((ImageView) helper.getView(R.id.iv_article_selection));
     }
 }

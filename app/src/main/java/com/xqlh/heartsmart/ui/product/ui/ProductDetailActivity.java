@@ -2,6 +2,7 @@ package com.xqlh.heartsmart.ui.product.ui;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Build;
 import android.util.Log;
 import android.view.View;
 import android.webkit.WebSettings;
@@ -47,7 +48,7 @@ public class ProductDetailActivity extends BaseActivity {
         Intent intent = getIntent();
         id = intent.getStringExtra("id");
         initTtileBar();
-//        setWebView();
+        setWebView();
         getData(id);
 
     }
@@ -64,14 +65,17 @@ public class ProductDetailActivity extends BaseActivity {
                     public void onSuccess(EntityProductDetail response) {
                         if (response.getCode() == 1) {
                             name = response.getResult().getName();
-                            product_detail_wb.loadData(response.getResult().getDescribeStr(), "text/html", "UTF-8");
+//                            product_detail_wb.loadData(response.getResult().getDescribeStr(), "text/html", "UTF-8");
+
+                            product_detail_wb.loadDataWithBaseURL(null, response.getResult().getDescribeStr(), "text/html", "UTF-8", null);
+
+
                             Log.i(TAG, "H5的内容: " + response.getResult().getDescribeStr());
                             product_detail_titleBar.setTitle(name);
                         }
                     }
                 });
     }
-
 
 
     public void initTtileBar() {
@@ -86,7 +90,15 @@ public class ProductDetailActivity extends BaseActivity {
     }
 
     private void setWebView() {
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+            product_detail_wb.setLayerType(View.LAYER_TYPE_SOFTWARE, null);//软件解码
+        }
+        product_detail_wb.setLayerType(View.LAYER_TYPE_HARDWARE, null);//硬件解码
+
         final WebSettings webSettings = product_detail_wb.getSettings();
+
+
         webSettings.setJavaScriptEnabled(true);
         webSettings.setDomStorageEnabled(false);
         // 打开屏幕时自适应

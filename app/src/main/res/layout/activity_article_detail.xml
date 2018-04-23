@@ -17,7 +17,6 @@
         android:id="@+id/article_detail_wb"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-
     </WebView>
 
 </LinearLayout>

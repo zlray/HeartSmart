@@ -43,7 +43,7 @@ public class AdapterArticle extends RecyclerView.Adapter<AdapterArticle.MineView
         LayoutInflater inflater = LayoutInflater.from(mContext);
 
         //找到子视图
-        childView = inflater.inflate(R.layout.item_article, parent, false);
+        childView = inflater.inflate(R.layout.item_newest_article, parent, false);
 
         //实例化mViewHolder
         AdapterArticle.MineViewHolder mViewHolder = new AdapterArticle.MineViewHolder(childView, listener);
@@ -81,22 +81,22 @@ public class AdapterArticle extends RecyclerView.Adapter<AdapterArticle.MineView
     }
 
     class MineViewHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.article_titlepic)
+        @BindView(R.id.iv_article_titlepic)
         ImageView article_titlepic;
 
-        @BindView(R.id.article_title)
+        @BindView(R.id.tv_article_title)
         TextView article_title;
 
-        @BindView(R.id.article_introduction)
+        @BindView(R.id.tv_article_introduction)
         TextView article_introduction;
 
-        @BindView(R.id.article_type)
+        @BindView(R.id.tv_article_type)
         TextView article_type;
 
-        @BindView(R.id.article_reading_times)
+        @BindView(R.id.tv_article_reading_times)
         TextView article_reading_times;
 
-        @BindView(R.id.article_date)
+        @BindView(R.id.tv_article_date)
         TextView article_date;
 
         protected RvListener mListener;
