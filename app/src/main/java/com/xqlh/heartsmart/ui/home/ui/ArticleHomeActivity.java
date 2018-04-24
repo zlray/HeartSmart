@@ -13,6 +13,7 @@ import com.xqlh.heartsmart.R;
 import com.xqlh.heartsmart.api.RetrofitHelper;
 import com.xqlh.heartsmart.api.base.BaseObserval;
 import com.xqlh.heartsmart.base.BaseActivity;
+import com.xqlh.heartsmart.bean.EntityArticleBeautiful;
 import com.xqlh.heartsmart.bean.EntityArticleNewest;
 import com.xqlh.heartsmart.ui.home.adapter.AdapterArticleHome;
 import com.xqlh.heartsmart.ui.home.model.IconTitleModel;
@@ -43,7 +44,7 @@ public class ArticleHomeActivity extends BaseActivity {
     private List<Uri> bannerList = new ArrayList<>();
     private List<IconTitleModel> eightList = new ArrayList<>();
     List<EntityArticleNewest.ResultBean> beautifulList = new ArrayList<>();
-    List<EntityArticleNewest.ResultBean> newestList =  new ArrayList<>();
+    List<EntityArticleNewest.ResultBean> newestList = new ArrayList<>();
 
 
     //每页的大小
@@ -69,13 +70,17 @@ public class ArticleHomeActivity extends BaseActivity {
 
         initTtileBar();
 
+        adapterArticleHome = new AdapterArticleHome(this);
+
+
+        getNewest(mCurrentPage, PAGE_SIZE);
+
         initData();
 
-//        getBeautifulArticle();
-
-//        getNewest(mCurrentPage, PAGE_SIZE);
+        getBeautifulArticle();
 
         initRv();
+
 
 //        //加载刷新数据
 //        initRefresh();
@@ -98,6 +103,7 @@ public class ArticleHomeActivity extends BaseActivity {
         //banner数据
         bannerList.add(Uri.parse("android.resource://" + getPackageName() + "/" + R.drawable.banner));
         bannerList.add(Uri.parse("android.resource://" + getPackageName() + "/" + R.drawable.banner));
+        adapterArticleHome.setBannerList(bannerList);
         //8个按钮
         eightList.add(new IconTitleModel(R.drawable.health, "成长"));
         eightList.add(new IconTitleModel(R.drawable.workplace, "职场"));
@@ -107,60 +113,59 @@ public class ArticleHomeActivity extends BaseActivity {
         eightList.add(new IconTitleModel(R.drawable.beautiful_article, "经典美文"));
         eightList.add(new IconTitleModel(R.drawable.marriage, "婚恋"));
         eightList.add(new IconTitleModel(R.drawable.health, "健康"));
-    }
 
+        adapterArticleHome.setEightList(eightList);
 
-    public void initRv() {
-        rv_article_home.setLayoutManager(new LinearLayoutManager(this));
-        Log.i("lz", "集合大小: " + bannerList.size() +"aa" + eightList.size()+"aa" + getBeautifulArticle().size() + "aa" + getNewest(mCurrentPage,PAGE_SIZE).size());
-
-        adapterArticleHome = new AdapterArticleHome(ArticleHomeActivity.this,
-                bannerList,
-                eightList,
-                getBeautifulArticle(),
-                getNewest(mCurrentPage,PAGE_SIZE));
         rv_article_home.setAdapter(adapterArticleHome);
-    }
 
-
-    public List<EntityArticleNewest.ResultBean> getBeautifulArticle() {
         RetrofitHelper.getApiService()
-                .getArticleQuery("", "", new String[]{""}, mCurrentPage, PAGE_SIZE, 2)
+                .getArticleBeautiful("", "", new String[]{""}, 1, 6, 2)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseObserval<EntityArticleNewest>() {
+                .subscribe(new BaseObserval<EntityArticleBeautiful>() {
                     @Override
-                    public void onSuccess(final EntityArticleNewest response) {
+                    public void onSuccess(final EntityArticleBeautiful response) {
                         if (response.getCode() == 1) {
-                            beautifulList = response.getResult();
-                            //
-                            Log.i(TAG, "aaaaaaaaaaa" + beautifulList.size());
+                            Log.i(TAG, "网络获取美文集合" + response.getResult().size());
+                            adapterArticleHome.setBeautifulList(response.getResult());
+                            rv_article_home.setAdapter(adapterArticleHome);
+
                         } else {
                             Toasty.warning(Utils.getContext(), "服务器异常", Toast.LENGTH_SHORT, true).show();
                         }
                         return;
                     }
                 });
-
-        return beautifulList;
     }
 
-    public List<EntityArticleNewest.ResultBean> getNewest(int page, int PAGE_SIZE) {
+
+    public void initRv() {
+
+        rv_article_home.setLayoutManager(new LinearLayoutManager(this));
+    }
+
+
+    public void getBeautifulArticle() {
+
+    }
+
+    public void getNewest(int page, int PAGE_SIZE) {
         RetrofitHelper.getApiService()
-                .getArticleQuery("", "", new String[]{""}, page, PAGE_SIZE, 0)
+                .getArticleQuery("", "", new String[]{""}, 1, 6, 2)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseObserval<EntityArticleNewest>() {
                     @Override
                     public void onSuccess(final EntityArticleNewest response) {
                         if (response.getCode() == 1) {
-                            newestList = response.getResult();
+                            Log.i(TAG, "网络获取最新集合" + response.getResult().size());
+                            adapterArticleHome.setNewestList(response.getResult());
+                            rv_article_home.setAdapter(adapterArticleHome);
                         } else {
                             Toasty.warning(Utils.getContext(), "服务器异常", Toast.LENGTH_SHORT, true).show();
                         }
                     }
                 });
-        return newestList;
     }
 
 

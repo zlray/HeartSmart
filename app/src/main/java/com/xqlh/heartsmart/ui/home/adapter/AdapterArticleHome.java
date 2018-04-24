@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.xqlh.heartsmart.R;
+import com.xqlh.heartsmart.bean.EntityArticleBeautiful;
 import com.xqlh.heartsmart.bean.EntityArticleNewest;
 import com.xqlh.heartsmart.ui.home.model.IconTitleModel;
 import com.xqlh.heartsmart.ui.home.ui.ArticleDetailActivity;
@@ -24,6 +25,7 @@ import com.youth.banner.BannerConfig;
 import com.youth.banner.Transformer;
 import com.youth.banner.loader.ImageLoader;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import es.dmoral.toasty.Toasty;
@@ -39,9 +41,9 @@ public class AdapterArticleHome extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     private List<IconTitleModel> listEight; //8个按钮
 
-    private List<EntityArticleNewest.ResultBean> listBeautiful; //美文
+    private List<EntityArticleBeautiful.ResultBean> listBeautiful = new ArrayList<>(); //美文
 
-    private List<EntityArticleNewest.ResultBean> listNewest; //最新
+    private List<EntityArticleNewest.ResultBean> listNewest = new ArrayList<>(); //最新
 
     private final int BANNER_VIEW_TYPE = 0;//轮播图
 
@@ -51,14 +53,36 @@ public class AdapterArticleHome extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     private final int NEWEST_VIEW_TYPE = 3;//最新文章
 
-    public AdapterArticleHome(Context context, List<Uri> listBanner, List<IconTitleModel> listEight, List<EntityArticleNewest.ResultBean> listBeautiful, List<EntityArticleNewest.ResultBean> listNewest) {
+    //最新
+    public AdapterArticleHome(Context context) {
         this.context = context;
-        this.listBanner = listBanner;
-        this.listEight = listEight;
-        this.listBeautiful = listBeautiful;
-        this.listNewest = listNewest;
-        Log.i("lz", "集合大小: " + listBanner.size() + "aa" + listEight.size() + "aa" + listBeautiful.size() + "aa" + listNewest.size());
     }
+
+    public void setNewestList(List<EntityArticleNewest.ResultBean> list) {
+        if (list == null) {
+            list = new ArrayList<>();
+        }
+        this.listNewest = list;
+        Log.i("lz", listNewest.size() + "setNewestList");
+    }
+
+
+    public void setBannerList(List<Uri> list) {
+        this.listBanner = list;
+    }
+
+    public void setEightList(List<IconTitleModel> list) {
+        this.listEight = list;
+    }
+
+    public void setBeautifulList(List<EntityArticleBeautiful.ResultBean> list) {
+        if (list == null) {
+            list = new ArrayList<>();
+        }
+        this.listBeautiful = list;
+        Log.i("lz", listBeautiful.size() + "setBeautifulList");
+    }
+
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -99,7 +123,6 @@ public class AdapterArticleHome extends RecyclerView.Adapter<RecyclerView.ViewHo
             BannerHolder bannerHolder = (BannerHolder) holder;
             //设置banner的各种属性
             setBanner(bannerHolder);
-
         } else if (holder instanceof EightHolder) {//频道
             EightHolder eightHolder = (EightHolder) holder;
             //设置频道
@@ -152,17 +175,16 @@ public class AdapterArticleHome extends RecyclerView.Adapter<RecyclerView.ViewHo
     }
 
     private void setBeautiful(BeautifulHolder beautifulHolder) {
-
-
+        Log.i("lz", "setBeautiful美文");
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
         linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         beautifulHolder.rv_beautiful.setLayoutManager(linearLayoutManager);
 
         AdapterBeautifulArticle adapterBeautifulArticle;
-        adapterBeautifulArticle = new AdapterBeautifulArticle(R.layout.item_rv_beautiful,
-                context, listBeautiful);
+        adapterBeautifulArticle = new AdapterBeautifulArticle(R.layout.item_rv_beautiful, context, listBeautiful);
 
         beautifulHolder.rv_beautiful.setAdapter(adapterBeautifulArticle);
+
         adapterBeautifulArticle.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
@@ -175,10 +197,12 @@ public class AdapterArticleHome extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     //最新
     private void setNewest(NewestHolder newestHolder) {
+        Log.i("lz", "setNewest最新的");
         AdapterNewestArticle adapterNewestArticle;
-        adapterNewestArticle = new AdapterNewestArticle(
-                R.layout.item_newest_article,
-                context,listNewest);
+        adapterNewestArticle = new AdapterNewestArticle(R.layout.item_rv_newest, context, listNewest);
+
+        newestHolder.rv_newest.setAdapter(adapterNewestArticle);
+
         adapterNewestArticle.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
@@ -187,8 +211,6 @@ public class AdapterArticleHome extends RecyclerView.Adapter<RecyclerView.ViewHo
                 context.startActivity(intent);
             }
         });
-        newestHolder.rv_newest.setAdapter(adapterNewestArticle);
-
     }
 
 
@@ -211,6 +233,7 @@ public class AdapterArticleHome extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     @Override
     public int getItemCount() {
+
         return listNewest.size() + 3;
 
     }

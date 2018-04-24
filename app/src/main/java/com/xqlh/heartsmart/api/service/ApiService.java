@@ -1,5 +1,6 @@
 package com.xqlh.heartsmart.api.service;
 
+import com.xqlh.heartsmart.bean.EntityArticleBeautiful;
 import com.xqlh.heartsmart.bean.EntityArticleDetail;
 import com.xqlh.heartsmart.bean.EntityArticleNewest;
 import com.xqlh.heartsmart.bean.EntityBindPhone;
@@ -112,6 +113,16 @@ public interface ApiService {
                                                      @Field("pageIndex") int pageIndex,
                                                      @Field("pageSize") int pageSize,
                                                      @Field("orderbytype") int orderbytype);
+
+    //美文
+    @FormUrlEncoded
+    @POST("api/article/aritclelist")
+    Observable<EntityArticleBeautiful> getArticleBeautiful(@Field("keywords") String keywords,
+                                                       @Field("ArticleTypeID") String ArticleTypeID,
+                                                       @Field("LabelIds") String[] LabelIds,
+                                                       @Field("pageIndex") int pageIndex,
+                                                       @Field("pageSize") int pageSize,
+                                                       @Field("orderbytype") int orderbytype);
 
 
     //获取文章的详细内容

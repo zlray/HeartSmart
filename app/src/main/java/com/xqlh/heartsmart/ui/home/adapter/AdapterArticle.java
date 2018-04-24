@@ -43,7 +43,7 @@ public class AdapterArticle extends RecyclerView.Adapter<AdapterArticle.MineView
         LayoutInflater inflater = LayoutInflater.from(mContext);
 
         //找到子视图
-        childView = inflater.inflate(R.layout.item_newest_article, parent, false);
+        childView = inflater.inflate(R.layout.item_rv_newest, parent, false);
 
         //实例化mViewHolder
         AdapterArticle.MineViewHolder mViewHolder = new AdapterArticle.MineViewHolder(childView, listener);
