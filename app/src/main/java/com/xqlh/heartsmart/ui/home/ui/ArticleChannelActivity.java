@@ -8,11 +8,8 @@ import butterknife.BindView;
 
 public class ArticleChannelActivity extends BaseActivity {
 
-    @BindView(R.id.viewpager)
-    CustomViewPager mViewpager;
-
-    @BindView(R.id.SlidingTabLayout)
-    com.flyco.tablayout.SlidingTabLayout SlidingTabLayout;
+    @BindView(R.id.vp)
+    CustomViewPager vp;
 
     @Override
     public int setContent() {

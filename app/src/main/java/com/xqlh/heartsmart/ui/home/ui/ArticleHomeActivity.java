@@ -2,13 +2,18 @@ package com.xqlh.heartsmart.ui.home.ui;
 
 import android.graphics.Color;
 import android.net.Uri;
-import android.support.v7.widget.LinearLayoutManager;
+import android.support.annotation.NonNull;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.xqlh.heartsmart.R;
 import com.xqlh.heartsmart.api.RetrofitHelper;
 import com.xqlh.heartsmart.api.base.BaseObserval;
@@ -24,6 +29,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 import es.dmoral.toasty.Toasty;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
@@ -38,6 +44,9 @@ public class ArticleHomeActivity extends BaseActivity {
 
     @BindView(R.id.rv_article_home)
     RecyclerView rv_article_home;
+
+    @BindView(R.id.ib_top)
+    ImageButton ib_top;
 
 
     private AdapterArticleHome adapterArticleHome;
@@ -77,14 +86,15 @@ public class ArticleHomeActivity extends BaseActivity {
 
         initData();
 
-        getBeautifulArticle();
+        getBeautifulArticle(mCurrentPage, PAGE_SIZE);
 
         initRv();
 
 
 //        //加载刷新数据
-//        initRefresh();
+        initRefresh();
     }
+
 
     public void initTtileBar() {
         article_titlebar.setLeftImageResource(R.drawable.return_button);
@@ -116,10 +126,41 @@ public class ArticleHomeActivity extends BaseActivity {
 
         adapterArticleHome.setEightList(eightList);
 
-        rv_article_home.setAdapter(adapterArticleHome);
+        //
+        adapterArticleHome.notifyDataSetChanged();
 
+    }
+
+
+    public void initRv() {
+        GridLayoutManager GridLayoutManager = new GridLayoutManager(this, 1);
+        GridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+            @Override
+            public int getSpanSize(int position) {
+                if (position <= 9) {
+                    ib_top.setVisibility(View.GONE);
+                } else {
+                    ib_top.setVisibility(View.VISIBLE);
+                }
+                return 1;//只能返回1
+            }
+        });
+        rv_article_home.setLayoutManager(GridLayoutManager);
+    }
+
+    @OnClick({R.id.ib_top})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.ib_top:
+                rv_article_home.scrollToPosition(0);
+                break;
+        }
+    }
+
+
+    public void getBeautifulArticle(int page, int PAGE_SIZE) {
         RetrofitHelper.getApiService()
-                .getArticleBeautiful("", "", new String[]{""}, 1, 6, 2)
+                .getArticleBeautiful("", "", new String[]{""}, page, PAGE_SIZE, 2)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseObserval<EntityArticleBeautiful>() {
@@ -127,8 +168,10 @@ public class ArticleHomeActivity extends BaseActivity {
                     public void onSuccess(final EntityArticleBeautiful response) {
                         if (response.getCode() == 1) {
                             Log.i(TAG, "网络获取美文集合" + response.getResult().size());
+
                             adapterArticleHome.setBeautifulList(response.getResult());
-                            rv_article_home.setAdapter(adapterArticleHome);
+
+                            adapterArticleHome.notifyDataSetChanged();
 
                         } else {
                             Toasty.warning(Utils.getContext(), "服务器异常", Toast.LENGTH_SHORT, true).show();
@@ -138,20 +181,9 @@ public class ArticleHomeActivity extends BaseActivity {
                 });
     }
 
-
-    public void initRv() {
-
-        rv_article_home.setLayoutManager(new LinearLayoutManager(this));
-    }
-
-
-    public void getBeautifulArticle() {
-
-    }
-
     public void getNewest(int page, int PAGE_SIZE) {
         RetrofitHelper.getApiService()
-                .getArticleQuery("", "", new String[]{""}, 1, 6, 2)
+                .getArticleQuery("", "", new String[]{""}, page, PAGE_SIZE, 3)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseObserval<EntityArticleNewest>() {
@@ -168,19 +200,48 @@ public class ArticleHomeActivity extends BaseActivity {
                 });
     }
 
+    public void getRefereshNewest(int page, int PAGE_SIZE) {
+        RetrofitHelper.getApiService()
+                .getArticleQuery("", "", new String[]{""}, page, PAGE_SIZE, 3)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseObserval<EntityArticleNewest>() {
+                    @Override
+                    public void onSuccess(final EntityArticleNewest response) {
+                        if (response.getCode() == 1) {
+                            Log.i(TAG, "网络获取最新刷新的集合" + response.getResult().size());
+                            adapterArticleHome.addNewestList(response.getResult());
+                            adapterArticleHome.notifyDataSetChanged();
+                        } else {
+                            Toasty.warning(Utils.getContext(), "服务器异常", Toast.LENGTH_SHORT, true).show();
+                        }
+                    }
+                });
+    }
 
-//    public void initRefresh() {
-//        //重置没有更多数据状态
-//        smartRefreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
-//            @Override
-//            public void onLoadMore(@NonNull final RefreshLayout refreshLayout) {
-//                mCurrentPage++;
-//                getNewest(mCurrentPage, PAGE_SIZE * mCurrentPage);
-//                adapterNewestArticle.notifyDataSetChanged();
-//                smartRefreshLayout.finishLoadMore();
-//            }
-//        });
-//    }
+
+    public void initRefresh() {
+        smartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(RefreshLayout refreshlayout) {
+                getBeautifulArticle(mCurrentPage, PAGE_SIZE);
+                getNewest(mCurrentPage, PAGE_SIZE);
+//                mData.clear();
+                adapterArticleHome.notifyDataSetChanged();
+                refreshlayout.finishRefresh();
+            }
+        });
+
+        //重置没有更多数据状态
+        smartRefreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
+            @Override
+            public void onLoadMore(@NonNull final RefreshLayout refreshLayout) {
+                mCurrentPage++;
+                getRefereshNewest(mCurrentPage, PAGE_SIZE * mCurrentPage);
+                smartRefreshLayout.finishLoadMore();
+            }
+        });
+    }
 
 
 //    @Override

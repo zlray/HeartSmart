@@ -5,23 +5,14 @@
     android:layout_height="match_parent"
     tools:context="com.xqlh.heartsmart.ui.home.ui.ArticleChannelActivity">
 
-    <RelativeLayout
+    <net.lucode.hackware.magicindicator.MagicIndicator
+        android:id="@+id/magic_indicator"
         android:layout_width="match_parent"
-        android:layout_height="50dp">
+        android:layout_height="40dp" />
 
-        <com.flyco.tablayout.SlidingTabLayout
-            xmlns:tl="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/SlidingTabLayout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/color_title_bar"
-            tl:tl_indicator_color="@android:color/white"
-            tl:tl_textSelectColor="@android:color/white"
-            tl:tl_textsize="14sp" />
-    </RelativeLayout>
-    <com.xqlh.heartsmart.widget.CustomViewPager
-        android:id="@+id/viewpager"
+    <android.support.v4.view.ViewPager
+        android:id="@+id/vp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-    </com.xqlh.heartsmart.widget.CustomViewPager>
+        android:layout_height="0dp"
+        android:layout_weight="1" />
 </LinearLayout>

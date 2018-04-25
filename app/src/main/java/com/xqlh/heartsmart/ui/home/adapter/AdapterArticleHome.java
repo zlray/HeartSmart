@@ -10,6 +10,8 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -19,6 +21,7 @@ import com.xqlh.heartsmart.bean.EntityArticleBeautiful;
 import com.xqlh.heartsmart.bean.EntityArticleNewest;
 import com.xqlh.heartsmart.ui.home.model.IconTitleModel;
 import com.xqlh.heartsmart.ui.home.ui.ArticleDetailActivity;
+import com.xqlh.heartsmart.utils.Constants;
 import com.xqlh.heartsmart.utils.Utils;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
@@ -59,12 +62,27 @@ public class AdapterArticleHome extends RecyclerView.Adapter<RecyclerView.ViewHo
     }
 
     public void setNewestList(List<EntityArticleNewest.ResultBean> list) {
-        if (list == null) {
-            list = new ArrayList<>();
-        }
         this.listNewest = list;
         Log.i("lz", listNewest.size() + "setNewestList");
     }
+
+    public void addNewestList(List<EntityArticleNewest.ResultBean> list) {
+        //增加数据
+        int position = listNewest.size();
+        listNewest.addAll(position, list);
+        notifyItemInserted(position);
+    }
+
+    public void clearNewestList() {
+        listNewest.clear();
+    }
+
+//    public void refresh(List<ItemBean> newList) {
+//        //刷新数据
+//        mList.removeAll(mList);
+//        mList.addAll(newList);
+//        notifyDataSetChanged();
+//    }
 
 
     public void setBannerList(List<Uri> list) {
@@ -101,7 +119,7 @@ public class AdapterArticleHome extends RecyclerView.Adapter<RecyclerView.ViewHo
             view.setLayoutParams(lp);
             return new BeautifulHolder(view);
         } else {//正常
-            view = getView(R.layout.item_layout_newest);
+            view = getView(R.layout.item_rv_newest);
             view.setLayoutParams(lp);
             return new NewestHolder(view);
         }
@@ -132,7 +150,7 @@ public class AdapterArticleHome extends RecyclerView.Adapter<RecyclerView.ViewHo
             setBeautiful(beautifulHolder);
         } else if (holder instanceof NewestHolder) {//正常布局
             NewestHolder newestHolder = (NewestHolder) holder;
-            setNewest(newestHolder);
+            setNewest(newestHolder, position);
         }
     }
 
@@ -196,21 +214,37 @@ public class AdapterArticleHome extends RecyclerView.Adapter<RecyclerView.ViewHo
     }
 
     //最新
-    private void setNewest(NewestHolder newestHolder) {
+    private void setNewest(NewestHolder newestHolder, final int position) {
         Log.i("lz", "setNewest最新的");
-        AdapterNewestArticle adapterNewestArticle;
-        adapterNewestArticle = new AdapterNewestArticle(R.layout.item_rv_newest, context, listNewest);
+        newestHolder.tv_article_title.setText(listNewest.get(position - 3).getTitle());
+        newestHolder.tv_article_type.setText(listNewest.get(position - 3).getArticleTypeStr());
+        newestHolder.tv_article_reading_times.setText(listNewest.get(position - 3).getShowTimes() + "人阅读");
+        newestHolder.tv_article_date.setText(Constants.getYYD(listNewest.get(position - 3).getCreateTime()));
 
-        newestHolder.rv_newest.setAdapter(adapterNewestArticle);
-
-        adapterNewestArticle.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+        Glide.with(context).load(listNewest.get(position - 3).getTitlePic()).into(newestHolder.iv_article_titlepic);
+        newestHolder.ll_newest_content.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+            public void onClick(View view) {
                 Intent intent = new Intent(context, ArticleDetailActivity.class);
-                intent.putExtra("id", listNewest.get(position).getID());
+                intent.putExtra("id", listNewest.get(position - 3).getID());
                 context.startActivity(intent);
             }
         });
+
+//        AdapterNewestArticle adapterNewestArticle;
+//        adapterNewestArticle = new AdapterNewestArticle(R.layout.item_rv_newest, context, listNewest);
+//
+//        newestHolder.rv_newest.setAdapter(adapterNewestArticle);
+//
+//        adapterNewestArticle.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+//                Intent intent = new Intent(context, ArticleDetailActivity.class);
+//                intent.putExtra("id", listNewest.get(position).getID());
+//                context.startActivity(intent);
+//            }
+//        });
+
     }
 
 
@@ -222,20 +256,20 @@ public class AdapterArticleHome extends RecyclerView.Adapter<RecyclerView.ViewHo
          */
         if (position == 0) {//第0个位置是轮播图
             return BANNER_VIEW_TYPE;
-        } else if (position == 1) {//第一个是频道布局
+        } else if (position == 1) {//第一个位置8个按钮
             return EIGHT_VIEW_TYPE;
-        } else if (position == 2) {//第2个位置是美女布局
+        } else if (position == 2) {//第2个位置
+            Log.i("lz", "第二个位置");
             return BEAUTIFUL_VIEW_TYPE;
         } else {//其他位置返回正常的布局
+            Log.i("lz", "第三个位置");
             return NEWEST_VIEW_TYPE;
         }
     }
 
     @Override
     public int getItemCount() {
-
         return listNewest.size() + 3;
-
     }
 
 
@@ -281,13 +315,25 @@ public class AdapterArticleHome extends RecyclerView.Adapter<RecyclerView.ViewHo
      * 最新的
      */
     public static class NewestHolder extends RecyclerView.ViewHolder {
-        RecyclerView rv_newest;
+        //        RecyclerView rv_newest;
+        TextView tv_article_title;
+        TextView tv_article_type;
+        TextView tv_article_reading_times;
+        TextView tv_article_date;
+        ImageView iv_article_titlepic;
+        LinearLayout ll_newest_content;
 
         public NewestHolder(View itemView) {
             super(itemView);
-            rv_newest = (RecyclerView) itemView.findViewById(R.id.rv_newest);
+            tv_article_title = (TextView) itemView.findViewById(R.id.tv_article_title);
+            tv_article_type = (TextView) itemView.findViewById(R.id.tv_article_type);
+            tv_article_reading_times = (TextView) itemView.findViewById(R.id.tv_article_reading_times);
+            tv_article_date = (TextView) itemView.findViewById(R.id.tv_article_date);
+
+            iv_article_titlepic = (ImageView) itemView.findViewById(R.id.iv_article_titlepic);
+            ll_newest_content = (LinearLayout) itemView.findViewById(R.id.ll_newest_content);
+
+//            rv_newest = (RecyclerView) itemView.findViewById(R.id.rv_newest);
         }
     }
-
-
 }

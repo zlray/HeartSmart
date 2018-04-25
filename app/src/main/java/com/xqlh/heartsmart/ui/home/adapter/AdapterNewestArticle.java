@@ -23,6 +23,7 @@ public class AdapterNewestArticle extends BaseQuickAdapter<EntityArticleNewest.R
 
     public AdapterNewestArticle(int layoutResId, Context mContext, List<EntityArticleNewest.ResultBean> list) {
         super(layoutResId, list);
+        Log.i("lz", "AdapterNewestArticle: " + "最新的" + list.get(1).getID());
         this.mContext = mContext;
     }
 

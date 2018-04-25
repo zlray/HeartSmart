@@ -1,6 +1,7 @@
 package com.xqlh.heartsmart.ui.home.adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
@@ -21,6 +22,7 @@ public class AdapterBeautifulArticle extends BaseQuickAdapter<EntityArticleBeaut
 
     public AdapterBeautifulArticle(int layoutResId, Context mContext, List<EntityArticleBeautiful.ResultBean> list) {
         super(layoutResId, list);
+        Log.i("lz", "AdapterBeautifulArticle: " +"美文");
         this.mContext = mContext;
     }
 
