@@ -19,7 +19,7 @@ import com.xqlh.heartsmart.bean.EntityProductCategory;
 import com.xqlh.heartsmart.ui.product.adapter.AdapterLeft;
 import com.xqlh.heartsmart.ui.product.adapter.AdapterRight;
 import com.xqlh.heartsmart.utils.ProgressUtils;
-import com.xqlh.heartsmart.utils.Utils;
+import com.xqlh.heartsmart.utils.ContenxtUtils;
 import com.xqlh.heartsmart.widget.TitleBar;
 
 import java.util.ArrayList;
@@ -117,7 +117,7 @@ public class ProductFragment extends BaseLazyFragment {
                             rv_right.setAdapter(adapterRight);
                             Log.i("lz", "aaaa" + listProduct.size());
                         } else {
-                            Toasty.warning(Utils.getContext(), "服务器异常", Toast.LENGTH_SHORT, true).show();
+                            Toasty.warning(ContenxtUtils.getContext(), "服务器异常", Toast.LENGTH_SHORT, true).show();
                         }
                     }
                 });
@@ -146,7 +146,7 @@ public class ProductFragment extends BaseLazyFragment {
                             rv_right.setAdapter(adapterRight);
                             Log.i("lz", "aaaa" + listProduct.size());
                         } else {
-                            Toasty.warning(Utils.getContext(), "服务器异常", Toast.LENGTH_SHORT, true).show();
+                            Toasty.warning(ContenxtUtils.getContext(), "服务器异常", Toast.LENGTH_SHORT, true).show();
                         }
                     }
                 });

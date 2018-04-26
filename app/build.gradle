@@ -83,5 +83,4 @@ dependencies {
     compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.30'
 
 
-
 }

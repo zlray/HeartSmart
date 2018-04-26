@@ -6,7 +6,7 @@ import android.view.View;
 import android.view.WindowManager;
 
 
-public class ContextUtils {
+public class DpSpUtils {
     /**
      * 将px值转换为sp值，保证文字大小不变
      *

@@ -1,7 +1,5 @@
 package com.xqlh.heartsmart.bean;
 
-import java.util.List;
-
 /**
  * Created by zl on 2018/4/17.
  */
@@ -12,7 +10,7 @@ public class EntityArticleDetail {
     /**
      * code : 1
      * msg : OK
-     * Result : {"ID":"03c1e7295f9648ebad4ea9ed1f701426","ArticleTitle":"让爱情更稳定幸福的三个关键","PublishDate":"2017-05-31","ShowTimes":21,"PraiseTimes":0,"CommentTimes":0,"CollectionTimes":-1,"UserID":"bcd32aab148b462dbf15c33d697496a1","UserName":"系统管理员","TitlePic":"http://resources.bnuxq.com:8082/images/2017/5\\33d2eef7aa55165aa11fb58163bcd4a0.jpg","Content":"\n\t\t\t<p>　　<strong><a class=\"channel_keylink\" href=\"http://www.xinlinghuayuan.com/\" target=\"_blank\"><span style=\"color: #0066ff;\"><span class=\"wp_keywordlink\"><\/span><\/span><\/a><a href=\"http://www.xinlinghuayuan.com/\" title=\"心理咨询\" target=\"_blank\">心理咨询<\/a><\/strong>师说，爱是包容而不是放纵，爱是关怀而不是宠爱，爱是相互交融而不是单相思，爱是百味而不全是甜蜜。真正的<a class=\"channel_keylink\" href=\"http://baike.baidu.com/view/10802066.htm?fr=aladdin\" target=\"_blank\"><span style=\"color: #0066ff;\">爱情<\/span><\/a>并不一定是他人眼中的完美匹配，而是相爱的人彼此心灵的相互契合。真爱是一种从内心发出的关心和照顾，没有华丽的言语，没有哗众取宠的行动， 只有在点点滴滴一言一行中你能感受得到。而要让爱情更稳定幸福要注意以下三个关键：<\/p>\n<p><strong>1. 实实在在地了解对方<\/strong><br>\n　　你确定你真的了解身边的另一半吗？你是否了解他的梦想，了解他五年后希望自己成为什么样的人吗？你愿意共享她的快乐，也拥抱她的失意与落寞吗？你能够在看透他的优点和缺点同时，却依然爱着这个人吗？<br>\n　　了解一个人是需要花很长时间的，或许终其一生，我们都无法完全了解另一个人。尽管如此，两个愿意花下长久时间去了解、倾听、猜测对方心思的人遇见了彼此，那么这一辈子还有什么更值得的了？<br>\n　　你说，他于是听；你听，他于是说，就这样成了一对听着说着不小心永远的恋人。<\/p>\n<p><strong>2. 即便情绪失控，仍注意不伤到对方<\/strong><br>\n　　不可否认，人都会有情绪失控的时候，我们大吵大叫，觉得全世界都对不起自己。但当我们争吵的时候，也应该避免把所有负面情绪投掷到另一半身上，因为这时我们说出的话，都有可能化作一把把利剑刺中对方最脆弱的部分。<br>\n　　每对情侣都应该学会属于自己的争吵和解方法，以及如何化解当下冲突的办法。事后，也必好好长谈聊聊彼此间的问题。<\/p>\n<p><strong>3. 在一天的结束前和好<\/strong><br>\n　　孙燕姿在《我怀念的》里唱到：\u201c争吵过后，还是想要爱你的冲动。\u201d而关系稳定的关键之一亦是如此！我们会争吵，但是争吵过后，还想和对方一起生活，还想和对方好好走向未来。研究显示，\u201c吵架不吵过夜\u201d确实有其道理。在睡觉前，放下彼此的各执己见吧，试着不要带太多情绪地聊聊为何发生争吵，也诚实地说出心里的顾虑以及问题，最后别忘了给对方一个深深的拥抱，这么做能够很好地帮助两人关系的成长。而若是心里的疙瘩一直没说出口，未来则可能越演越烈成为两人关系里的未爆弹。<br>\n　　上海<a class=\"channel_keylink\" href=\"http://www.xinlinghuayuan.com/\" target=\"_blank\"><span style=\"color: #0066ff;\"><span class=\"wp_keywordlink\"><\/span><\/span><\/a><a href=\"http://www.xc2006.cn/\" title=\"心潮\" target=\"_blank\">心潮<\/a><a class=\"channel_keylink\" href=\"http://www.xinlinghuayuan.com/\" target=\"_blank\"><span style=\"color: #0066ff;\"><span class=\"wp_keywordlink_affiliate\"><\/span><\/span><\/a><a href=\"http://www.xinlinghuayuan.com/blog/tag/psychological\" title=\"View all posts in 心理咨询\" target=\"_blank\">心理咨询<\/a><a class=\"channel_keylink\" href=\"http://www.xinlinghuayuan.com/\" target=\"_blank\">中心（<\/a><a class=\"channel_keylink\" href=\"http://www.xinlinghuayuan.com/\" target=\"_blank\"><span style=\"color: #0066ff;\"><span class=\"wp_keywordlink\"><\/span><\/span><\/a><a href=\"http://www.xinlinghuayuan.com/\" title=\"心灵花园\" target=\"_blank\">心灵花园<\/a><a class=\"channel_keylink\" href=\"http://www.xinlinghuayuan.com/\" target=\"_blank\">/<\/a><a class=\"channel_keylink\" href=\"http://baike.baidu.com/view/10802066.htm?fr=aladdin\" target=\"_blank\"><span style=\"color: #0066ff;\">顾歌<\/span><\/a><a class=\"channel_keylink\" href=\"http://www.xinlinghuayuan.com/\" target=\"_blank\">工作室）上海<\/a><a class=\"channel_keylink\" href=\"http://www.xinlinghuayuan.com/Team/Index.html\" target=\"_blank\"><span style=\"color: #0066ff;\"><span class=\"wp_keywordlink\"><\/span><\/span><\/a><a href=\"http://www.xinlinghuayuan.com/Team/Index.html\" title=\"心理咨询师\" target=\"_blank\">心理咨询师<\/a><a class=\"channel_keylink\" href=\"http://www.xinlinghuayuan.com/\" target=\"_blank\"> 选编<\/a><\/p>\n<p align=\"center\"><a href=\"http://www.xinlinghuayuan.com/Learning/UploadFiles_9559/201409/2014092810373072.jpg\" target=\"_blank\"><img src=\"http://resources.bnuxq.com:8082/images/2017/5\\33d2eef7aa55165aa11fb58163bcd4a0.jpg\" style=\"width: auto\\9; height:auto;width:100%;\"><\/a><\/p>\n<div style=\"float:right;\"><\/div>\t\t<p>@文章转自心灵花园网心理学博客<\/p>","ArticleTypeID":"ca9818ee292b4927a73c9b7c805c7938","ArticleTypeStr":"婚恋","ArticleLables":["结婚","两性关系","恋爱","社交技巧"],"IsCollection":false}
+     * Result : {"ID":"035415da080c43b380adcb4d149864e8","ArticleTitle":"性心理系列：牢骚的性暗示","PublishDate":"2017-05-31","ShowTimes":0,"PraiseTimes":0,"CommentTimes":0,"CollectionTimes":-1,"UserID":"bcd32aab148b462dbf15c33d697496a1","UserName":"系统管理员","TitlePic":"http://resources.bnuxq.com:8082/images/2017/5\\c6726680fedc67217a282bde19a8741a.jpg","Content":"\n\t\t\t<p>　　在<a class=\"channel_keylink\" href=\"http://www.xinlinghuayuan.com/\" target=\"_blank\"><span style=\"color: #0066ff;\"><span class=\"wp_keywordlink\"><\/span><\/span><\/a><a href=\"http://www.xinlinghuayuan.com/\" title=\"心理咨询\" target=\"_blank\">心理咨询<\/a>室里乐天紧紧的攥着拳头，额头出汗，他说他感到非常紧张。<a class=\"channel_keylink\" href=\"http://www.xinlinghuayuan.com/Team/Index.html\" target=\"_blank\"><span style=\"color: #0066ff;\"><span class=\"wp_keywordlink\"><\/span><\/span><\/a><a href=\"http://www.xinlinghuayuan.com/Team/Index.html\" title=\"心理咨询师\" target=\"_blank\">心理咨询师<\/a>让他闭上眼睛，做了一个放松体验。当乐天感觉到自己达到一定程度的放松时，他开始了倾诉。<br>\n　　乐天来自北方城市，父亲是一名大学心理系教授，从小乐天就经历过父亲的<a class=\"channel_keylink\" href=\"http://www.xinlinghuayuan.com/Learning/Index.html\" target=\"_blank\"><span style=\"color: #0066ff;\">心理学<\/span><\/a>熏陶。1998年乐天毕业于北京一所知名的大学，后在深圳落户，开办了一家电子产品公司，成为那个年代的淘金者。2008年，乐天和　　相恋10年的夏美结婚并生育一个可爱的孩子。<br>\n　　夏美是当地一家民营企业老板的千金，高中文化程度，为了支持乐天创业，夏美的父亲打尽了自己在当地的人情牌。随着事业的发展，乐天和夏美的分歧也越来越多，夏美不能理解乐天为什么早起晚归，压力那么大，总是把自己逼得处于非常紧张的状态，当然，夏美对于乐天也有期待，她期待的丈夫和孩子的父亲是一个和自己一样把身心都奉献给孩子的人，能够分担她教养孩子和孝顺长辈的重任。而来自北方的乐天，就是个大男子主义，他认为事业重于一切。2012年开始，他们的矛盾也越来越严重。<br>\n　　2012年下半年一次夫妻房事中，因为丈夫没有让妻子得到满足，妻子发牢骚的说了句：干事业把身体都亏掉了，以后也难行。乐天听到妻子这么说，感觉脑子突然空荡荡的，顿时担心自己会不会失去了性能力。<br>\n　　接下来的半年里，多次的尝试房事，乐天总是觉得自己不行，妻子的怨言越来越多。失眠、紧张、担忧在这半年里，充斥着乐天的生活。半年后，乐天决定要看心理咨询。<br>\n　　乐天在心理咨询室里说：我妻子不相信心理咨询，就我来看<a class=\"channel_keylink\" href=\"http://www.xinlinghuayuan.com/Team/Index.html\" target=\"_blank\"><span style=\"color: #0066ff;\"><span class=\"wp_keywordlink\"><\/span><\/span><\/a><a href=\"http://www.xinlinghuayuan.com/Team/Index.html\" title=\"心理医生\" target=\"_blank\">心理医生<\/a>这个问题，她觉得花钱了，和我闹了几次。我觉得她不能体会我的痛苦。我希望能解决我的性<a class=\"channel_keylink\" href=\"http://www.xinlinghuayuan.com/sjz/Index.html\" target=\"_blank\"><span style=\"color: #0066ff;\">心理问题<\/span><\/a>，同时，妻子也有一定的改变。<br>\n　　心理咨询师反馈：心理咨询室里有很多形形色色的个案，就乐天先生而言，首次心理咨询，他会依旧把自己的位置放在老板的位置，这不止会干扰咨询，也是他婚姻生活中的一个问题。在化解了咨询角色的问题后，让夫妻意识到夫妻的感情培养和房事的关系，这是这次<span class=\"wp_keywordlink_affiliate\"><a href=\"http://www.xinlinghuayuan.com/blog/tag/xing-xin-li\" title=\"View all posts in 性心理\" target=\"_blank\">性心理<\/a><\/span>问题解决的关键。<br>\n　　心理咨询师助理反馈心理咨询后的效果：这个个案是个持续的多次咨询，访客大概来了中心10次，每次超过50分钟。心理咨询师要求他们不要急于房事等，给他们的夫妻生活做出了一些规范。现在访客夫妻的感情很好，房事也正常了。妻子正在我们中心参加一些学习，希望能多学点心理学知识，在丈夫事业发展时，能尽量和丈夫同步成长。<br>\n　　访客乐天反馈：我是个很有想法的人，以前也看过当地的心理医生，感觉不太好，没有解决问题。这次在上海看心理咨询，我终于意识到为什么以前的心理医生看不好我的原因了，很多心理咨询师就被我牵着走了，而不是指引我。总之，上海当地的权威的<a class=\"channel_keylink\" href=\"http://www.xinlinghuayuan.com/Guidelines/Index.html\" target=\"_blank\"><span style=\"color: #0066ff;\">心理咨询机构<\/span><\/a>，像成立早的单位，机构积累的案例多，心理咨询师经验丰富。<br>\n　　文/上海<a class=\"channel_keylink\" href=\"http://www.xc2006.cn/\" target=\"_blank\"><span style=\"color: #0066ff;\"><span class=\"wp_keywordlink\"><\/span><\/span><\/a><a href=\"http://www.xc2006.cn/\" title=\"心潮\" target=\"_blank\">心潮<\/a><a class=\"channel_keylink\" href=\"http://www.xinlinghuayuan.com/\" target=\"_blank\"><span style=\"color: #0066ff;\">心理咨询中心<\/span><\/a>（<a class=\"channel_keylink\" href=\"http://www.xinlinghuayuan.com/\" target=\"_blank\"><span style=\"color: #0066ff;\"><span class=\"wp_keywordlink\"><\/span><\/span><\/a><a href=\"http://www.xinlinghuayuan.com/\" title=\"心灵花园\" target=\"_blank\">心灵花园<\/a>/<a class=\"channel_keylink\" href=\"http://baike.baidu.com/view/10802066.htm?fr=aladdin\" target=\"_blank\"><span style=\"color: #0066ff;\">顾歌<\/span><\/a>心理工作室）<a class=\"channel_keylink\" href=\"http://www.xinlinghuayuan.com/\" target=\"_blank\"><span style=\"color: #0066ff;\"><span class=\"wp_keywordlink\"><\/span><\/span><\/a><a href=\"http://www.xinlinghuayuan.com/\" title=\"上海心理咨询\" target=\"_blank\">上海心理咨询<\/a>师　Echo<\/p>\n<p align=\"center\"><img src=\"http://resources.bnuxq.com:8082/images/2017/5\\c6726680fedc67217a282bde19a8741a.jpg\" style=\"width: auto\\9; height:auto;width:100%;\"><\/p>\n<div style=\"float:right;\"><\/div>\t\t<p>@文章转自心灵花园网心理学博客<\/p>","ArticleTypeID":"850e7186768347daa7380627ca4fbc58","ArticleTypeStr":"性心理","ArticleLables":null,"IsCollection":false}
      * ResultMsg : null
      */
 
@@ -55,33 +53,32 @@ public class EntityArticleDetail {
 
     public static class ResultBean {
         /**
-         * ID : 03c1e7295f9648ebad4ea9ed1f701426
-         * ArticleTitle : 让爱情更稳定幸福的三个关键
+         * ID : 035415da080c43b380adcb4d149864e8
+         * ArticleTitle : 性心理系列：牢骚的性暗示
          * PublishDate : 2017-05-31
-         * ShowTimes : 21
+         * ShowTimes : 0
          * PraiseTimes : 0
          * CommentTimes : 0
          * CollectionTimes : -1
          * UserID : bcd32aab148b462dbf15c33d697496a1
          * UserName : 系统管理员
-         * TitlePic : http://resources.bnuxq.com:8082/images/2017/5\33d2eef7aa55165aa11fb58163bcd4a0.jpg
+         * TitlePic : http://resources.bnuxq.com:8082/images/2017/5\c6726680fedc67217a282bde19a8741a.jpg
          * Content :
-         <p>　　<strong><a class="channel_keylink" href="http://www.xinlinghuayuan.com/" target="_blank"><span style="color: #0066ff;"><span class="wp_keywordlink"></span></span></a><a href="http://www.xinlinghuayuan.com/" title="心理咨询" target="_blank">心理咨询</a></strong>师说，爱是包容而不是放纵，爱是关怀而不是宠爱，爱是相互交融而不是单相思，爱是百味而不全是甜蜜。真正的<a class="channel_keylink" href="http://baike.baidu.com/view/10802066.htm?fr=aladdin" target="_blank"><span style="color: #0066ff;">爱情</span></a>并不一定是他人眼中的完美匹配，而是相爱的人彼此心灵的相互契合。真爱是一种从内心发出的关心和照顾，没有华丽的言语，没有哗众取宠的行动， 只有在点点滴滴一言一行中你能感受得到。而要让爱情更稳定幸福要注意以下三个关键：</p>
-         <p><strong>1. 实实在在地了解对方</strong><br>
-         　　你确定你真的了解身边的另一半吗？你是否了解他的梦想，了解他五年后希望自己成为什么样的人吗？你愿意共享她的快乐，也拥抱她的失意与落寞吗？你能够在看透他的优点和缺点同时，却依然爱着这个人吗？<br>
-         　　了解一个人是需要花很长时间的，或许终其一生，我们都无法完全了解另一个人。尽管如此，两个愿意花下长久时间去了解、倾听、猜测对方心思的人遇见了彼此，那么这一辈子还有什么更值得的了？<br>
-         　　你说，他于是听；你听，他于是说，就这样成了一对听着说着不小心永远的恋人。</p>
-         <p><strong>2. 即便情绪失控，仍注意不伤到对方</strong><br>
-         　　不可否认，人都会有情绪失控的时候，我们大吵大叫，觉得全世界都对不起自己。但当我们争吵的时候，也应该避免把所有负面情绪投掷到另一半身上，因为这时我们说出的话，都有可能化作一把把利剑刺中对方最脆弱的部分。<br>
-         　　每对情侣都应该学会属于自己的争吵和解方法，以及如何化解当下冲突的办法。事后，也必好好长谈聊聊彼此间的问题。</p>
-         <p><strong>3. 在一天的结束前和好</strong><br>
-         　　孙燕姿在《我怀念的》里唱到：“争吵过后，还是想要爱你的冲动。”而关系稳定的关键之一亦是如此！我们会争吵，但是争吵过后，还想和对方一起生活，还想和对方好好走向未来。研究显示，“吵架不吵过夜”确实有其道理。在睡觉前，放下彼此的各执己见吧，试着不要带太多情绪地聊聊为何发生争吵，也诚实地说出心里的顾虑以及问题，最后别忘了给对方一个深深的拥抱，这么做能够很好地帮助两人关系的成长。而若是心里的疙瘩一直没说出口，未来则可能越演越烈成为两人关系里的未爆弹。<br>
-         　　上海<a class="channel_keylink" href="http://www.xinlinghuayuan.com/" target="_blank"><span style="color: #0066ff;"><span class="wp_keywordlink"></span></span></a><a href="http://www.xc2006.cn/" title="心潮" target="_blank">心潮</a><a class="channel_keylink" href="http://www.xinlinghuayuan.com/" target="_blank"><span style="color: #0066ff;"><span class="wp_keywordlink_affiliate"></span></span></a><a href="http://www.xinlinghuayuan.com/blog/tag/psychological" title="View all posts in 心理咨询" target="_blank">心理咨询</a><a class="channel_keylink" href="http://www.xinlinghuayuan.com/" target="_blank">中心（</a><a class="channel_keylink" href="http://www.xinlinghuayuan.com/" target="_blank"><span style="color: #0066ff;"><span class="wp_keywordlink"></span></span></a><a href="http://www.xinlinghuayuan.com/" title="心灵花园" target="_blank">心灵花园</a><a class="channel_keylink" href="http://www.xinlinghuayuan.com/" target="_blank">/</a><a class="channel_keylink" href="http://baike.baidu.com/view/10802066.htm?fr=aladdin" target="_blank"><span style="color: #0066ff;">顾歌</span></a><a class="channel_keylink" href="http://www.xinlinghuayuan.com/" target="_blank">工作室）上海</a><a class="channel_keylink" href="http://www.xinlinghuayuan.com/Team/Index.html" target="_blank"><span style="color: #0066ff;"><span class="wp_keywordlink"></span></span></a><a href="http://www.xinlinghuayuan.com/Team/Index.html" title="心理咨询师" target="_blank">心理咨询师</a><a class="channel_keylink" href="http://www.xinlinghuayuan.com/" target="_blank"> 选编</a></p>
-         <p align="center"><a href="http://www.xinlinghuayuan.com/Learning/UploadFiles_9559/201409/2014092810373072.jpg" target="_blank"><img src="http://resources.bnuxq.com:8082/images/2017/5\33d2eef7aa55165aa11fb58163bcd4a0.jpg" style="width: auto\9; height:auto;width:100%;"></a></p>
+         <p>　　在<a class="channel_keylink" href="http://www.xinlinghuayuan.com/" target="_blank"><span style="color: #0066ff;"><span class="wp_keywordlink"></span></span></a><a href="http://www.xinlinghuayuan.com/" title="心理咨询" target="_blank">心理咨询</a>室里乐天紧紧的攥着拳头，额头出汗，他说他感到非常紧张。<a class="channel_keylink" href="http://www.xinlinghuayuan.com/Team/Index.html" target="_blank"><span style="color: #0066ff;"><span class="wp_keywordlink"></span></span></a><a href="http://www.xinlinghuayuan.com/Team/Index.html" title="心理咨询师" target="_blank">心理咨询师</a>让他闭上眼睛，做了一个放松体验。当乐天感觉到自己达到一定程度的放松时，他开始了倾诉。<br>
+         　　乐天来自北方城市，父亲是一名大学心理系教授，从小乐天就经历过父亲的<a class="channel_keylink" href="http://www.xinlinghuayuan.com/Learning/Index.html" target="_blank"><span style="color: #0066ff;">心理学</span></a>熏陶。1998年乐天毕业于北京一所知名的大学，后在深圳落户，开办了一家电子产品公司，成为那个年代的淘金者。2008年，乐天和　　相恋10年的夏美结婚并生育一个可爱的孩子。<br>
+         　　夏美是当地一家民营企业老板的千金，高中文化程度，为了支持乐天创业，夏美的父亲打尽了自己在当地的人情牌。随着事业的发展，乐天和夏美的分歧也越来越多，夏美不能理解乐天为什么早起晚归，压力那么大，总是把自己逼得处于非常紧张的状态，当然，夏美对于乐天也有期待，她期待的丈夫和孩子的父亲是一个和自己一样把身心都奉献给孩子的人，能够分担她教养孩子和孝顺长辈的重任。而来自北方的乐天，就是个大男子主义，他认为事业重于一切。2012年开始，他们的矛盾也越来越严重。<br>
+         　　2012年下半年一次夫妻房事中，因为丈夫没有让妻子得到满足，妻子发牢骚的说了句：干事业把身体都亏掉了，以后也难行。乐天听到妻子这么说，感觉脑子突然空荡荡的，顿时担心自己会不会失去了性能力。<br>
+         　　接下来的半年里，多次的尝试房事，乐天总是觉得自己不行，妻子的怨言越来越多。失眠、紧张、担忧在这半年里，充斥着乐天的生活。半年后，乐天决定要看心理咨询。<br>
+         　　乐天在心理咨询室里说：我妻子不相信心理咨询，就我来看<a class="channel_keylink" href="http://www.xinlinghuayuan.com/Team/Index.html" target="_blank"><span style="color: #0066ff;"><span class="wp_keywordlink"></span></span></a><a href="http://www.xinlinghuayuan.com/Team/Index.html" title="心理医生" target="_blank">心理医生</a>这个问题，她觉得花钱了，和我闹了几次。我觉得她不能体会我的痛苦。我希望能解决我的性<a class="channel_keylink" href="http://www.xinlinghuayuan.com/sjz/Index.html" target="_blank"><span style="color: #0066ff;">心理问题</span></a>，同时，妻子也有一定的改变。<br>
+         　　心理咨询师反馈：心理咨询室里有很多形形色色的个案，就乐天先生而言，首次心理咨询，他会依旧把自己的位置放在老板的位置，这不止会干扰咨询，也是他婚姻生活中的一个问题。在化解了咨询角色的问题后，让夫妻意识到夫妻的感情培养和房事的关系，这是这次<span class="wp_keywordlink_affiliate"><a href="http://www.xinlinghuayuan.com/blog/tag/xing-xin-li" title="View all posts in 性心理" target="_blank">性心理</a></span>问题解决的关键。<br>
+         　　心理咨询师助理反馈心理咨询后的效果：这个个案是个持续的多次咨询，访客大概来了中心10次，每次超过50分钟。心理咨询师要求他们不要急于房事等，给他们的夫妻生活做出了一些规范。现在访客夫妻的感情很好，房事也正常了。妻子正在我们中心参加一些学习，希望能多学点心理学知识，在丈夫事业发展时，能尽量和丈夫同步成长。<br>
+         　　访客乐天反馈：我是个很有想法的人，以前也看过当地的心理医生，感觉不太好，没有解决问题。这次在上海看心理咨询，我终于意识到为什么以前的心理医生看不好我的原因了，很多心理咨询师就被我牵着走了，而不是指引我。总之，上海当地的权威的<a class="channel_keylink" href="http://www.xinlinghuayuan.com/Guidelines/Index.html" target="_blank"><span style="color: #0066ff;">心理咨询机构</span></a>，像成立早的单位，机构积累的案例多，心理咨询师经验丰富。<br>
+         　　文/上海<a class="channel_keylink" href="http://www.xc2006.cn/" target="_blank"><span style="color: #0066ff;"><span class="wp_keywordlink"></span></span></a><a href="http://www.xc2006.cn/" title="心潮" target="_blank">心潮</a><a class="channel_keylink" href="http://www.xinlinghuayuan.com/" target="_blank"><span style="color: #0066ff;">心理咨询中心</span></a>（<a class="channel_keylink" href="http://www.xinlinghuayuan.com/" target="_blank"><span style="color: #0066ff;"><span class="wp_keywordlink"></span></span></a><a href="http://www.xinlinghuayuan.com/" title="心灵花园" target="_blank">心灵花园</a>/<a class="channel_keylink" href="http://baike.baidu.com/view/10802066.htm?fr=aladdin" target="_blank"><span style="color: #0066ff;">顾歌</span></a>心理工作室）<a class="channel_keylink" href="http://www.xinlinghuayuan.com/" target="_blank"><span style="color: #0066ff;"><span class="wp_keywordlink"></span></span></a><a href="http://www.xinlinghuayuan.com/" title="上海心理咨询" target="_blank">上海心理咨询</a>师　Echo</p>
+         <p align="center"><img src="http://resources.bnuxq.com:8082/images/2017/5\c6726680fedc67217a282bde19a8741a.jpg" style="width: auto\9; height:auto;width:100%;"></p>
          <div style="float:right;"></div>		<p>@文章转自心灵花园网心理学博客</p>
-         * ArticleTypeID : ca9818ee292b4927a73c9b7c805c7938
-         * ArticleTypeStr : 婚恋
-         * ArticleLables : ["结婚","两性关系","恋爱","社交技巧"]
+         * ArticleTypeID : 850e7186768347daa7380627ca4fbc58
+         * ArticleTypeStr : 性心理
+         * ArticleLables : null
          * IsCollection : false
          */
 
@@ -98,8 +95,8 @@ public class EntityArticleDetail {
         private String Content;
         private String ArticleTypeID;
         private String ArticleTypeStr;
+        private Object ArticleLables;
         private boolean IsCollection;
-        private List<String> ArticleLables;
 
         public String getID() {
             return ID;
@@ -205,20 +202,20 @@ public class EntityArticleDetail {
             this.ArticleTypeStr = ArticleTypeStr;
         }
 
+        public Object getArticleLables() {
+            return ArticleLables;
+        }
+
+        public void setArticleLables(Object ArticleLables) {
+            this.ArticleLables = ArticleLables;
+        }
+
         public boolean isIsCollection() {
             return IsCollection;
         }
 
         public void setIsCollection(boolean IsCollection) {
             this.IsCollection = IsCollection;
-        }
-
-        public List<String> getArticleLables() {
-            return ArticleLables;
-        }
-
-        public void setArticleLables(List<String> ArticleLables) {
-            this.ArticleLables = ArticleLables;
         }
     }
 }

@@ -25,7 +25,7 @@ import com.xqlh.heartsmart.bean.EntityUserInfor;
 import com.xqlh.heartsmart.utils.Constants;
 import com.xqlh.heartsmart.utils.ProgressUtils;
 import com.xqlh.heartsmart.utils.SharedPreferencesHelper;
-import com.xqlh.heartsmart.utils.Utils;
+import com.xqlh.heartsmart.utils.ContenxtUtils;
 import com.xqlh.heartsmart.widget.TitleBar;
 import com.yalantis.ucrop.UCrop;
 import com.yalantis.ucrop.UCropActivity;
@@ -123,7 +123,7 @@ public class MineActivity extends BaseActivity {
                             mine_tv_birthday.setText(response.getResult().getBirthDate());
                             mine_tv_phone.setText(response.getResult().getTelephone());
                         } else {
-                            Toasty.warning(Utils.getContext(), "服务器异常", Toast.LENGTH_SHORT, true).show();
+                            Toasty.warning(ContenxtUtils.getContext(), "服务器异常", Toast.LENGTH_SHORT, true).show();
                         }
                     }
                 });

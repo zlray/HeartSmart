@@ -63,7 +63,8 @@
         <activity android:name=".ui.login.ui.UpdatePasswordActivity" />
         <activity android:name=".ui.home.ui.ArticleHomeActivity" />
         <activity android:name=".ui.home.ui.ArticleDetailActivity" />
-        <activity android:name=".ui.home.ui.ArticleChannelActivity"></activity>
+        <activity android:name=".ui.home.ui.ArticleChannelActivity" />
+        <activity android:name=".ui.home.ui.ArticleCategoryActivity"></activity>
     </application>
 
 </manifest>

@@ -29,4 +29,11 @@
         <attr name="civ_border_overlay" format="boolean" />
         <attr name="civ_fill_color" format="color" />
     </declare-styleable>
+
+    <declare-styleable name="hprogress">
+        <attr name="progress" format="integer"/>
+        <attr name="max" format="integer"/>
+        <attr name="progressHeight" format="integer"/>
+        <attr name="progressColor" format="color"/>
+    </declare-styleable>
 </resources>

@@ -24,7 +24,7 @@ import com.xqlh.heartsmart.utils.CommonUtil;
 import com.xqlh.heartsmart.utils.Constants;
 import com.xqlh.heartsmart.utils.ProgressUtils;
 import com.xqlh.heartsmart.utils.SharedPreferencesHelper;
-import com.xqlh.heartsmart.utils.Utils;
+import com.xqlh.heartsmart.utils.ContenxtUtils;
 import com.xqlh.heartsmart.widget.TitleBar;
 
 import java.util.concurrent.TimeUnit;
@@ -163,7 +163,7 @@ public class BindPhoneActivity extends BaseActivity {
                                             })
                                             .subscribe();
                                 } else {
-                                    Toasty.warning(Utils.getContext(), "该手机号已经被注册", Toast.LENGTH_SHORT, true).show();
+                                    Toasty.warning(ContenxtUtils.getContext(), "该手机号已经被注册", Toast.LENGTH_SHORT, true).show();
                                 }
                             }
                         }
@@ -212,7 +212,7 @@ public class BindPhoneActivity extends BaseActivity {
                                     et_verification_code_input.getText().toString().trim()
                             );
                         } else {
-                            Toasty.success(Utils.getContext(), "验证码错误", Toast.LENGTH_SHORT, true).show();
+                            Toasty.success(ContenxtUtils.getContext(), "验证码错误", Toast.LENGTH_SHORT, true).show();
                         }
                     }
                 });
@@ -237,7 +237,7 @@ public class BindPhoneActivity extends BaseActivity {
                     public void onSuccess(EntityBindPhone response) {
                         if (response.getCode() == 1) {
                             if (response.isResult()) {
-                                Toasty.success(Utils.getContext(), response.getResultMsg(), Toast.LENGTH_SHORT, true).show();
+                                Toasty.success(ContenxtUtils.getContext(), response.getResultMsg(), Toast.LENGTH_SHORT, true).show();
                                 Intent intent = new Intent(BindPhoneActivity.this, RetrievePasswordActivity.class);
                                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                 startActivity(intent);
@@ -268,7 +268,7 @@ public class BindPhoneActivity extends BaseActivity {
                         bt_bind.setBackgroundResource(R.drawable.login_bt_bg);
                     }
                 } else {
-                    Toasty.warning(Utils.getContext(), "输入正确格式手机号", Toast.LENGTH_SHORT, true).show();
+                    Toasty.warning(ContenxtUtils.getContext(), "输入正确格式手机号", Toast.LENGTH_SHORT, true).show();
                     bt_verification_code_get.setEnabled(false);
                     bt_verification_code_get.setBackgroundResource(R.drawable.retrieve_countdown_click);
                 }

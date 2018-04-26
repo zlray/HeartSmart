@@ -24,7 +24,7 @@ import com.xqlh.heartsmart.bean.EntityUpdatePassword;
 import com.xqlh.heartsmart.utils.Constants;
 import com.xqlh.heartsmart.utils.ProgressUtils;
 import com.xqlh.heartsmart.utils.SharedPreferencesHelper;
-import com.xqlh.heartsmart.utils.Utils;
+import com.xqlh.heartsmart.utils.ContenxtUtils;
 import com.xqlh.heartsmart.widget.TitleBar;
 
 import java.util.concurrent.TimeUnit;
@@ -101,7 +101,7 @@ public class RetrievePasswordActivity extends BaseActivity {
 
     @Override
     public void init() {
-        sp_token = new SharedPreferencesHelper(Utils.getContext(), Constants.CHECKINFOR);
+        sp_token = new SharedPreferencesHelper(ContenxtUtils.getContext(), Constants.CHECKINFOR);
         Intent intent = getIntent();
         account = intent.getStringExtra(Constants.ACCOUNT);
         tv_account.setText(account);
@@ -233,7 +233,7 @@ public class RetrievePasswordActivity extends BaseActivity {
                             sp_token.getSharedPreference(Constants.MESSAGE_TOKEN, "").toString()
                     );
                 } else {
-                    Toasty.warning(Utils.getContext(), "两次输入的密码不一致", Toast.LENGTH_SHORT, true).show();
+                    Toasty.warning(ContenxtUtils.getContext(), "两次输入的密码不一致", Toast.LENGTH_SHORT, true).show();
                 }
                 break;
         }

@@ -7,11 +7,14 @@ package com.xqlh.heartsmart.ui.home.model;
 public class IconTitleModel {
 
     private int iconResource; //图片id
-    private String title; //
+    private String title;
+    private String articleTypeID;//
 
-    public IconTitleModel(int iconResource, String title) {
+
+    public IconTitleModel(int iconResource, String title, String articleTypeID) {
         this.iconResource = iconResource;
         this.title = title;
+        this.articleTypeID = articleTypeID;
     }
 
     @Override
@@ -36,5 +39,13 @@ public class IconTitleModel {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public String getArticleTypeID() {
+        return articleTypeID;
+    }
+
+    public void setArticleTypeID(String articleTypeID) {
+        this.articleTypeID = articleTypeID;
     }
 }

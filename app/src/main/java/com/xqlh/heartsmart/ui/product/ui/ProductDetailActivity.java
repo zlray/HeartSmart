@@ -105,6 +105,10 @@ public class ProductDetailActivity extends BaseActivity {
         webSettings.setUseWideViewPort(true);
         //设置此属性，可任意比例缩放
         webSettings.setLoadWithOverviewMode(true);
+
+        webSettings.setUseWideViewPort(true);  //将图片调整到适合webview的大小
+        webSettings.setLoadWithOverviewMode(true); // 缩放至屏幕的大小
+
         // 支持页面缩放
         webSettings.setBuiltInZoomControls(true);
         webSettings.setSupportZoom(true);

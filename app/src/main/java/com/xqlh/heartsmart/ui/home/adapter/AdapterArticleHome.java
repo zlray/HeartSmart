@@ -12,7 +12,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -20,9 +19,9 @@ import com.xqlh.heartsmart.R;
 import com.xqlh.heartsmart.bean.EntityArticleBeautiful;
 import com.xqlh.heartsmart.bean.EntityArticleNewest;
 import com.xqlh.heartsmart.ui.home.model.IconTitleModel;
+import com.xqlh.heartsmart.ui.home.ui.ArticleCategoryActivity;
 import com.xqlh.heartsmart.ui.home.ui.ArticleDetailActivity;
 import com.xqlh.heartsmart.utils.Constants;
-import com.xqlh.heartsmart.utils.Utils;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.Transformer;
@@ -30,8 +29,6 @@ import com.youth.banner.loader.ImageLoader;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import es.dmoral.toasty.Toasty;
 
 /**
  * Created by Administrator on 2018/4/23.
@@ -187,13 +184,15 @@ public class AdapterArticleHome extends RecyclerView.Adapter<RecyclerView.ViewHo
         adapterEightButton.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                Toasty.warning(Utils.getContext(), listEight.get(position).getTitle(), Toast.LENGTH_LONG, true).show();
+                Intent intent = new Intent(context, ArticleCategoryActivity.class);
+                intent.putExtra("ArticleTypeID", listEight.get(position).getArticleTypeID());
+                intent.putExtra("title", listEight.get(position).getTitle());
+                context.startActivity(intent);
             }
         });
     }
 
     private void setBeautiful(BeautifulHolder beautifulHolder) {
-        Log.i("lz", "setBeautiful美文");
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
         linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         beautifulHolder.rv_beautiful.setLayoutManager(linearLayoutManager);
@@ -207,7 +206,7 @@ public class AdapterArticleHome extends RecyclerView.Adapter<RecyclerView.ViewHo
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 Intent intent = new Intent(context, ArticleDetailActivity.class);
-                intent.putExtra("id", listBeautiful.get(position).getID());
+                intent.putExtra("id", listBeautiful.get(position).getID().trim());
                 context.startActivity(intent);
             }
         });
@@ -215,7 +214,6 @@ public class AdapterArticleHome extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     //最新
     private void setNewest(NewestHolder newestHolder, final int position) {
-        Log.i("lz", "setNewest最新的");
         newestHolder.tv_article_title.setText(listNewest.get(position - 3).getTitle());
         newestHolder.tv_article_type.setText(listNewest.get(position - 3).getArticleTypeStr());
         newestHolder.tv_article_reading_times.setText(listNewest.get(position - 3).getShowTimes() + "人阅读");
@@ -226,7 +224,7 @@ public class AdapterArticleHome extends RecyclerView.Adapter<RecyclerView.ViewHo
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, ArticleDetailActivity.class);
-                intent.putExtra("id", listNewest.get(position - 3).getID());
+                intent.putExtra("id", listNewest.get(position - 3).getID().trim());
                 context.startActivity(intent);
             }
         });

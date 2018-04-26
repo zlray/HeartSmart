@@ -100,6 +100,7 @@ public interface ApiService {
     @GET("api/product/productinfo")
     Observable<EntityProductDetail> getProductDetail(@Query("id") String id);
 
+
     //获得用户的信息
     @GET("api/account/userinfo")
     Observable<EntityUserInfor> getUserInfor(@Header("Authorization") String Authorization);
@@ -128,4 +129,13 @@ public interface ApiService {
     //获取文章的详细内容
     @GET("api/article/aritcle")
     Observable<EntityArticleDetail> getArticleDetail(@Query("id") String id);
+
+
+
+
+
+
+
+
+
 }

@@ -32,7 +32,7 @@ import com.xqlh.heartsmart.bean.EntityLogin;
 import com.xqlh.heartsmart.utils.Constants;
 import com.xqlh.heartsmart.utils.ProgressUtils;
 import com.xqlh.heartsmart.utils.SharedPreferencesHelper;
-import com.xqlh.heartsmart.utils.Utils;
+import com.xqlh.heartsmart.utils.ContenxtUtils;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -200,7 +200,7 @@ public class LoginActivity extends BaseActivity {
             if (userPassword.isEmpty())
                 return;
             if (!userPassword.matches("[A-Za-z0-9]+")) {
-                Toasty.warning(Utils.getContext(), "请输入数字或字母", Toast.LENGTH_SHORT, true).show();
+                Toasty.warning(ContenxtUtils.getContext(), "请输入数字或字母", Toast.LENGTH_SHORT, true).show();
                 s.clear();
             }
         }
@@ -237,7 +237,7 @@ public class LoginActivity extends BaseActivity {
                 if (!TextUtils.isEmpty(et_account.getText().toString())) {
                     checkAccount(et_account.getText().toString().trim());
                 } else {
-                    Toasty.warning(Utils.getContext(), "请输入用户名", Toast.LENGTH_SHORT, true).show();
+                    Toasty.warning(ContenxtUtils.getContext(), "请输入用户名", Toast.LENGTH_SHORT, true).show();
                 }
                 break;
         }
@@ -262,7 +262,7 @@ public class LoginActivity extends BaseActivity {
                                 startActivity(new Intent(LoginActivity.this, MainActivity.class));
                             }
                         } else {
-                            Toasty.warning(Utils.getContext(), "用户名或者密码错误", Toast.LENGTH_SHORT, true).show();
+                            Toasty.warning(ContenxtUtils.getContext(), "用户名或者密码错误", Toast.LENGTH_SHORT, true).show();
                         }
                     }
                 });
@@ -285,7 +285,7 @@ public class LoginActivity extends BaseActivity {
                                 intent.putExtra(Constants.ACCOUNT, et_account.getText().toString());
                                 startActivity(intent);
                             } else {
-                                Toasty.warning(Utils.getContext(), "用户名未注册,请重新输入", Toast.LENGTH_SHORT, true).show();
+                                Toasty.warning(ContenxtUtils.getContext(), "用户名未注册,请重新输入", Toast.LENGTH_SHORT, true).show();
                             }
                         }
                     }
