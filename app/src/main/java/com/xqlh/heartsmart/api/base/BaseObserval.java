@@ -6,7 +6,7 @@ import com.google.gson.JsonParseException;
 import com.xqlh.heartsmart.R;
 import com.xqlh.heartsmart.api.exception.ServerResponseException;
 import com.xqlh.heartsmart.utils.LogUtils;
-import com.xqlh.heartsmart.utils.ContenxtUtils;
+import com.xqlh.heartsmart.utils.ContextUtils;
 
 import org.json.JSONException;
 
@@ -77,7 +77,7 @@ public abstract class BaseObserval<T> implements Observer<T> {
      */
     public void onFail(String message) {
         //
-        Toasty.info(ContenxtUtils.getContext(), message, Toast.LENGTH_SHORT, true).show();
+        Toasty.info(ContextUtils.getContext(), message, Toast.LENGTH_SHORT, true).show();
     }
 
 
@@ -89,20 +89,20 @@ public abstract class BaseObserval<T> implements Observer<T> {
     public void onException(ExceptionReason reason) {
         switch (reason) {
             case CONNECT_ERROR:
-                Toasty.info(ContenxtUtils.getContext(), ContenxtUtils.getContext().getResources().getText(R.string.connect_error), Toast.LENGTH_SHORT, true).show();
+                Toasty.info(ContextUtils.getContext(), ContextUtils.getContext().getResources().getText(R.string.connect_error), Toast.LENGTH_SHORT, true).show();
                 break;
             case CONNECT_TIMEOUT:
-                Toasty.info(ContenxtUtils.getContext(), ContenxtUtils.getContext().getResources().getText(R.string.connect_timeout), Toast.LENGTH_SHORT, true).show();
+                Toasty.info(ContextUtils.getContext(), ContextUtils.getContext().getResources().getText(R.string.connect_timeout), Toast.LENGTH_SHORT, true).show();
                 break;
             case BAD_NETWORK:
-                Toasty.info(ContenxtUtils.getContext(), ContenxtUtils.getContext().getResources().getText(R.string.bad_network), Toast.LENGTH_SHORT, true).show();
+                Toasty.info(ContextUtils.getContext(), ContextUtils.getContext().getResources().getText(R.string.bad_network), Toast.LENGTH_SHORT, true).show();
                 break;
             case PARSE_ERROR:
-                Toasty.info(ContenxtUtils.getContext(), ContenxtUtils.getContext().getResources().getText(R.string.parse_error), Toast.LENGTH_SHORT, true).show();
+                Toasty.info(ContextUtils.getContext(), ContextUtils.getContext().getResources().getText(R.string.parse_error), Toast.LENGTH_SHORT, true).show();
                 break;
             case UNKNOWN_ERROR:
             default:
-                Toasty.info(ContenxtUtils.getContext(), ContenxtUtils.getContext().getResources().getText(R.string.unknown_error), Toast.LENGTH_SHORT, true).show();
+                Toasty.info(ContextUtils.getContext(), ContextUtils.getContext().getResources().getText(R.string.unknown_error), Toast.LENGTH_SHORT, true).show();
                 break;
         }
     }

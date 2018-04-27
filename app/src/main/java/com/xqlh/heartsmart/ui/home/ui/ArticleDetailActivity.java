@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.http.SslError;
-import android.text.Html;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
@@ -71,7 +70,7 @@ public class ArticleDetailActivity extends BaseActivity {
 
         setWebView();
 
-//        getData(id);
+        getData(id);
     }
 
     public void initTtileBar() {
@@ -97,8 +96,12 @@ public class ArticleDetailActivity extends BaseActivity {
                         if (response.getCode() == 1) {
                             Log.i(TAG, "标题: " + response.getResult().getArticleTitle());
                             Log.i(TAG, "H5的内容: " + response.getResult().getContent());
+                            String replace1 = response.getResult().getContent().replace("%", "%25");
+                            String replace2 = replace1.replace("/", "%27");
+                            Log.i(TAG, "网页replace3replace3   " + replace2);
+
                             article_detail_wb.loadDataWithBaseURL(null,
-                                    Html.fromHtml(response.getResult().getContent()) + "",
+                                    replace2,
                                     "text/html", "UTF-8", null);
 
 //                            article_detail_wb.loadData(response.getResult().getContent(), "text/html; charset=UTF-8", null);
@@ -132,11 +135,9 @@ public class ArticleDetailActivity extends BaseActivity {
 
         article_detail_wb.setWebViewClient(webViewClient);
 
-        //
-        article_detail_wb.loadUrl("https://www.baidu.com");
     }
 
-    WebViewClient webViewClient = new WebViewClient(){
+    WebViewClient webViewClient = new WebViewClient() {
         //https的处理方式
         @Override
         public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
@@ -221,12 +222,15 @@ public class ArticleDetailActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 rl_retory.setVisibility(View.INVISIBLE);
+                article_detail_wb.setVisibility(View.VISIBLE);
                 //重新加载网页
-                article_detail_wb.reload();
+                Log.i(TAG, "重新加载");
+                getData(id);
             }
         });
         hideProgressWithAnim();
     }
+
     /**
      * 隐藏加载对话框
      */
@@ -248,6 +252,7 @@ public class ArticleDetailActivity extends BaseActivity {
         });
         top_progress.startAnimation(animation);
     }
+
     /**
      * 获取消失的动画
      *

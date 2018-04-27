@@ -101,29 +101,17 @@ public class ProductDetailActivity extends BaseActivity {
 
         webSettings.setJavaScriptEnabled(true);
         webSettings.setDomStorageEnabled(false);
-        // 打开屏幕时自适应
-        webSettings.setUseWideViewPort(true);
-        //设置此属性，可任意比例缩放
-        webSettings.setLoadWithOverviewMode(true);
-
-        webSettings.setUseWideViewPort(true);  //将图片调整到适合webview的大小
-        webSettings.setLoadWithOverviewMode(true); // 缩放至屏幕的大小
-
-        // 支持页面缩放
-        webSettings.setBuiltInZoomControls(true);
-        webSettings.setSupportZoom(true);
-        webSettings.setDomStorageEnabled(true);
-        webSettings.setAppCacheEnabled(true);
-        webSettings.setDatabaseEnabled(true);
         webSettings.setDefaultTextEncodingName("utf-8");
-        // 设置可以支持缩放
-        product_detail_wb.getSettings().setSupportZoom(true);
-        // 设置出现缩放工具
-        product_detail_wb.getSettings().setBuiltInZoomControls(true);
-        //扩大比例的缩放
-        product_detail_wb.getSettings().setUseWideViewPort(true);
-        //自适应屏幕
-        product_detail_wb.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
-        product_detail_wb.getSettings().setLoadWithOverviewMode(true);
+//        // 打开屏幕时自适应
+//        //设置此属性，可任意比例缩放
+//        webSettings.setLoadWithOverviewMode(true);
+//        webSettings.setUseWideViewPort(true);  //将图片调整到适合webview的大小
+//        // 支持页面缩放
+//        webSettings.setBuiltInZoomControls(true);
+//        webSettings.setSupportZoom(true);
+//        webSettings.setAppCacheEnabled(true);
+//        webSettings.setDatabaseEnabled(true);
+//
+//        webSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
     }
 }

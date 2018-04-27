@@ -22,7 +22,7 @@ import com.xqlh.heartsmart.bean.EntityArticleBeautiful;
 import com.xqlh.heartsmart.bean.EntityArticleNewest;
 import com.xqlh.heartsmart.ui.home.adapter.AdapterArticleHome;
 import com.xqlh.heartsmart.ui.home.model.IconTitleModel;
-import com.xqlh.heartsmart.utils.ContenxtUtils;
+import com.xqlh.heartsmart.utils.ContextUtils;
 import com.xqlh.heartsmart.widget.TitleBar;
 
 import java.util.ArrayList;
@@ -172,7 +172,7 @@ public class ArticleHomeActivity extends BaseActivity {
                             adapterArticleHome.notifyDataSetChanged();
 
                         } else {
-                            Toasty.warning(ContenxtUtils.getContext(), "服务器异常", Toast.LENGTH_SHORT, true).show();
+                            Toasty.warning(ContextUtils.getContext(), "服务器异常", Toast.LENGTH_SHORT, true).show();
                         }
                         return;
                     }
@@ -192,7 +192,7 @@ public class ArticleHomeActivity extends BaseActivity {
                             adapterArticleHome.setNewestList(response.getResult());
                             rv_article_home.setAdapter(adapterArticleHome);
                         } else {
-                            Toasty.warning(ContenxtUtils.getContext(), "服务器异常", Toast.LENGTH_SHORT, true).show();
+                            Toasty.warning(ContextUtils.getContext(), "服务器异常", Toast.LENGTH_SHORT, true).show();
                         }
                     }
                 });
@@ -211,7 +211,7 @@ public class ArticleHomeActivity extends BaseActivity {
                             adapterArticleHome.addNewestList(response.getResult());
                             adapterArticleHome.notifyDataSetChanged();
                         } else {
-                            Toasty.warning(ContenxtUtils.getContext(), "服务器异常", Toast.LENGTH_SHORT, true).show();
+                            Toasty.warning(ContextUtils.getContext(), "服务器异常", Toast.LENGTH_SHORT, true).show();
                         }
                     }
                 });

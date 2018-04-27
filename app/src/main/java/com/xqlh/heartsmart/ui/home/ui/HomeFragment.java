@@ -21,7 +21,7 @@ import com.xqlh.heartsmart.base.BaseLazyFragment;
 import com.xqlh.heartsmart.base.RvListener;
 import com.xqlh.heartsmart.bean.EntityArticleNewest;
 import com.xqlh.heartsmart.ui.home.adapter.AdapterArticle;
-import com.xqlh.heartsmart.utils.ContenxtUtils;
+import com.xqlh.heartsmart.utils.ContextUtils;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.Transformer;
@@ -95,7 +95,7 @@ public class HomeFragment extends BaseLazyFragment {
                             });
                             rv_article_newest.setAdapter(adapterArticle);
                         } else {
-                            Toasty.warning(ContenxtUtils.getContext(), "服务器异常", Toast.LENGTH_SHORT, true).show();
+                            Toasty.warning(ContextUtils.getContext(), "服务器异常", Toast.LENGTH_SHORT, true).show();
                         }
                     }
                 });

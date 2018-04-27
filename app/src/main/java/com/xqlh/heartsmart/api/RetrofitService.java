@@ -8,7 +8,7 @@ import com.xqlh.heartsmart.api.Interceptor.HttpCacheInterceptor;
 import com.xqlh.heartsmart.api.Interceptor.HttpHeaderInterceptor;
 import com.xqlh.heartsmart.utils.Constants;
 import com.xqlh.heartsmart.utils.LogUtils;
-import com.xqlh.heartsmart.utils.ContenxtUtils;
+import com.xqlh.heartsmart.utils.ContextUtils;
 
 import java.io.File;
 import java.io.UnsupportedEncodingException;
@@ -44,7 +44,7 @@ public class RetrofitService {
 
         loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
 
-        File cacheFile = new File(ContenxtUtils.getContext().getCacheDir(), "cache");
+        File cacheFile = new File(ContextUtils.getContext().getCacheDir(), "cache");
 
         Log.i("lz", "okHttp缓存文件名字" + cacheFile.getName());
 

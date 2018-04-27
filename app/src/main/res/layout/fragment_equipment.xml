@@ -1,8 +1,18 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="com.xqlh.heartsmart.ui.equipment.ui.EquipmentFragment">
+    <com.xqlh.heartsmart.widget.TitleBar
+        android:id="@+id/equipment_fragmet_titlebar"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/color_title_bar"></com.xqlh.heartsmart.widget.TitleBar>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_equipment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    </android.support.v7.widget.RecyclerView>
 
-
-</FrameLayout>
+</LinearLayout>

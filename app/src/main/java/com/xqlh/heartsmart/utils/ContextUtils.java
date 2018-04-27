@@ -10,11 +10,11 @@ import android.content.Context;
  *     desc  : Utils初始化相关
  * </pre>
  */
-public class ContenxtUtils {
+public class ContextUtils {
 
     private static Context context;
 
-    private ContenxtUtils() {
+    private ContextUtils() {
         throw new UnsupportedOperationException("u can't instantiate me...");
     }
 
@@ -24,7 +24,7 @@ public class ContenxtUtils {
      * @param context 上下文
      */
     public static void init(Context context) {
-        ContenxtUtils.context = context.getApplicationContext();
+        ContextUtils.context = context.getApplicationContext();
     }
 
     /**

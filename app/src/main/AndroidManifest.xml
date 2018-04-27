@@ -64,7 +64,8 @@
         <activity android:name=".ui.home.ui.ArticleHomeActivity" />
         <activity android:name=".ui.home.ui.ArticleDetailActivity" />
         <activity android:name=".ui.home.ui.ArticleChannelActivity" />
-        <activity android:name=".ui.home.ui.ArticleCategoryActivity"></activity>
+        <activity android:name=".ui.home.ui.ArticleCategoryActivity" />
+        <activity android:name=".ui.equipment.ui.EquipmentReportActivity"></activity>
     </application>
 
 </manifest>

@@ -20,7 +20,7 @@ import com.xqlh.heartsmart.api.base.BaseObserval;
 import com.xqlh.heartsmart.base.BaseActivity;
 import com.xqlh.heartsmart.bean.EntityArticleNewest;
 import com.xqlh.heartsmart.ui.home.adapter.AdapterNewestArticle;
-import com.xqlh.heartsmart.utils.ContenxtUtils;
+import com.xqlh.heartsmart.utils.ContextUtils;
 import com.xqlh.heartsmart.widget.TitleBar;
 
 import java.util.ArrayList;
@@ -124,7 +124,7 @@ public class ArticleCategoryActivity extends BaseActivity {
                                 }
                             });
                         } else {
-                            Toasty.warning(ContenxtUtils.getContext(), "服务器异常", Toast.LENGTH_SHORT, true).show();
+                            Toasty.warning(ContextUtils.getContext(), "服务器异常", Toast.LENGTH_SHORT, true).show();
                         }
                     }
                 });
@@ -163,7 +163,7 @@ public class ArticleCategoryActivity extends BaseActivity {
                             adapterNewestArticle.addNewestList(response.getResult());
                             adapterNewestArticle.notifyDataSetChanged();
                         } else {
-                            Toasty.warning(ContenxtUtils.getContext(), "服务器异常", Toast.LENGTH_SHORT, true).show();
+                            Toasty.warning(ContextUtils.getContext(), "服务器异常", Toast.LENGTH_SHORT, true).show();
                         }
                     }
                 });

@@ -19,7 +19,7 @@ import com.xqlh.heartsmart.bean.EntityUserInfor;
 import com.xqlh.heartsmart.utils.Constants;
 import com.xqlh.heartsmart.utils.ImageLoaderUtil;
 import com.xqlh.heartsmart.utils.SharedPreferencesHelper;
-import com.xqlh.heartsmart.utils.ContenxtUtils;
+import com.xqlh.heartsmart.utils.ContextUtils;
 import com.xqlh.heartsmart.widget.TitleBar;
 
 import butterknife.BindView;
@@ -84,7 +84,7 @@ public class MineFragment extends BaseLazyFragment {
                                 Log.i("lz", "出生日期" + response.getResult().getBirthDate());
                             }
                         } else {
-                            Toasty.warning(ContenxtUtils.getContext(), "用户名或者密码错误", Toast.LENGTH_SHORT, true).show();
+                            Toasty.warning(ContextUtils.getContext(), "用户名或者密码错误", Toast.LENGTH_SHORT, true).show();
                         }
                     }
                 });

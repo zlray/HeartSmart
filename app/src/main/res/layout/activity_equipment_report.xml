@@ -1,23 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.xqlh.heartsmart.ui.product.ui.ProductDetailActivity">
-
+    tools:context="com.xqlh.heartsmart.ui.equipment.ui.EquipmentReportActivity">
     <com.xqlh.heartsmart.widget.TitleBar
-        android:id="@+id/product_detail_titleBar"
+        android:id="@+id/equipment_report_titlebar"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="@color/color_title_bar"></com.xqlh.heartsmart.widget.TitleBar>
-
-    <WebView
-        android:id="@+id/product_detail_wb"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_equipment_report"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-    </WebView>
-
+        android:layout_height="match_parent"></android.support.v7.widget.RecyclerView>
 
 </LinearLayout>
