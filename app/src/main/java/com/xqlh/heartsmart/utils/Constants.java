@@ -25,6 +25,7 @@ public class Constants {
     public static final String CHECKINFOR = "CheckInfor";
 
     public static final String MESSAGE_TOKEN = "messageToken";
+
     public static final String LOGIN_TOKEN = "loginToken";
 
     public static final String ACCOUNT = "account";

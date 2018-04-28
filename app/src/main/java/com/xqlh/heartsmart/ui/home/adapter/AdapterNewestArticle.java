@@ -1,7 +1,6 @@
 package com.xqlh.heartsmart.ui.home.adapter;
 
 import android.content.Context;
-import android.util.Log;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
@@ -38,7 +37,6 @@ public class AdapterNewestArticle extends BaseQuickAdapter<EntityArticleNewest.R
 
     @Override
     protected void convert(BaseViewHolder helper, EntityArticleNewest.ResultBean item) {
-        Log.i("lz", item.getTitle() + "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
         helper.setText(R.id.tv_article_title, item.getTitle())
                 .setText(R.id.tv_article_type, item.getArticleTypeStr())
                 .setText(R.id.tv_article_reading_times, item.getShowTimes() + "人阅读")

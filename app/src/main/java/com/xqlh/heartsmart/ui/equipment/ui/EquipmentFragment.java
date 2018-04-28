@@ -42,12 +42,13 @@ public class EquipmentFragment extends BaseLazyFragment {
     @Override
     protected void init() {
         initTtileBar();
-        equipmentList.add(new EquipmentIconTitleModel(R.drawable.health, "智能击打系统", "adbfad8a12564b87bbf502900a09ffc7"));
-        equipmentList.add(new EquipmentIconTitleModel(R.drawable.health, "生物反馈训练系统", "b60f031fecd9422f92faacc4f649994b"));
-        equipmentList.add(new EquipmentIconTitleModel(R.drawable.health, "智能呐喊系统", "c8e738b521bd47d794590f443cce1351"));
-        equipmentList.add(new EquipmentIconTitleModel(R.drawable.health, "自信心提升训练系统", "450bd9dfe8f549a8ba5d027ee85c4891"));
-        equipmentList.add(new EquipmentIconTitleModel(R.drawable.health, "测评系统", "153dd1e6ebab4279931875d654ddc001"));
-        equipmentList.add(new EquipmentIconTitleModel(R.drawable.health, "智能认知调整拥抱系统", "1"));
+        equipmentList.add(new EquipmentIconTitleModel(R.drawable.equipment_appraisal, "心企心理检测咨询档案管理系统", "153dd1e6ebab4279931875d654ddc001"));
+        equipmentList.add(new EquipmentIconTitleModel(R.drawable.equipment_bestray, "百思瑞生物反馈训练系统", "b60f031fecd9422f92faacc4f649994b"));
+        equipmentList.add(new EquipmentIconTitleModel(R.drawable.equipment_hug, "心企智能认知调节拥抱系统", "1"));
+        equipmentList.add(new EquipmentIconTitleModel(R.drawable.equipment_beat, "心企智能击打宣泄系统", "adbfad8a12564b87bbf502900a09ffc7"));
+        equipmentList.add(new EquipmentIconTitleModel(R.drawable.equipment_whoop, "心企智能呐喊宣泄系统", "c8e738b521bd47d794590f443cce1351"));
+        equipmentList.add(new EquipmentIconTitleModel(R.drawable.equipment_confidence, "心企智能自信心提升训练系统", "450bd9dfe8f549a8ba5d027ee85c4891"));
+
 
         GridLayoutManager gridLayoutManager = new GridLayoutManager(ContextUtils.getContext(), 2);
 
@@ -56,6 +57,7 @@ public class EquipmentFragment extends BaseLazyFragment {
         adapterEquipment = new AdapterEquipment(R.layout.item_equipment, equipmentList);
 
         rv_equipment.setAdapter(adapterEquipment);
+
         adapterEquipment.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {

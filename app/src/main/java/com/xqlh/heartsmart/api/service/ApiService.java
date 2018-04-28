@@ -7,6 +7,7 @@ import com.xqlh.heartsmart.bean.EntityBindPhone;
 import com.xqlh.heartsmart.bean.EntityCheckAccount;
 import com.xqlh.heartsmart.bean.EntityCheckMessage;
 import com.xqlh.heartsmart.bean.EntityCheckPhone;
+import com.xqlh.heartsmart.bean.EntityEquipmentReport;
 import com.xqlh.heartsmart.bean.EntityGetMessage;
 import com.xqlh.heartsmart.bean.EntityGetPhoneByAccount;
 import com.xqlh.heartsmart.bean.EntityLogin;
@@ -109,21 +110,21 @@ public interface ApiService {
     @FormUrlEncoded
     @POST("api/article/aritclelist")
     Observable<EntityArticleNewest> getArticleQuery(@Field("keywords") String keywords,
-                                                     @Field("ArticleTypeID") String ArticleTypeID,
-                                                     @Field("LabelIds") String[] LabelIds,
-                                                     @Field("pageIndex") int pageIndex,
-                                                     @Field("pageSize") int pageSize,
-                                                     @Field("orderbytype") int orderbytype);
+                                                    @Field("ArticleTypeID") String ArticleTypeID,
+                                                    @Field("LabelIds") String[] LabelIds,
+                                                    @Field("pageIndex") int pageIndex,
+                                                    @Field("pageSize") int pageSize,
+                                                    @Field("orderbytype") int orderbytype);
 
     //美文
     @FormUrlEncoded
     @POST("api/article/aritclelist")
     Observable<EntityArticleBeautiful> getArticleBeautiful(@Field("keywords") String keywords,
-                                                       @Field("ArticleTypeID") String ArticleTypeID,
-                                                       @Field("LabelIds") String[] LabelIds,
-                                                       @Field("pageIndex") int pageIndex,
-                                                       @Field("pageSize") int pageSize,
-                                                       @Field("orderbytype") int orderbytype);
+                                                           @Field("ArticleTypeID") String ArticleTypeID,
+                                                           @Field("LabelIds") String[] LabelIds,
+                                                           @Field("pageIndex") int pageIndex,
+                                                           @Field("pageSize") int pageSize,
+                                                           @Field("orderbytype") int orderbytype);
 
 
     //获取文章的详细内容
@@ -131,11 +132,12 @@ public interface ApiService {
     Observable<EntityArticleDetail> getArticleDetail(@Query("id") String id);
 
 
-
-
-
-
-
+    //获取智能硬件报告
+    @GET("api/psychtest/evrlist")
+    Observable<EntityEquipmentReport> getReport(@Header("Authorization") String Authorization,
+                                                @Query("evaluationTypeID") String evaluationTypeID,
+                                                @Query("pageIndex") int pageIndex,
+                                                @Query("pageSize") int pageSize);
 
 
 }

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp">
+
+    <TextView
+        android:id="@+id/tv_report_name"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:ellipsize="end"
+        android:gravity="center|left"
+        android:singleLine="true"
+        android:text="我看过可麻烦给"
+        android:textColor="@color/black"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/tv_report_result"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:ellipsize="end"
+        android:gravity="center"
+        android:singleLine="true"
+        android:text="我看过可麻烦给我看过可麻烦给我看过可麻烦给我看过可麻烦给我看过可麻烦给我看过可麻烦给我看过可麻烦给" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="30dp">
+
+        <TextView
+            android:id="@+id/tv_report_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerHorizontal="true"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:text="9月26号"
+            android:textSize="14sp" />
+
+    </RelativeLayout>
+
+</LinearLayout>

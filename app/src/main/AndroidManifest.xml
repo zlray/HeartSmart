@@ -34,16 +34,16 @@
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
 
         <!-- Main -->
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity"></activity>
+
+        <!-- 引导页面 -->
+        <activity android:name=".ui.guide.activity.GuideActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <!-- 引导页面 -->
-        <activity android:name=".ui.guide.activity.GuideActivity" />
 
         <!-- 欢迎页面 -->
         <activity android:name=".ui.welcome.WelcomeActivity" />
@@ -65,7 +65,8 @@
         <activity android:name=".ui.home.ui.ArticleDetailActivity" />
         <activity android:name=".ui.home.ui.ArticleChannelActivity" />
         <activity android:name=".ui.home.ui.ArticleCategoryActivity" />
-        <activity android:name=".ui.equipment.ui.EquipmentReportActivity"></activity>
+        <activity android:name=".ui.equipment.ui.EquipmentReportActivity" />
+        <activity android:name=".ui.equipment.ui.EquipmentReportDetailActivity"></activity>
     </application>
 
 </manifest>
