@@ -38,6 +38,7 @@ public class ArticleHomeActivity extends BaseActivity {
     @BindView(R.id.article_titlebar)
     TitleBar article_titlebar;
 
+
     @BindView(R.id.smartRefreshLayout)
     SmartRefreshLayout smartRefreshLayout;
 
@@ -78,7 +79,6 @@ public class ArticleHomeActivity extends BaseActivity {
         initTtileBar();
 
         adapterArticleHome = new AdapterArticleHome(this);
-
 
         getNewest(mCurrentPage, PAGE_SIZE);
 
@@ -127,7 +127,6 @@ public class ArticleHomeActivity extends BaseActivity {
         adapterArticleHome.notifyDataSetChanged();
 
     }
-
 
     public void initRv() {
         GridLayoutManager GridLayoutManager = new GridLayoutManager(this, 1);

@@ -3,6 +3,7 @@ package com.xqlh.heartsmart.api.service;
 import com.xqlh.heartsmart.bean.EntityArticleBeautiful;
 import com.xqlh.heartsmart.bean.EntityArticleDetail;
 import com.xqlh.heartsmart.bean.EntityArticleNewest;
+import com.xqlh.heartsmart.bean.EntityAppraisalRecommend;
 import com.xqlh.heartsmart.bean.EntityBindPhone;
 import com.xqlh.heartsmart.bean.EntityCheckAccount;
 import com.xqlh.heartsmart.bean.EntityCheckMessage;
@@ -13,6 +14,7 @@ import com.xqlh.heartsmart.bean.EntityGetPhoneByAccount;
 import com.xqlh.heartsmart.bean.EntityLogin;
 import com.xqlh.heartsmart.bean.EntityProductCategory;
 import com.xqlh.heartsmart.bean.EntityProductDetail;
+import com.xqlh.heartsmart.bean.EntityReportBasics;
 import com.xqlh.heartsmart.bean.EntityUpdatePassword;
 import com.xqlh.heartsmart.bean.EntityUserInfor;
 import com.xqlh.heartsmart.bean.EntityWelcome;
@@ -139,5 +141,13 @@ public interface ApiService {
                                                 @Query("pageIndex") int pageIndex,
                                                 @Query("pageSize") int pageSize);
 
+    //获得报告的基础信息
+    @GET("api/psychtest/basereport")
+    Observable<EntityReportBasics> getReportBasic(@Header("Authorization") String Authorization,
+                                                  @Query("id") String id);
+
+    //获得推荐测评
+    @GET("api/psychtest/recommentpsy")
+    Observable<EntityAppraisalRecommend> getAppraisalRecommend();
 
 }

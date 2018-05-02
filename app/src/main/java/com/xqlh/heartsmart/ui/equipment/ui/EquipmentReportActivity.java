@@ -111,7 +111,7 @@ public class EquipmentReportActivity extends BaseActivity {
                     @Override
                     public void onSuccess(final EntityEquipmentReport response) {
                         if (response.getCode() == 1) {
-                            if (response != null) {
+                            if (response.getResult().size() > 0) {
 
                                 adapterEquipmentReport = new AdapterEquipmentReport(R.layout.item_equipment_report, response.getResult());
 
@@ -126,10 +126,9 @@ public class EquipmentReportActivity extends BaseActivity {
                                         startActivity(intent);
                                     }
                                 });
-                            }else {
+                            } else {
                                 tv_empty.setVisibility(View.VISIBLE);
                             }
-
                         } else {
                             Toasty.warning(ContextUtils.getContext(), "服务器异常", Toast.LENGTH_SHORT, true).show();
                         }

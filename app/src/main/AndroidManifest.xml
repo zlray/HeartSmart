@@ -34,7 +34,7 @@
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
 
         <!-- Main -->
-        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".MainActivity" />
 
         <!-- 引导页面 -->
         <activity android:name=".ui.guide.activity.GuideActivity">
@@ -66,7 +66,9 @@
         <activity android:name=".ui.home.ui.ArticleChannelActivity" />
         <activity android:name=".ui.home.ui.ArticleCategoryActivity" />
         <activity android:name=".ui.equipment.ui.EquipmentReportActivity" />
-        <activity android:name=".ui.equipment.ui.EquipmentReportDetailActivity"></activity>
+        <activity android:name=".ui.equipment.ui.EquipmentReportDetailActivity" />
+        <activity android:name=".ui.appraisal.ui.AppraisalIntroduceActivity" />
+        <activity android:name=".ui.appraisal.ui.AppraisalCategoryActivity"></activity>
     </application>
 
 </manifest>
