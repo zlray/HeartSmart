@@ -1,9 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.xqlh.heartsmart.ui.appraisal.ui.AppraisalCategoryActivity">
 
-</android.support.constraint.ConstraintLayout>
+    <com.xqlh.heartsmart.widget.TitleBar
+        android:id="@+id/titlebar"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/color_title_bar"></com.xqlh.heartsmart.widget.TitleBar>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_appraisal_category"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/titlebar"></android.support.v7.widget.RecyclerView>
+</RelativeLayout>

@@ -18,10 +18,10 @@ import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.xqlh.heartsmart.R;
 import com.xqlh.heartsmart.bean.EntityAppraisalRecommend;
+import com.xqlh.heartsmart.ui.appraisal.ui.AppraisalCategoryActivity;
 import com.xqlh.heartsmart.ui.appraisal.ui.AppraisalIntroduceActivity;
 import com.xqlh.heartsmart.ui.home.adapter.AdapterEightButton;
 import com.xqlh.heartsmart.ui.home.model.IconTitleModel;
-import com.xqlh.heartsmart.ui.home.ui.ArticleCategoryActivity;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.Transformer;
@@ -43,6 +43,8 @@ public class AdapterAppraisalHome extends RecyclerView.Adapter<RecyclerView.View
     private List<Uri> listBanner; //banner
 
     private List<IconTitleModel> listEight; //8个按钮
+
+
 
     private List<EntityAppraisalRecommend.ResultBean> listHot = new ArrayList<>(); //美文
 
@@ -93,13 +95,10 @@ public class AdapterAppraisalHome extends RecyclerView.Adapter<RecyclerView.View
         this.listBanner = list;
     }
 
-    public void setEightList1(List<IconTitleModel> list) {
+    public void setEightList(List<IconTitleModel> list) {
         this.listEight = list;
     }
 
-    public void setEightList2(List<IconTitleModel> list) {
-        this.listEight = list;
-    }
 
     public void setHotList(List<EntityAppraisalRecommend.ResultBean> list) {
         if (list == null) {
@@ -118,7 +117,7 @@ public class AdapterAppraisalHome extends RecyclerView.Adapter<RecyclerView.View
             view.setLayoutParams(lp);
             return new BannerHolder(view);
         } else if (viewType == EIGHT_VIEW_TYPE) {// 8个按钮
-            view = getView(R.layout.item_layout_appraisal_eight);
+            view = getView(R.layout.item_layout_eight);
             view.setLayoutParams(lp);
             return new EightHolder(view);
         } else if (viewType == BEAUTIFUL_VIEW_TYPE) {// hot
@@ -194,8 +193,8 @@ public class AdapterAppraisalHome extends RecyclerView.Adapter<RecyclerView.View
         adapterEightButton.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                Intent intent = new Intent(context, ArticleCategoryActivity.class);
-                intent.putExtra("ArticleTypeID", listEight.get(position).getArticleTypeID());
+                Intent intent = new Intent(context, AppraisalCategoryActivity.class);
+                intent.putExtra("PsychtestTypeID", listEight.get(position).getArticleTypeID());
                 intent.putExtra("title", listEight.get(position).getTitle());
                 context.startActivity(intent);
             }
@@ -259,7 +258,7 @@ public class AdapterAppraisalHome extends RecyclerView.Adapter<RecyclerView.View
         beautifulHolder.rv_hot.setLayoutManager(linearLayoutManager);
 
         AdapterHotApprisal adapterHotApprisal;
-        adapterHotApprisal = new AdapterHotApprisal(R.layout.item_rv_beautiful, context, listHot);
+        adapterHotApprisal = new AdapterHotApprisal(R.layout.item_rv_hot, context, listHot);
 
         beautifulHolder.rv_hot.setAdapter(adapterHotApprisal);
 
@@ -275,10 +274,10 @@ public class AdapterAppraisalHome extends RecyclerView.Adapter<RecyclerView.View
 
     //最新
     private void setNewest(NewestHolder newestHolder, final int position) {
-        newestHolder.tv_appraisal_title.setText(listRecommend.get(position - 3).getTitle());
-        newestHolder.tv_appraisal_introduction.setText(listRecommend.get(position - 3).getPsyName());
+        newestHolder.tv_appraisal_title.setText(listRecommend.get(position - 3).getPsyName());
+        newestHolder.tv_appraisal_introduction.setText(listRecommend.get(position - 3).getTitle());
         newestHolder.tv_appraisal_test_number.setText(listRecommend.get(position - 3).getTestMan() + "人测试");
-        newestHolder.tv_appraisal_price.setText("￥" + listRecommend.get(position - 3).getTopicCount());//价格
+        newestHolder.tv_appraisal_price.setText("￥" + 0.0);//价格
 
         Glide.with(context).load(listRecommend.get(position - 3).getPsyPic()).into(newestHolder.iv_appraisal);
 
@@ -349,7 +348,7 @@ public class AdapterAppraisalHome extends RecyclerView.Adapter<RecyclerView.View
     }
 
     /**
-     * 美文
+     * 最热
      */
     public static class BeautifulHolder extends RecyclerView.ViewHolder {
         RecyclerView rv_hot;
@@ -361,7 +360,7 @@ public class AdapterAppraisalHome extends RecyclerView.Adapter<RecyclerView.View
     }
 
     /**
-     * 最新的
+     * 推荐
      */
     public static class NewestHolder extends RecyclerView.ViewHolder {
         //        RecyclerView rv_newest;

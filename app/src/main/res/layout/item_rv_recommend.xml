@@ -64,7 +64,7 @@
                 android:paddingLeft="4dp"
                 android:paddingRight="4dp"
                 android:paddingTop="2dp"
-                android:text="情感"
+                android:text="10人测试"
                 android:textColor="@color/green"
                 android:textSize="14sp" />
 

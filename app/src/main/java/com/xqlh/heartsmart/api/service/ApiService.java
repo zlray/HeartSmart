@@ -1,5 +1,7 @@
 package com.xqlh.heartsmart.api.service;
 
+import com.xqlh.heartsmart.bean.EntityAppraisalCategory;
+import com.xqlh.heartsmart.bean.EntityAppraisalIntroduce;
 import com.xqlh.heartsmart.bean.EntityArticleBeautiful;
 import com.xqlh.heartsmart.bean.EntityArticleDetail;
 import com.xqlh.heartsmart.bean.EntityArticleNewest;
@@ -147,7 +149,22 @@ public interface ApiService {
                                                   @Query("id") String id);
 
     //获得推荐测评
+    @GET("api/psychtest/hotpsy")
+    Observable<EntityAppraisalRecommend> getAppraisalHot();
+
+
+    //获得推荐测评
     @GET("api/psychtest/recommentpsy")
     Observable<EntityAppraisalRecommend> getAppraisalRecommend();
+
+
+
+    //获得测评的分类
+    @GET("api/psychtest/specialty")
+    Observable<EntityAppraisalCategory> getAppraisalCategory(@Query("PsychtestTypeID") String id);
+
+    //获得测评详情
+    @GET("api/psychtest/info")
+    Observable<EntityAppraisalIntroduce> getAppraisalIntroduce(@Query("id") String id);
 
 }
