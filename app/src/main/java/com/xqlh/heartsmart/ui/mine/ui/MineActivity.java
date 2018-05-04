@@ -22,6 +22,7 @@ import com.xqlh.heartsmart.api.RetrofitHelper;
 import com.xqlh.heartsmart.api.base.BaseObserval;
 import com.xqlh.heartsmart.base.BaseActivity;
 import com.xqlh.heartsmart.bean.EntityUserInfor;
+import com.xqlh.heartsmart.utils.CommonUtil;
 import com.xqlh.heartsmart.utils.Constants;
 import com.xqlh.heartsmart.utils.ProgressUtils;
 import com.xqlh.heartsmart.utils.SharedPreferencesHelper;
@@ -85,7 +86,6 @@ public class MineActivity extends BaseActivity {
                 this, Constants.CHECKINFOR);
 
         getUserInfor();
-
         initView();
     }
 
@@ -119,9 +119,15 @@ public class MineActivity extends BaseActivity {
                                     .load(response.getResult().getHeadimgurl())
                                     .error(R.drawable.head_default)
                                     .into(mine_iv_head);
-                            mine_tv_sex.setText(response.getResult().getSex());
+                            if ("0".equals(response.getResult().getSex())) {
+                                mine_tv_sex.setText("请设置");
+                            } else if ("1".equals(response.getResult().getSex())) {
+                                mine_tv_sex.setText("男");
+                            } else if ("2".equals(response.getResult().getSex())) {
+                                mine_tv_sex.setText("女");
+                            }
                             mine_tv_birthday.setText(response.getResult().getBirthDate());
-                            mine_tv_phone.setText(response.getResult().getTelephone());
+                            mine_tv_phone.setText(CommonUtil.hidePhone(response.getResult().getTelephone()));
                         } else {
                             Toasty.warning(ContextUtils.getContext(), "服务器异常", Toast.LENGTH_SHORT, true).show();
                         }

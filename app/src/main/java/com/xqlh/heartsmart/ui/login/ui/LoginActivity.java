@@ -246,7 +246,7 @@ public class LoginActivity extends BaseActivity {
     public void login(String username, String password) {
         // 18701662581
         RetrofitHelper.getApiService()
-                .Login("xiaomeinv", "123456")
+                .Login(username, password)
                 .subscribeOn(Schedulers.io())
                 .compose(this.<EntityLogin>bindToLifecycle())
                 .compose(ProgressUtils.<EntityLogin>applyProgressBar(this))
@@ -259,6 +259,7 @@ public class LoginActivity extends BaseActivity {
                                 Log.i(TAG, "onSuccess: " + response.getResult());
                                 Log.i(TAG, "存储登录的Token" + response.getResult());
                                 sp_login_token.put(Constants.LOGIN_TOKEN, response.getResult());
+                                sp_login_token.put(Constants.IS_LOGIN,true);
                                 startActivity(new Intent(LoginActivity.this, MainActivity.class));
                             }
                         } else {

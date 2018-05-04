@@ -60,7 +60,7 @@ public interface ApiService {
 
     //获取短信
     @GET("api/account/smscodev2")
-    Observable<EntityGetMessage> GetMessage2(@Query("string") String string);
+    Observable<EntityGetMessage> GetMessage2(@Query("tocken") String string);
 
 
     //修改密码

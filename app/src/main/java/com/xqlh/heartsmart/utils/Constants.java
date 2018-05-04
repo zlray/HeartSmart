@@ -24,6 +24,10 @@ public class Constants {
 
     public static final String CHECKINFOR = "CheckInfor";
 
+    public static final String IS_LOGIN = "isLogin";
+
+    public static final String IS_FIRST = "isFirst";
+
     public static final String MESSAGE_TOKEN = "messageToken";
 
     public static final String LOGIN_TOKEN = "loginToken";
@@ -35,19 +39,19 @@ public class Constants {
 
     public static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
 
-    public static String getYYD(String time){
-        DateFormat formatter=new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-        Date date=null;
+    public static String getYYD(String time) {
+        DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        Date date = null;
         try {
-            date=formatter.parse(time);
+            date = formatter.parse(time);
 
         } catch (ParseException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        GregorianCalendar calendar=new GregorianCalendar();
+        GregorianCalendar calendar = new GregorianCalendar();
         calendar.setTime(date);
-        return calendar.get(Calendar.YEAR)+"-"+(calendar.get(Calendar.MONTH)+1)+"-"+calendar.get(Calendar.DAY_OF_MONTH);
+        return calendar.get(Calendar.YEAR) + "-" + (calendar.get(Calendar.MONTH) + 1) + "-" + calendar.get(Calendar.DAY_OF_MONTH);
 //        System.out.println((date.getYear()+1900)+"-"+(date.getMonth()+1)+"-"+(date.getDay()+12));
     }
 

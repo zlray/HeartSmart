@@ -58,8 +58,6 @@ public class AppraisalIntroduceActivity extends BaseActivity {
     @BindView(R.id.tv_time)
     TextView tv_time;
 
-    @BindView(R.id.bt_collect)
-    Button bt_collect;
 
     @BindView(R.id.bt_appraisal)
     Button bt_appraisal;
@@ -113,12 +111,9 @@ public class AppraisalIntroduceActivity extends BaseActivity {
                 });
     }
 
-    @OnClick({R.id.bt_collect, R.id.bt_appraisal})
+    @OnClick({R.id.bt_appraisal})
     public void OnClick(View view) {
         switch (view.getId()) {
-            case R.id.bt_collect:
-
-                break;
             case R.id.bt_appraisal:
 
                 break;

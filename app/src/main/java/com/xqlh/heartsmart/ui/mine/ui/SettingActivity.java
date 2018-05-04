@@ -8,7 +8,10 @@ import android.widget.RelativeLayout;
 import com.xqlh.heartsmart.R;
 import com.xqlh.heartsmart.base.BaseActivity;
 import com.xqlh.heartsmart.ui.login.ui.BindPhoneActivity;
+import com.xqlh.heartsmart.ui.login.ui.LoginActivity;
 import com.xqlh.heartsmart.ui.login.ui.UpdatePasswordActivity;
+import com.xqlh.heartsmart.utils.Constants;
+import com.xqlh.heartsmart.utils.SharedPreferencesHelper;
 import com.xqlh.heartsmart.widget.TitleBar;
 
 import butterknife.BindView;
@@ -21,7 +24,7 @@ public class SettingActivity extends BaseActivity {
     RelativeLayout setting_rv_update_password;
     @BindView(R.id.setting_rv_update_phone)
     RelativeLayout setting_rv_update_phone;
-
+    private SharedPreferencesHelper sp_login_token;
 
     @Override
     public int setContent() {
@@ -35,6 +38,8 @@ public class SettingActivity extends BaseActivity {
 
     @Override
     public void init() {
+        sp_login_token = new SharedPreferencesHelper(
+                SettingActivity.this, Constants.CHECKINFOR);
         initTtileBar();
 
     }
@@ -53,7 +58,7 @@ public class SettingActivity extends BaseActivity {
         });
     }
 
-    @OnClick({R.id.setting_rv_update_password, R.id.setting_rv_update_phone})
+    @OnClick({R.id.setting_rv_update_password, R.id.setting_rv_update_phone, R.id.bt_exit})
     public void onClikc(View view) {
         switch (view.getId()) {
             case R.id.setting_rv_update_password:
@@ -63,8 +68,12 @@ public class SettingActivity extends BaseActivity {
             case R.id.setting_rv_update_phone:
                 startActivity(new Intent(SettingActivity.this, BindPhoneActivity.class));
                 break;
-
+            case R.id.bt_exit:
+                sp_login_token.remove(Constants.LOGIN_TOKEN);
+                Intent intent = new Intent(SettingActivity.this, LoginActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+                break;
         }
     }
-
 }

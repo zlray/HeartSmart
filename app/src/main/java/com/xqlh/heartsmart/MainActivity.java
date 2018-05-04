@@ -7,13 +7,13 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import com.vondear.rxtools.RxPermissionsTool;
+import com.xqlh.heartsmart.adapter.FragmentVpAdapter;
 import com.xqlh.heartsmart.base.BaseActivity;
 import com.xqlh.heartsmart.ui.appraisal.ui.AppraisalFragment;
 import com.xqlh.heartsmart.ui.equipment.ui.EquipmentFragment;
 import com.xqlh.heartsmart.ui.home.ui.HomeFragment;
 import com.xqlh.heartsmart.ui.mine.ui.MineFragment;
 import com.xqlh.heartsmart.ui.product.ui.ProductFragment;
-import com.xqlh.heartsmart.adapter.FragmentVpAdapter;
 
 import java.util.ArrayList;
 
@@ -72,6 +72,7 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
     long l_firstClickTime;
     //第二次点击退出的时间戳
     long l_secondClickTime;
+
 
     /**
      * 绑定控件

@@ -11,7 +11,7 @@ import android.widget.LinearLayout;
 import com.xqlh.heartsmart.R;
 import com.xqlh.heartsmart.base.BaseActivity;
 import com.xqlh.heartsmart.ui.guide.adapter.GuidePageAdapter;
-import com.xqlh.heartsmart.ui.welcome.WelcomeActivity;
+import com.xqlh.heartsmart.ui.login.ui.LoginActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -63,9 +63,6 @@ public class GuideActivity extends BaseActivity {
         //加载底部圆点
         initPoint();
     }
-
-
-
 
     /**
      * 加载底部圆点
@@ -159,7 +156,7 @@ public class GuideActivity extends BaseActivity {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.guide_ib_start:
-                startActivity(new Intent(GuideActivity.this, WelcomeActivity.class));
+                startActivity(new Intent(GuideActivity.this, LoginActivity.class));
                 break;
         }
     }

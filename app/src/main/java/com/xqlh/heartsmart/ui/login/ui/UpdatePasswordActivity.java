@@ -121,8 +121,11 @@ public class UpdatePasswordActivity extends BaseActivity {
                         if (response.getCode() == 1) {
                             Intent intent = new Intent(UpdatePasswordActivity.this, LoginActivity.class);
                             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            startActivity(intent);
+                            //移除登录的login
                             sp_login_token.remove(Constants.LOGIN_TOKEN);
                             Toasty.success(UpdatePasswordActivity.this, "修改成功，重新登录", Toast.LENGTH_SHORT, true).show();
+
                         }
                     }
                 });

@@ -3,6 +3,7 @@ package com.xqlh.heartsmart.ui.login.ui;
 import android.content.Intent;
 import android.graphics.Color;
 import android.text.Editable;
+import android.text.InputType;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -18,13 +19,14 @@ import com.xqlh.heartsmart.R;
 import com.xqlh.heartsmart.api.RetrofitHelper;
 import com.xqlh.heartsmart.api.base.BaseObserval;
 import com.xqlh.heartsmart.base.BaseActivity;
+import com.xqlh.heartsmart.bean.EntityCheckMessage;
 import com.xqlh.heartsmart.bean.EntityGetMessage;
 import com.xqlh.heartsmart.bean.EntityGetPhoneByAccount;
 import com.xqlh.heartsmart.bean.EntityUpdatePassword;
 import com.xqlh.heartsmart.utils.Constants;
+import com.xqlh.heartsmart.utils.ContextUtils;
 import com.xqlh.heartsmart.utils.ProgressUtils;
 import com.xqlh.heartsmart.utils.SharedPreferencesHelper;
-import com.xqlh.heartsmart.utils.ContextUtils;
 import com.xqlh.heartsmart.widget.TitleBar;
 
 import java.util.concurrent.TimeUnit;
@@ -79,10 +81,18 @@ public class RetrievePasswordActivity extends BaseActivity {
     @BindView(R.id.bt_submit)
     Button bt_submit;
 
+    @BindView(R.id.iv_show_password_first)
+    ImageView iv_show_password_first;
+
+    @BindView(R.id.iv_show_password_second)
+    ImageView iv_show_password_second;
+
+
     String account;
     SharedPreferencesHelper sp_token;
     private Disposable mdDisposable;
 
+    private String pwd;
     private int screenHeight = 0;//屏幕高度
     private int keyHeight = 0; //软件盘弹起后所占高度
     private float scale = 0.6f; //logo缩放比例
@@ -109,6 +119,7 @@ public class RetrievePasswordActivity extends BaseActivity {
         getPhoneByAccount(account);
         et_password_fist.addTextChangedListener(textWatcher);
         et_password_second.addTextChangedListener(textWatcher);
+        et_verification_code_input.addTextChangedListener(textWatcher);
     }
 
     public void initTtileBar() {
@@ -166,38 +177,75 @@ public class RetrievePasswordActivity extends BaseActivity {
         public void onTextChanged(CharSequence s, int start, int before, int count) {
             String password_one = et_password_fist.getText().toString().trim();
             String password_two = et_password_fist.getText().toString().trim();
-            if (password_one.length() >= 6 & password_two.length() >= 6) {
+            String code = et_verification_code_input.getText().toString().trim();
+            if (password_one.length() >= 6 && password_two.length() >= 6 && code.length() == 6) {
                 bt_submit.setEnabled(true);
-                bt_submit.setBackgroundResource(R.drawable.retrieve_countdown_default);
+                bt_submit.setBackgroundResource(R.drawable.login_bt_bg);
 
             } else {
                 bt_submit.setEnabled(false);
-                bt_submit.setBackgroundResource(R.drawable.retrieve_countdown_click);
+                bt_submit.setBackgroundResource(R.drawable.login_bt_bg_default);
             }
         }
 
         @Override
         public void afterTextChanged(Editable s) {
             String password_one = et_password_fist.getText().toString().trim();
-            String password_two = et_password_fist.getText().toString().trim();
+            String password_two = et_password_second.getText().toString().trim();
             if (!TextUtils.isEmpty(password_one) && iv_clean_password_first.getVisibility() == View.GONE) {
                 //显示清除按钮
                 iv_clean_password_first.setVisibility(View.VISIBLE);
             } else if (TextUtils.isEmpty(password_one)) {
                 iv_clean_password_first.setVisibility(View.GONE);
+                bt_submit.setEnabled(false);
+                bt_submit.setBackgroundResource(R.drawable.login_bt_bg_default);
             }
             if (!TextUtils.isEmpty(password_two) && iv_clean_password_second.getVisibility() == View.GONE) {
                 //显示清除按钮
                 iv_clean_password_second.setVisibility(View.VISIBLE);
             } else if (TextUtils.isEmpty(password_two)) {
                 iv_clean_password_second.setVisibility(View.GONE);
+                bt_submit.setEnabled(false);
+                bt_submit.setBackgroundResource(R.drawable.login_bt_bg_default);
             }
         }
     };
 
-    @OnClick({R.id.bt_verification_code_get, R.id.bt_submit})
+    @OnClick({R.id.iv_show_password_first, R.id.iv_show_password_second,
+            R.id.iv_clean_password_first, R.id.iv_clean_password_second,
+            R.id.bt_verification_code_get, R.id.bt_submit})
     public void OnClick(View view) {
         switch (view.getId()) {
+            case R.id.iv_show_password_first:
+                if (et_password_fist.getInputType() != InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD) {
+                    et_password_fist.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+                    iv_show_password_first.setImageResource(R.drawable.pass_visuable);
+                } else {
+                    et_password_fist.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                    iv_show_password_first.setImageResource(R.drawable.pass_gone);
+                }
+                pwd = et_password_fist.getText().toString();
+                if (!TextUtils.isEmpty(pwd))
+                    et_password_fist.setSelection(pwd.length());
+                break;
+            case R.id.iv_show_password_second:
+                if (et_password_second.getInputType() != InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD) {
+                    et_password_second.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+                    iv_show_password_second.setImageResource(R.drawable.pass_visuable);
+                } else {
+                    et_password_second.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                    iv_show_password_second.setImageResource(R.drawable.pass_gone);
+                }
+                pwd = et_password_second.getText().toString();
+                if (!TextUtils.isEmpty(pwd))
+                    et_password_second.setSelection(pwd.length());
+                break;
+            case R.id.iv_clean_password_first:
+                et_password_fist.setText("");
+                break;
+            case R.id.iv_clean_password_second:
+                et_password_second.setText("");
+                break;
             case R.id.bt_verification_code_get:
                 //验证手机号
                 getMessage(sp_token.getSharedPreference(Constants.GET_PHONE_BY_ACCOUNT_TOKEN, "").toString());
@@ -224,19 +272,41 @@ public class RetrievePasswordActivity extends BaseActivity {
                         })
                         .subscribe();
                 break;
-            case R.id.bt_bind:
-                if (et_password_fist.getText().equals(et_password_second.getText())) {
-                    //用户名获取手机号返回的 toke,  验证码,  密码,  获取短信返回的token
-                    updatePassword(sp_token.getSharedPreference(Constants.GET_PHONE_BY_ACCOUNT_TOKEN, "").toString(),
-                            et_verification_code_input.getText().toString().trim(),
-                            et_password_fist.getText().toString().trim(),
-                            sp_token.getSharedPreference(Constants.MESSAGE_TOKEN, "").toString()
-                    );
-                } else {
-                    Toasty.warning(ContextUtils.getContext(), "两次输入的密码不一致", Toast.LENGTH_SHORT, true).show();
-                }
+            case R.id.bt_submit:
+                //校验短信验证码是否正确
+                checkMessage(et_verification_code_input.getText().toString(),
+                        sp_token.getSharedPreference(Constants.MESSAGE_TOKEN, "").toString());
                 break;
         }
+    }
+
+    //校验验证码接口
+    public void checkMessage(String message, String token) {
+        RetrofitHelper.getApiService()
+                .CheckMessage(token, message)
+                .subscribeOn(Schedulers.io())
+                .compose(this.<EntityCheckMessage>bindToLifecycle())
+                .compose(ProgressUtils.<EntityCheckMessage>applyProgressBar(this))
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseObserval<EntityCheckMessage>() {
+                    @Override
+                    public void onSuccess(EntityCheckMessage response) {
+                        if (response.getCode() == 1) {
+                            if (et_password_fist.getText().toString().equals(et_password_second.getText().toString())) {
+                                //用户名获取手机号返回的 toke,  验证码,  密码,  获取短信返回的token
+                                updatePassword(sp_token.getSharedPreference(Constants.GET_PHONE_BY_ACCOUNT_TOKEN, "").toString(),
+                                        et_verification_code_input.getText().toString().trim(),
+                                        et_password_fist.getText().toString().trim(),
+                                        sp_token.getSharedPreference(Constants.MESSAGE_TOKEN, "").toString()
+                                );
+                            } else {
+                                Toasty.warning(ContextUtils.getContext(), "两次输入的密码不一致", Toast.LENGTH_SHORT, true).show();
+                            }
+                        } else {
+                            Toasty.success(ContextUtils.getContext(), "验证码错误", Toast.LENGTH_SHORT, true).show();
+                        }
+                    }
+                });
     }
 
     public void updatePassword(String TelephoneToken, String VerCode, String password, String token) {
@@ -250,7 +320,10 @@ public class RetrievePasswordActivity extends BaseActivity {
                     @Override
                     public void onSuccess(EntityUpdatePassword response) {
                         if (response.getCode() == 1) {
-                            startActivity(new Intent(RetrievePasswordActivity.this, LoginActivity.class));
+                            Intent intent = new Intent(RetrievePasswordActivity.this, LoginActivity.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            startActivity(intent);
+                            Toasty.success(ContextUtils.getContext(), "修改成功，重新登录", Toast.LENGTH_SHORT, true).show();
                         }
                     }
                 });
