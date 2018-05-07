@@ -59,8 +59,6 @@ public class ArticleHomeActivity extends BaseActivity {
     private int PAGE_SIZE = 6;
     //当前是第几页
     private int mCurrentPage = 1;
-    //是否没有更多数据了
-    private boolean isNoMoreData = false;
 
 
     @Override
@@ -88,11 +86,9 @@ public class ArticleHomeActivity extends BaseActivity {
 
         initRv();
 
-
 //        //加载刷新数据
         initRefresh();
     }
-
 
     public void initTtileBar() {
         article_titlebar.setLeftImageResource(R.drawable.return_button);

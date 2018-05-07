@@ -7,6 +7,8 @@
     <item android:drawable="@drawable/progress_3" android:duration="200"/>
     <item android:drawable="@drawable/progress_4" android:duration="200"/>
     <item android:drawable="@drawable/progress_5" android:duration="200"/>
+
+
     <item android:drawable="@drawable/progress_6" android:duration="200"/>
     <item android:drawable="@drawable/progress_7" android:duration="200"/>
     <item android:drawable="@drawable/progress_8" android:duration="200"/>

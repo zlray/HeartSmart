@@ -21,7 +21,6 @@ public class DialogUtils {
         }*/
         if(mProgressDialog==null){
             mProgressDialog= new CustomProgressDialog.Builder(context)
-                    .setTheme(R.style.ProgressDialogStyle)
                     .setMessage(msg)
                     .build();
         }

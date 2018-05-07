@@ -1,7 +1,9 @@
 package com.xqlh.heartsmart.api.service;
 
+import com.xqlh.heartsmart.bean.EntityAppraisalAnswer;
 import com.xqlh.heartsmart.bean.EntityAppraisalCategory;
 import com.xqlh.heartsmart.bean.EntityAppraisalIntroduce;
+import com.xqlh.heartsmart.bean.EntityAppraisalTopic;
 import com.xqlh.heartsmart.bean.EntityArticleBeautiful;
 import com.xqlh.heartsmart.bean.EntityArticleDetail;
 import com.xqlh.heartsmart.bean.EntityArticleNewest;
@@ -158,7 +160,6 @@ public interface ApiService {
     Observable<EntityAppraisalRecommend> getAppraisalRecommend();
 
 
-
     //获得测评的分类
     @GET("api/psychtest/specialty")
     Observable<EntityAppraisalCategory> getAppraisalCategory(@Query("PsychtestTypeID") String id);
@@ -166,5 +167,25 @@ public interface ApiService {
     //获得测评详情
     @GET("api/psychtest/info")
     Observable<EntityAppraisalIntroduce> getAppraisalIntroduce(@Query("id") String id);
+
+//    根据测评ID获取测评的题目【/api/psychtest/topic】GET
+
+//    psyid	string	测评ID
+
+    @GET("api/psychtest/topic")
+    Observable<EntityAppraisalTopic> getAppraisalTopic(@Query("psyid") String psyid);
+
+
+
+//    根据题目ID获取题目下的选项【/api/psychtest/optionbytopicid】 GET
+
+//    topicid	string	题目ID
+
+    @GET("api/psychtest/optionbytopicid")
+    Observable<EntityAppraisalAnswer> getAppraisalAnswer(@Query("topicid") String topicid);
+
+
+
+
 
 }

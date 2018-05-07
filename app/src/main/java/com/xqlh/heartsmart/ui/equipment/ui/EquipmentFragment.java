@@ -42,6 +42,7 @@ public class EquipmentFragment extends BaseLazyFragment {
     @Override
     protected void init() {
         initTtileBar();
+        equipmentList.clear();
         equipmentList.add(new EquipmentIconTitleModel(R.drawable.equipment_appraisal, "心企心理检测咨询档案管理系统", "153dd1e6ebab4279931875d654ddc001"));
         equipmentList.add(new EquipmentIconTitleModel(R.drawable.equipment_bestray, "百思瑞生物反馈训练系统", "b60f031fecd9422f92faacc4f649994b"));
         equipmentList.add(new EquipmentIconTitleModel(R.drawable.equipment_hug, "心企智能认知调节拥抱系统", "1"));

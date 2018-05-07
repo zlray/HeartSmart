@@ -2,36 +2,29 @@ package com.xqlh.heartsmart.ui.home.ui;
 
 
 import android.app.Fragment;
-import android.content.Context;
-import android.content.Intent;
 import android.net.Uri;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
-import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.xqlh.heartsmart.R;
 import com.xqlh.heartsmart.api.RetrofitHelper;
 import com.xqlh.heartsmart.api.base.BaseObserval;
 import com.xqlh.heartsmart.base.BaseLazyFragment;
-import com.xqlh.heartsmart.base.RvListener;
 import com.xqlh.heartsmart.bean.EntityArticleNewest;
-import com.xqlh.heartsmart.ui.home.adapter.AdapterArticle;
+import com.xqlh.heartsmart.ui.home.adapter.AdapterHome;
+import com.xqlh.heartsmart.ui.home.model.IconTitleModel;
 import com.xqlh.heartsmart.utils.ContextUtils;
-import com.youth.banner.Banner;
-import com.youth.banner.BannerConfig;
-import com.youth.banner.Transformer;
-import com.youth.banner.loader.ImageLoader;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.OnClick;
 import es.dmoral.toasty.Toasty;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
@@ -41,20 +34,24 @@ import io.reactivex.schedulers.Schedulers;
  */
 public class HomeFragment extends BaseLazyFragment {
 
-    @BindView(R.id.ib_article)
-    ImageButton ib_article;
-    @BindView(R.id.banner)
-    Banner banner;
     private List<Uri> mList = new ArrayList<>();
 
-    AdapterArticle adapterArticle;
+    @BindView(R.id.rv_home)
+    RecyclerView rv_home;
 
-    @BindView(R.id.rv_article_newest)
-    RecyclerView rv_article_newest;
+    @BindView(R.id.smartRefreshLayout)
+    SmartRefreshLayout smartRefreshLayout;
 
-    //点击查看更多文章
-    @BindView(R.id.rv_more_article)
-    RelativeLayout rv_more_article;
+    AdapterHome adapterHome;
+
+    //每页的大小
+    private int PAGE_SIZE = 6;
+    //当前是第几页
+    private int mCurrentPage = 1;
+
+    private List<Uri> bannerList = new ArrayList<>();
+    private List<IconTitleModel> eightList = new ArrayList<>();
+
 
     @Override
     protected int setContentView() {
@@ -67,33 +64,53 @@ public class HomeFragment extends BaseLazyFragment {
 
     @Override
     protected void init() {
-        initBanner();
-        rv_article_newest.setLayoutManager(new LinearLayoutManager(getActivity()));
+        adapterHome = new AdapterHome(getActivity());
+        initRv();
     }
 
     @Override
     protected void lazyLoad() {
-        getNewest();
+        getNewest(mCurrentPage, PAGE_SIZE);
+        initData();
+        initRefresh();
     }
 
-    public void getNewest() {
+
+    public void initData() {
+        //banner数据
+        bannerList.add(Uri.parse("android.resource://" + getActivity().getPackageName() + "/" + R.drawable.banner));
+        bannerList.add(Uri.parse("android.resource://" + getActivity().getPackageName() + "/" + R.drawable.banner));
+        adapterHome.setBannerList(bannerList);
+        //8个按钮
+        eightList.add(new IconTitleModel(R.drawable.psychological_test, "心理测评", "153dd1e6ebab4279931875d654ddc001"));
+        eightList.add(new IconTitleModel(R.drawable.evaluation_archives, "测评系统", "2e8d670d44b9440282aa816b51a6a779"));
+        eightList.add(new IconTitleModel(R.drawable.music, "体感音乐", "6497552afcea4fbebe7588294372fb22"));
+        eightList.add(new IconTitleModel(R.drawable.hug, "认知拥抱", "76f1cfba8c8e40ec888b563e6b8ea4f1"));
+        eightList.add(new IconTitleModel(R.drawable.article, "心理文章", "850e7186768347daa7380627ca4fbc58"));
+        eightList.add(new IconTitleModel(R.drawable.self_confidence, "自信心", "a3ece580903a432c87b48719d52fc768"));
+        eightList.add(new IconTitleModel(R.drawable.whoop, "呐喊宣泄", "ca9818ee292b4927a73c9b7c805c7938"));
+        eightList.add(new IconTitleModel(R.drawable.beat, "击打宣泄", "f490f11854144b05a69eb42d7ddf962e"));
+
+        adapterHome.setEightList(eightList);
+        //
+        adapterHome.notifyDataSetChanged();
+    }
+
+    public void initRv() {
+        rv_home.setLayoutManager(new LinearLayoutManager(getActivity()));
+    }
+
+    public void getNewest(int page, int PAGE_SIZE) {
         RetrofitHelper.getApiService()
-                .getArticleQuery("", "", new String[]{""}, 1, 6, 0)
+                .getArticleQuery("", "", new String[]{""}, page, PAGE_SIZE, 0)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseObserval<EntityArticleNewest>() {
                     @Override
                     public void onSuccess(final EntityArticleNewest response) {
                         if (response.getCode() == 1) {
-                            adapterArticle = new AdapterArticle(getActivity(), response.getResult(), new RvListener() {
-                                @Override
-                                public void onItemClick(int id, int position) {
-                                    Intent intent = new Intent(getActivity(), ArticleDetailActivity.class);
-                                    intent.putExtra("id", response.getResult().get(position).getID());
-                                    getActivity().startActivity(intent);
-                                }
-                            });
-                            rv_article_newest.setAdapter(adapterArticle);
+                            adapterHome.setNewestList(response.getResult());
+                            rv_home.setAdapter(adapterHome);
                         } else {
                             Toasty.warning(ContextUtils.getContext(), "服务器异常", Toast.LENGTH_SHORT, true).show();
                         }
@@ -101,56 +118,45 @@ public class HomeFragment extends BaseLazyFragment {
                 });
     }
 
-    @OnClick({R.id.ib_article,R.id.rv_more_article})
-    public void OnClick(View view) {
-        switch (view.getId()) {
-            case R.id.ib_article:
-                startActivity(new Intent(getActivity(), ArticleHomeActivity.class));
-                break;
-            case R.id.rv_more_article:
-                startActivity(new Intent(getActivity(), ArticleHomeActivity.class));
-                break;
-        }
+    public void initRefresh() {
+        smartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(RefreshLayout refreshlayout) {
+                getRefereshNewest(mCurrentPage, PAGE_SIZE * mCurrentPage);
+                getNewest(1, 6);
+                adapterHome.notifyDataSetChanged();
+                refreshlayout.finishRefresh();
+            }
+        });
+
+        //重置没有更多数据状态
+        smartRefreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
+            @Override
+            public void onLoadMore(@NonNull final RefreshLayout refreshLayout) {
+                mCurrentPage++;
+                getRefereshNewest(mCurrentPage, PAGE_SIZE * mCurrentPage);
+                smartRefreshLayout.finishLoadMore();
+            }
+        });
     }
 
-    public void initBanner() {
-
-        //设置图片集合 18245096128
-        banner.setImages(mList);
-
-        //设置banner样式
-//        banner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR_TITLE);
-
-        //设置图片加载器
-        banner.setImageLoader(new GlideImageLoader());
-
-        //设置banner动画效果
-        banner.setBannerAnimation(Transformer.Default);
-
-        //设置标题集合（当banner样式有显示title时）
-//        banner.setBannerTitles(titles);
-
-        //设置自动轮播，默认为true
-        banner.isAutoPlay(true);
-
-        //设置轮播时间
-        banner.setDelayTime(1500);
-
-        //设置指示器位置（当banner模式中有指示器时）
-        banner.setIndicatorGravity(BannerConfig.CENTER);
-
-        //banner设置方法全部调用完毕时最后调用
-        banner.start();
+    public void getRefereshNewest(int page, int PAGE_SIZE) {
+        RetrofitHelper.getApiService()
+                .getArticleQuery("", "", new String[]{""}, page, PAGE_SIZE, 3)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseObserval<EntityArticleNewest>() {
+                    @Override
+                    public void onSuccess(final EntityArticleNewest response) {
+                        if (response.getCode() == 1) {
+                            adapterHome.addNewestList(response.getResult());
+                            adapterHome.notifyDataSetChanged();
+                        } else {
+                            Toasty.warning(ContextUtils.getContext(), "服务器异常", Toast.LENGTH_SHORT, true).show();
+                        }
+                    }
+                });
     }
 
-    public class GlideImageLoader extends ImageLoader {
-        @Override
-        public void displayImage(Context context, Object path, ImageView imageView) {
-
-            //Glide 加载图片简单用法
-            Glide.with(context).load(path).into(imageView);
-
-        }
-    }
 
 }

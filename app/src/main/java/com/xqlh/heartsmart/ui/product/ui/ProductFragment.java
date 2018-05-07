@@ -62,7 +62,7 @@ public class ProductFragment extends BaseLazyFragment {
     protected void init() {
         initTtileBar();
         rv_right.setLayoutManager(new LinearLayoutManager(getActivity()));
-        bt_hardware.setBackgroundColor(Color.BLUE);
+        bt_hardware.setBackgroundColor(Color.GRAY);
         bt_software.setBackgroundColor(Color.WHITE);
     }
 
@@ -95,7 +95,6 @@ public class ProductFragment extends BaseLazyFragment {
     }
 
     public void initHardData() {
-
         RetrofitHelper.getApiService()
                 .getProductCategory(0, 3, 10)
                 .subscribeOn(Schedulers.io())

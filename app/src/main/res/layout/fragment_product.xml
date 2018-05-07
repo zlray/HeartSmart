@@ -30,7 +30,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:text="硬件"
-                android:textColor="@color/white" />
+                android:textColor="@color/black" />
 
             <Button
                 android:id="@+id/bt_software"
@@ -38,7 +38,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/bt_hardware"
                 android:text="软件"
-                android:textColor="@color/white" />
+                android:textColor="@color/black" />
         </RelativeLayout>
 
 

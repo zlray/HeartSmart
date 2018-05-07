@@ -22,7 +22,7 @@ public class ProgressUtils {
         final WeakReference<Activity> activityWeakReference = new WeakReference<>(activity);
         final DialogUtils dialogUtils = new DialogUtils();
 
-        dialogUtils.showProgress(activityWeakReference.get());
+        dialogUtils.showProgress(activityWeakReference.get(),"加载中...");
 
         return new ObservableTransformer<T, T>() {
             @Override
