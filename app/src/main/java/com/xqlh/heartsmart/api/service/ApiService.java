@@ -3,11 +3,11 @@ package com.xqlh.heartsmart.api.service;
 import com.xqlh.heartsmart.bean.EntityAppraisalAnswer;
 import com.xqlh.heartsmart.bean.EntityAppraisalCategory;
 import com.xqlh.heartsmart.bean.EntityAppraisalIntroduce;
+import com.xqlh.heartsmart.bean.EntityAppraisalRecommend;
 import com.xqlh.heartsmart.bean.EntityAppraisalTopic;
 import com.xqlh.heartsmart.bean.EntityArticleBeautiful;
 import com.xqlh.heartsmart.bean.EntityArticleDetail;
 import com.xqlh.heartsmart.bean.EntityArticleNewest;
-import com.xqlh.heartsmart.bean.EntityAppraisalRecommend;
 import com.xqlh.heartsmart.bean.EntityBindPhone;
 import com.xqlh.heartsmart.bean.EntityCheckAccount;
 import com.xqlh.heartsmart.bean.EntityCheckMessage;
@@ -20,6 +20,7 @@ import com.xqlh.heartsmart.bean.EntityProductCategory;
 import com.xqlh.heartsmart.bean.EntityProductDetail;
 import com.xqlh.heartsmart.bean.EntityReportBasics;
 import com.xqlh.heartsmart.bean.EntityUpdatePassword;
+import com.xqlh.heartsmart.bean.EntityUpdateUserInfor;
 import com.xqlh.heartsmart.bean.EntityUserInfor;
 import com.xqlh.heartsmart.bean.EntityWelcome;
 
@@ -93,6 +94,21 @@ public interface ApiService {
                                           @Field("Telphone") String Telphone,
                                           @Field("token") String token,
                                           @Field("telcode") String telcode);
+
+    //修改个人信息
+    @FormUrlEncoded
+    @POST("api/account/perfectuser")
+    Observable<EntityUpdateUserInfor> updateUserInfor(@Header("Authorization") String Authorization,
+                                                      @Field("name") String name,
+                                                      @Field("Sex") int sex,
+                                                      @Field("BirthDate") String BirthDate,
+                                                      @Field("EducationLevel") int EducationLevel,
+                                                      @Field("Email") String Email,
+                                                      @Field("Residence") String Residence,
+                                                      @Field("province") String province,
+                                                      @Field("city") String city,
+                                                      @Field("ConsultantTitle") int ConsultantTitle);
+
 
     //app启动页面
     @GET("api/clientapp/apphomepic")
@@ -176,16 +192,12 @@ public interface ApiService {
     Observable<EntityAppraisalTopic> getAppraisalTopic(@Query("psyid") String psyid);
 
 
-
 //    根据题目ID获取题目下的选项【/api/psychtest/optionbytopicid】 GET
 
 //    topicid	string	题目ID
 
     @GET("api/psychtest/optionbytopicid")
     Observable<EntityAppraisalAnswer> getAppraisalAnswer(@Query("topicid") String topicid);
-
-
-
 
 
 }

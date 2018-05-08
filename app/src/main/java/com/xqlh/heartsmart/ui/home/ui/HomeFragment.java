@@ -55,10 +55,6 @@ public class HomeFragment extends BaseLazyFragment {
 
     @Override
     protected int setContentView() {
-        mList.add(Uri.parse("android.resource://" + getActivity().getPackageName() + "/" + R.drawable.banner));
-        mList.add(Uri.parse("android.resource://" + getActivity().getPackageName() + "/" + R.drawable.banner));
-        mList.add(Uri.parse("android.resource://" + getActivity().getPackageName() + "/" + R.drawable.banner));
-        mList.add(Uri.parse("android.resource://" + getActivity().getPackageName() + "/" + R.drawable.banner));
         return R.layout.fragment_home;
     }
 
@@ -78,10 +74,13 @@ public class HomeFragment extends BaseLazyFragment {
 
     public void initData() {
         //banner数据
+        bannerList.clear();
         bannerList.add(Uri.parse("android.resource://" + getActivity().getPackageName() + "/" + R.drawable.banner));
         bannerList.add(Uri.parse("android.resource://" + getActivity().getPackageName() + "/" + R.drawable.banner));
         adapterHome.setBannerList(bannerList);
         //8个按钮
+        eightList.clear();
+
         eightList.add(new IconTitleModel(R.drawable.psychological_test, "心理测评", "153dd1e6ebab4279931875d654ddc001"));
         eightList.add(new IconTitleModel(R.drawable.evaluation_archives, "测评系统", "2e8d670d44b9440282aa816b51a6a779"));
         eightList.add(new IconTitleModel(R.drawable.music, "体感音乐", "6497552afcea4fbebe7588294372fb22"));

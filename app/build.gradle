@@ -84,4 +84,7 @@ dependencies {
     compile 'com.borjabravo:readmoretextview:2.1.0'
     compile 'cn.carbs.android:ExpandableTextView:1.0.3'
 
+    compile files('libs/eventbus-3.0.0.jar')
+
+
 }

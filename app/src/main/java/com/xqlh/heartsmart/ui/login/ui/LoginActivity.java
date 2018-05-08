@@ -230,8 +230,8 @@ public class LoginActivity extends BaseActivity {
                 break;
             case R.id.bt_login:
                 RxKeyboardTool.hideSoftInput(LoginActivity.this);
-                login(et_account.getText().toString().trim(), et_password.getText().toString().trim());
 
+                login(et_account.getText().toString().trim(), et_password.getText().toString().trim());
                 break;
             case R.id.bt_forget_password:
                 if (!TextUtils.isEmpty(et_account.getText().toString())) {

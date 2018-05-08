@@ -17,6 +17,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.vondear.rxtools.RxPhotoTool;
 import com.vondear.rxtools.RxSPTool;
 import com.vondear.rxtools.view.dialog.RxDialogChooseImage;
+import com.xqlh.heartsmart.Event.EventUpdateUserInfor;
 import com.xqlh.heartsmart.R;
 import com.xqlh.heartsmart.api.RetrofitHelper;
 import com.xqlh.heartsmart.api.base.BaseObserval;
@@ -30,6 +31,10 @@ import com.xqlh.heartsmart.utils.ContextUtils;
 import com.xqlh.heartsmart.widget.TitleBar;
 import com.yalantis.ucrop.UCrop;
 import com.yalantis.ucrop.UCropActivity;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -82,9 +87,11 @@ public class MineActivity extends BaseActivity {
     @Override
     public void init() {
         initTtileBar();
+
+        EventBus.getDefault().register(this);
+
         sp_login_token = new SharedPreferencesHelper(
                 this, Constants.CHECKINFOR);
-
         getUserInfor();
         initView();
     }
@@ -101,6 +108,15 @@ public class MineActivity extends BaseActivity {
                 finish();
             }
         });
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void updatetCheck(EventUpdateUserInfor eventUpdateUserInfor) {
+        switch (eventUpdateUserInfor.getMsg()) {
+            case "updateUserInfor":
+                getUserInfor();
+                break;
+        }
     }
 
     public void getUserInfor() {
@@ -140,9 +156,6 @@ public class MineActivity extends BaseActivity {
         switch (view.getId()) {
             case R.id.mine_update_infor:
                 Intent intent = new Intent(MineActivity.this, UpdateUserInforActivity.class);
-                intent.putExtra("nickname", mine_tv_nickname.getText().toString());
-                intent.putExtra("sex", mine_tv_sex.getText().toString());
-                intent.putExtra("birthday", mine_tv_birthday.getText().toString());
                 startActivity(intent);
                 break;
         }

@@ -242,7 +242,6 @@ public class AdapterHome extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     @Override
     public int getItemViewType(int position) {
-
         /**
          *  区分item类型,返回不同的int类型的值,
          *  在onCreateViewHolder方法中用viewType来创建不同的ViewHolder
@@ -264,9 +263,8 @@ public class AdapterHome extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     @Override
     public int getItemCount() {
-        return listNewest.size() + 4;
+        return listNewest.size() + 4;//
     }
-
 
     /**
      * 最新文章
@@ -285,14 +283,12 @@ public class AdapterHome extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public static class TextHolder extends RecyclerView.ViewHolder {
         RelativeLayout rv_more;
         TextView tv;
-
         public TextHolder(View itemView) {
             super(itemView);
             rv_more = (RelativeLayout) itemView.findViewById(R.id.rv_more);
             tv = itemView.findViewById(R.id.tv);
         }
     }
-
 
     /**
      * 轮播图的ViewHolder
@@ -303,7 +299,6 @@ public class AdapterHome extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         public BannerHolder(View itemView) {
             super(itemView);
             banner = (Banner) itemView.findViewById(R.id.banner);
-
         }
     }
 
