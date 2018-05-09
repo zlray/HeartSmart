@@ -11,6 +11,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.xqlh.heartsmart.Event.EventUpdateUserInfor;
 import com.xqlh.heartsmart.R;
 import com.xqlh.heartsmart.api.RetrofitHelper;
 import com.xqlh.heartsmart.api.base.BaseObserval;
@@ -21,6 +22,10 @@ import com.xqlh.heartsmart.utils.ImageLoaderUtil;
 import com.xqlh.heartsmart.utils.SharedPreferencesHelper;
 import com.xqlh.heartsmart.utils.ContextUtils;
 import com.xqlh.heartsmart.widget.TitleBar;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -53,13 +58,17 @@ public class MineFragment extends BaseLazyFragment {
 
     @Override
     protected void init() {
+        if (!EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().register(this);
+        }
         initTtileBar();
         sp_login_token = new SharedPreferencesHelper(
                 getActivity(), Constants.CHECKINFOR);
     }
+
     @OnClick({R.id.rv_setting})
-    public void onClikc(View view){
-        switch (view.getId()){
+    public void onClikc(View view) {
+        switch (view.getId()) {
             case R.id.rv_setting:
                 startActivity(new Intent(getActivity(), SettingActivity.class));
                 break;
@@ -68,6 +77,19 @@ public class MineFragment extends BaseLazyFragment {
 
     @Override
     protected void lazyLoad() {
+        getUserInfor();
+    }
+
+    @Subscribe(threadMode = ThreadMode.BACKGROUND)
+    public void updatetCheck(EventUpdateUserInfor eventUpdateUserInfor) {
+        switch (eventUpdateUserInfor.getMsg()) {
+            case "updateUserInfor":
+                getUserInfor();
+                break;
+        }
+    }
+
+    public void getUserInfor() {
         RetrofitHelper.getApiService()
                 .getUserInfor(sp_login_token.getSharedPreference(Constants.LOGIN_TOKEN, "").toString().trim())
                 .subscribeOn(Schedulers.io())
@@ -79,9 +101,6 @@ public class MineFragment extends BaseLazyFragment {
                             if (response.getMsg().equals("OK")) {
                                 mine_tv_name.setText(response.getResult().getName());
                                 ImageLoaderUtil.LoadImage(getActivity(), response.getResult().getHeadimgurl(), mine_iv_head);
-                                Log.i("lz", "昵称" + response.getResult().getName());
-                                Log.i("lz", "性别" + response.getResult().getSex());
-                                Log.i("lz", "出生日期" + response.getResult().getBirthDate());
                             }
                         } else {
                             Toasty.warning(ContextUtils.getContext(), "用户名或者密码错误", Toast.LENGTH_SHORT, true).show();

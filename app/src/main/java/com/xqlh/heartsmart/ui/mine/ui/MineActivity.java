@@ -110,7 +110,7 @@ public class MineActivity extends BaseActivity {
         });
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN)
+    @Subscribe(threadMode = ThreadMode.BACKGROUND)
     public void updatetCheck(EventUpdateUserInfor eventUpdateUserInfor) {
         switch (eventUpdateUserInfor.getMsg()) {
             case "updateUserInfor":
@@ -191,10 +191,10 @@ public class MineActivity extends BaseActivity {
                     Log.i(TAG, "选择相机为" + RxPhotoTool.imageUriFromCamera);
                     initUCrop(RxPhotoTool.imageUriFromCamera);
                 }
-
                 break;
             case RxPhotoTool.CROP_IMAGE://普通裁剪后的处理
                 Log.i(TAG, "普通裁剪" + RxPhotoTool.cropImageUri);
+
                 Glide.with(this).
                         load(RxPhotoTool.cropImageUri).
                         diskCacheStrategy(DiskCacheStrategy.ALL). //缓存的尺寸
@@ -207,13 +207,17 @@ public class MineActivity extends BaseActivity {
                         fallback(R.drawable.head_default).//url为空的显示的 图片
                         into(mine_iv_head);
                 break;
-
             case UCrop.REQUEST_CROP://UCrop裁剪之后的处理
                 if (resultCode == RESULT_OK) {
+
                     resultUri = UCrop.getOutput(data);
+
                     Log.i(TAG, "UCrop裁剪之后的处理" + resultUri);
+
                     roadImageView(resultUri, mine_iv_head);
+
                     RxSPTool.putContent(this, "AVATAR", resultUri.toString());
+
                 } else if (resultCode == UCrop.RESULT_ERROR) {
                     final Throwable cropError = UCrop.getError(data);
                 }
@@ -229,7 +233,9 @@ public class MineActivity extends BaseActivity {
 
     //从Uri中加载图片 并将其转化成File文件返回
     private File roadImageView(Uri uri, ImageView imageView) {
+
         Log.i(TAG, "加载图片的uri为" + uri);
+
         Glide.with(this).
                 load(uri).
                 diskCacheStrategy(DiskCacheStrategy.RESULT).
@@ -242,6 +248,7 @@ public class MineActivity extends BaseActivity {
                 fallback(R.drawable.head_default). // uri为空时加载的图片
                 into(imageView);
 
+        Log.i(TAG, "返回的文件名称" + new File(RxPhotoTool.getImageAbsolutePath(this, uri)));
         return (new File(RxPhotoTool.getImageAbsolutePath(this, uri)));
     }
 
@@ -251,9 +258,11 @@ public class MineActivity extends BaseActivity {
         SimpleDateFormat timeFormatter = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.CHINA);
         long time = System.currentTimeMillis();
         String imageName = timeFormatter.format(new Date(time));
+
         Log.i(TAG, "图片名称" + imageName);
 
         Uri destinationUri = Uri.fromFile(new File(this.getCacheDir(), imageName + ".jpeg"));
+
         Log.i(TAG, "目的地的uri为" + destinationUri);
 
 
@@ -277,5 +286,9 @@ public class MineActivity extends BaseActivity {
                 .withMaxResultSize(1000, 1000)
                 .withOptions(options)
                 .start(this);
+    }
+
+    public void uploadHead() {
+
     }
 }

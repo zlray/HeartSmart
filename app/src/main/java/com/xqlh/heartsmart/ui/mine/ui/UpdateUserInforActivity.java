@@ -106,13 +106,13 @@ public class UpdateUserInforActivity extends BaseActivity {
                 if ("男".equals(tv_gender.getText().toString())) {
                     gender = 1;
                 } else {
-                    gender = 0;
+                    gender = 2;
                 }
                 String token = sp.getSharedPreference(Constants.LOGIN_TOKEN, "").toString();
                 String name = et_name.getText().toString().trim();
                 String birth = tv_birth.getText().toString().trim();
                 Log.i(TAG, "update: " + token
-                        + "--" + name + "--" + gender + "--" + birth );
+                        + "--" + name + "--" + gender + "--" + birth);
 
                 update(sp.getSharedPreference(Constants.LOGIN_TOKEN, "").toString(),
                         et_name.getText().toString().trim(),
@@ -125,7 +125,7 @@ public class UpdateUserInforActivity extends BaseActivity {
 
     public void update(String toke, String name, int gender, String birthdate) {
         RetrofitHelper.getApiService()
-                .updateUserInfor(toke, name, gender, birthdate, 0, "1", "", "北京", "北京", 1)
+                .updateUserInfor(toke, "", name, "", gender, birthdate, "", 0, "", "", 1, "")
                 .subscribeOn(Schedulers.io())
                 .compose(this.<EntityUpdateUserInfor>bindToLifecycle())
                 .compose(ProgressUtils.<EntityUpdateUserInfor>applyProgressBar(this))
@@ -137,7 +137,10 @@ public class UpdateUserInforActivity extends BaseActivity {
                             if (response.getMsg().equals("OK")) {
                                 //发送eventbus
                                 EventBus.getDefault().post(new EventUpdateUserInfor("updateUserInfor"));
-                                startActivity(new Intent(UpdateUserInforActivity.this, MineActivity.class));
+                                finish();
+                                Intent intent = new Intent(UpdateUserInforActivity.this, MineActivity.class);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                startActivity(intent);
                             }
                         } else {
                             Toasty.warning(ContextUtils.getContext(), "服务器异常", Toast.LENGTH_SHORT, true).show();
@@ -215,6 +218,5 @@ public class UpdateUserInforActivity extends BaseActivity {
                 });
         // ------------------------------------------------------------------选择日期结束
     }
-
 
 }

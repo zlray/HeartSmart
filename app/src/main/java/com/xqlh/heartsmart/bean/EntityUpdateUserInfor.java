@@ -15,8 +15,7 @@ public class EntityUpdateUserInfor {
 
     private int code;
     private String msg;
-    private Object Result;
-    private Object ResultMsg;
+    private boolean Result;
 
     public int getCode() {
         return code;
@@ -34,19 +33,11 @@ public class EntityUpdateUserInfor {
         this.msg = msg;
     }
 
-    public Object getResult() {
+    public boolean isResult() {
         return Result;
     }
 
-    public void setResult(Object Result) {
-        this.Result = Result;
-    }
-
-    public Object getResultMsg() {
-        return ResultMsg;
-    }
-
-    public void setResultMsg(Object ResultMsg) {
-        this.ResultMsg = ResultMsg;
+    public void setResult(boolean result) {
+        Result = result;
     }
 }

@@ -21,16 +21,20 @@ import com.xqlh.heartsmart.bean.EntityProductDetail;
 import com.xqlh.heartsmart.bean.EntityReportBasics;
 import com.xqlh.heartsmart.bean.EntityUpdatePassword;
 import com.xqlh.heartsmart.bean.EntityUpdateUserInfor;
+import com.xqlh.heartsmart.bean.EntityUploadHead;
 import com.xqlh.heartsmart.bean.EntityUserInfor;
 import com.xqlh.heartsmart.bean.EntityWelcome;
 
 import io.reactivex.Observable;
+import okhttp3.MultipartBody;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.Headers;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
 import retrofit2.http.Query;
 
 /**
@@ -97,17 +101,24 @@ public interface ApiService {
 
     //修改个人信息
     @FormUrlEncoded
-    @POST("api/account/perfectuser")
+    @POST("api/user/edityuser")
     Observable<EntityUpdateUserInfor> updateUserInfor(@Header("Authorization") String Authorization,
-                                                      @Field("name") String name,
+                                                      @Field("UserName") String UserName,
+                                                      @Field("Name") String Name,
+                                                      @Field("NickName") String NickName,
                                                       @Field("Sex") int sex,
                                                       @Field("BirthDate") String BirthDate,
-                                                      @Field("EducationLevel") int EducationLevel,
                                                       @Field("Email") String Email,
-                                                      @Field("Residence") String Residence,
+                                                      @Field("EducationLevel") int EducationLevel,
                                                       @Field("province") String province,
                                                       @Field("city") String city,
-                                                      @Field("ConsultantTitle") int ConsultantTitle);
+                                                      @Field("ConsultantTitle") int ConsultantTitle,
+                                                      @Field("Headimgurl") String Headimgurl);
+    //头像上传
+//    http://open.bnuxq.com/api/FileUploadAPI
+    @Multipart
+    @POST("api/FileUploadAPI")
+    Observable<EntityUploadHead> uoloadHead(@Part MultipartBody.Part file);
 
 
     //app启动页面

@@ -26,7 +26,7 @@
             android:layout_height="match_parent"
             android:background="@null"
             android:gravity="center|left"
-            android:hint="请输入新的用户名"
+            android:hint="请输入新的名字"
             android:paddingLeft="@dimen/dp_20"
             android:textSize="14sp" />
     </LinearLayout>
