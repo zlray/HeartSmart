@@ -5,12 +5,6 @@
     android:layout_height="match_parent"
     tools:context="com.xqlh.heartsmart.ui.appraisal.ui.AppraisalIntroduceActivity">
 
-    <com.xqlh.heartsmart.widget.TitleBar
-        android:id="@+id/titlebar"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@color/color_title_bar"></com.xqlh.heartsmart.widget.TitleBar>
-
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">

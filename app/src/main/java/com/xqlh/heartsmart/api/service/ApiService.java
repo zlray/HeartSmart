@@ -19,6 +19,7 @@ import com.xqlh.heartsmart.bean.EntityLogin;
 import com.xqlh.heartsmart.bean.EntityProductCategory;
 import com.xqlh.heartsmart.bean.EntityProductDetail;
 import com.xqlh.heartsmart.bean.EntityReportBasics;
+import com.xqlh.heartsmart.bean.EntityUndoneAppraisal;
 import com.xqlh.heartsmart.bean.EntityUpdatePassword;
 import com.xqlh.heartsmart.bean.EntityUpdateUserInfor;
 import com.xqlh.heartsmart.bean.EntityUploadHead;
@@ -114,6 +115,7 @@ public interface ApiService {
                                                       @Field("city") String city,
                                                       @Field("ConsultantTitle") int ConsultantTitle,
                                                       @Field("Headimgurl") String Headimgurl);
+
     //头像上传
 //    http://open.bnuxq.com/api/FileUploadAPI
     @Multipart
@@ -209,6 +211,13 @@ public interface ApiService {
 
     @GET("api/psychtest/optionbytopicid")
     Observable<EntityAppraisalAnswer> getAppraisalAnswer(@Query("topicid") String topicid);
+
+
+    //    获取用户未完成测评【/api/console/user/nofinishpsy】 GET
+    @GET("api/console/user/nofinishpsy")
+    Observable<EntityUndoneAppraisal> getAppraisalUndone(@Header("Authorization") String Authorization,
+                                                         @Query("pageIndex") int pageIndex,
+                                                         @Query("pageSize") int pageSize);
 
 
 }

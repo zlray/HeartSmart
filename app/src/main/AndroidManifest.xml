@@ -37,7 +37,7 @@
         <activity android:name=".MainActivity" />
 
         <!-- 引导页面 -->
-        <activity android:name=".ui.guide.activity.GuideActivity"></activity>
+        <activity android:name=".ui.guide.activity.GuideActivity" />
 
         <!-- 欢迎页面 -->
         <activity android:name=".ui.welcome.WelcomeActivity">
@@ -70,7 +70,8 @@
         <activity android:name=".ui.appraisal.ui.AppraisalIntroduceActivity" />
         <activity android:name=".ui.appraisal.ui.AppraisalCategoryActivity" />
         <activity android:name=".ui.appraisal.ui.AppraisalActivity" />
-        <activity android:name=".ui.appraisal.ui.AppraisalReportActivity"></activity>
+        <activity android:name=".ui.appraisal.ui.AppraisalReportActivity" />
+        <activity android:name=".ui.mine.ui.UndoneAppraisalActivity"></activity>
     </application>
 
 </manifest>
