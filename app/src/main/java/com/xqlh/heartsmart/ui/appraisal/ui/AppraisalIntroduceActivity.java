@@ -118,8 +118,6 @@ public class AppraisalIntroduceActivity extends BaseActivity {
                 Intent intent = new Intent(AppraisalIntroduceActivity.this,AppraisalActivity.class);
                 intent.putExtra("id",id);
                 startActivity(intent);
-
-
                 break;
         }
     }

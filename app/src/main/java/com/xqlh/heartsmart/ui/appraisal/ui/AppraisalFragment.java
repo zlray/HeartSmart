@@ -80,8 +80,11 @@ public class AppraisalFragment extends BaseLazyFragment {
 
     public void initData() {
         //banner数据
+        bannerList.clear();
+        
         bannerList.add(Uri.parse("android.resource://" + getActivity().getPackageName() + "/" + R.drawable.banner));
         bannerList.add(Uri.parse("android.resource://" + getActivity().getPackageName() + "/" + R.drawable.banner));
+
         adapterAppraisalHome.setBannerList(bannerList);
         //8个按钮
         eightList.clear();
