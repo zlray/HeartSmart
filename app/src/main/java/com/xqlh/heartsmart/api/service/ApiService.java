@@ -4,6 +4,7 @@ import com.xqlh.heartsmart.bean.EntityAppraisalAnswer;
 import com.xqlh.heartsmart.bean.EntityAppraisalCategory;
 import com.xqlh.heartsmart.bean.EntityAppraisalIntroduce;
 import com.xqlh.heartsmart.bean.EntityAppraisalRecommend;
+import com.xqlh.heartsmart.bean.EntityAppraisalReportID;
 import com.xqlh.heartsmart.bean.EntityAppraisalTopic;
 import com.xqlh.heartsmart.bean.EntityArticleBeautiful;
 import com.xqlh.heartsmart.bean.EntityArticleDetail;
@@ -18,6 +19,7 @@ import com.xqlh.heartsmart.bean.EntityGetPhoneByAccount;
 import com.xqlh.heartsmart.bean.EntityLogin;
 import com.xqlh.heartsmart.bean.EntityProductCategory;
 import com.xqlh.heartsmart.bean.EntityProductDetail;
+import com.xqlh.heartsmart.bean.EntityReportAnswer;
 import com.xqlh.heartsmart.bean.EntityReportBasics;
 import com.xqlh.heartsmart.bean.EntityUndoneAppraisal;
 import com.xqlh.heartsmart.bean.EntityUpdatePassword;
@@ -219,5 +221,15 @@ public interface ApiService {
                                                          @Query("pageIndex") int pageIndex,
                                                          @Query("pageSize") int pageSize);
 
+    @FormUrlEncoded
+    @POST("api/psychtest/savepuo")
+    Observable<EntityReportAnswer> reportAnswer(@Header("Authorization") String Authorization,
+                                                @Field("ptestUserid") String ptestUserid,
+                                                @Field("optionNumber") String optionNumber,
+                                                @Field("topicID") String topicID);
+
+    @GET("api/psychtest/psytestend")
+    Observable<EntityAppraisalReportID> getAppraisalReportID(@Header("Authorization") String Authorization,
+                                                             @Query("ptestUserid") String ptestUserid);
 
 }

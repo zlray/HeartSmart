@@ -36,6 +36,8 @@ public class Constants {
 
     public static final String GET_PHONE_BY_ACCOUNT_TOKEN = "getPhoneByAccount";
 
+    public static final String TOPIC_INDEX = "topicIndex";
+
 
     public static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
 

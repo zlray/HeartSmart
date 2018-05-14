@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.xqlh.heartsmart.ui.appraisal.ui.AppraisalIntroduceActivity">
+    tools:context="com.xqlh.heartsmart.ui.appraisal.ui.AppraisalInstructionActivity">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -42,22 +43,11 @@
                 android:text="哈哈哈哈"
                 android:textSize="14sp" />
 
-            <TextView
-                android:id="@+id/tv_price"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/tv_title"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="10dp"
-                android:gravity="center"
-                android:textColor="@color/red"
-                android:textSize="28sp" />
-
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_above="@+id/fl"
-                android:layout_below="@+id/tv_price"
+                android:layout_below="@+id/tv_title"
                 android:layout_marginTop="10dp"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp">
@@ -182,35 +172,11 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/ll_price"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_below="@+id/ll_notice"
-                    android:layout_marginTop="10dp"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginRight="5dp"
-                        android:background="@drawable/circle_red" />
-
-                    <TextView
-                        android:id="@+id/tv_price2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:text="￥10.21" />
-                </LinearLayout>
-
-                <LinearLayout
                     android:id="@+id/ll_topic_number"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
-                    android:layout_below="@+id/ll_price"
+                    android:layout_below="@+id/ll_notice"
                     android:layout_marginTop="10dp"
                     android:orientation="horizontal">
 
@@ -283,6 +249,5 @@
 
 
     </FrameLayout>
-
 
 </RelativeLayout>

@@ -42,6 +42,9 @@ public class EquipmentReportDetailActivity extends BaseActivity {
     @BindView(R.id.tv_advice)
     TextView tv_advice;
 
+    @BindView(R.id.tv_comment)
+    TextView tv_comment;
+
 
     private String id;
     private String name;
@@ -100,11 +103,13 @@ public class EquipmentReportDetailActivity extends BaseActivity {
                         if (response.getCode() == 1) {
                             String analys = "";
                             String advice = "";
+                            String comment = "";
                             if (response.getResult() != null) {
                                 tv_name.setText(response.getResult().getUserName());
                                 tv_time.setText(response.getResult().getPsyReportDate());
                                 tv_total_score.setText(response.getResult().getTotalScore() + "");
                                 tv_level.setText(response.getResult().getTotalLevelName());
+
                                 for (int i = 0; i < response.getResult().getAnalys().size(); i++) {
                                     analys = response.getResult().getAnalys() + "";
                                 }
@@ -113,6 +118,10 @@ public class EquipmentReportDetailActivity extends BaseActivity {
                                     advice = response.getResult().getAdvice() + "";
                                 }
                                 tv_advice.setText(advice);
+                                for (int j = 0; j < response.getResult().getComment().size(); j++) {
+                                    comment = response.getResult().getComment() + "";
+                                }
+                                tv_comment.setText(comment);
                             }
                         } else {
                             Toasty.warning(ContextUtils.getContext(), "服务器异常", Toast.LENGTH_SHORT, true).show();

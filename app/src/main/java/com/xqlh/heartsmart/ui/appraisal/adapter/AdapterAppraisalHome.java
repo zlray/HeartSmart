@@ -266,7 +266,7 @@ public class AdapterAppraisalHome extends RecyclerView.Adapter<RecyclerView.View
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 Intent intent = new Intent(context, AppraisalIntroduceActivity.class);
-                intent.putExtra("id", listHot.get(position).getID().trim());
+                intent.putExtra("PsyID", listHot.get(position).getID().trim());
                 context.startActivity(intent);
             }
         });
@@ -285,7 +285,7 @@ public class AdapterAppraisalHome extends RecyclerView.Adapter<RecyclerView.View
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, AppraisalIntroduceActivity.class);
-                intent.putExtra("id", listRecommend.get(position - 3).getID().trim());
+                intent.putExtra("PsyID", listRecommend.get(position - 3).getID().trim());
                 context.startActivity(intent);
             }
         });

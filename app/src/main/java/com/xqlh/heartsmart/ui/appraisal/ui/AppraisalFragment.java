@@ -86,6 +86,9 @@ public class AppraisalFragment extends BaseLazyFragment {
         bannerList.add(Uri.parse("android.resource://" + getActivity().getPackageName() + "/" + R.drawable.banner));
 
         adapterAppraisalHome.setBannerList(bannerList);
+
+        adapterAppraisalHome.notifyDataSetChanged();
+
         //8个按钮
         eightList.clear();
 

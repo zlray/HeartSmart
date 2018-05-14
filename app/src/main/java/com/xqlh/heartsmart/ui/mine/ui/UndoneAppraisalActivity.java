@@ -2,6 +2,7 @@ package com.xqlh.heartsmart.ui.mine.ui;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -9,12 +10,15 @@ import android.widget.Toast;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.xqlh.heartsmart.R;
 import com.xqlh.heartsmart.api.RetrofitHelper;
 import com.xqlh.heartsmart.api.base.BaseObserval;
 import com.xqlh.heartsmart.base.BaseActivity;
 import com.xqlh.heartsmart.bean.EntityUndoneAppraisal;
-import com.xqlh.heartsmart.ui.appraisal.ui.AppraisalIntroduceActivity;
+import com.xqlh.heartsmart.ui.appraisal.ui.AppraisalInstructionActivity;
 import com.xqlh.heartsmart.ui.home.adapter.AdapterAppraisalUndone;
 import com.xqlh.heartsmart.utils.Constants;
 import com.xqlh.heartsmart.utils.ContextUtils;
@@ -38,7 +42,7 @@ public class UndoneAppraisalActivity extends BaseActivity {
     TitleBar titlebar;
 
     //每页的大小
-    private int pageSize = 3;
+    private int pageSize = 6;
     //当前是第几页
     private int mCurrentPage = 1;
     private String token;
@@ -91,8 +95,10 @@ public class UndoneAppraisalActivity extends BaseActivity {
                             adapterAppraisalUndone.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
                                 @Override
                                 public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                                    Intent intent = new Intent(UndoneAppraisalActivity.this, AppraisalIntroduceActivity.class);
-                                    intent.putExtra("id", response.getResult().get(position).getID());
+                                    Intent intent = new Intent(UndoneAppraisalActivity.this, AppraisalInstructionActivity.class);
+                                    //传递测评id
+                                    intent.putExtra("PsyID", response.getResult().get(position).getPsyID());
+                                    intent.putExtra("TestRecordId", response.getResult().get(position).getID());
                                     startActivity(intent);
                                 }
                             });
@@ -101,5 +107,25 @@ public class UndoneAppraisalActivity extends BaseActivity {
                         }
                     }
                 });
+    }
+
+    public void initRefresh() {
+        smartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(RefreshLayout refreshlayout) {
+                getUndon(token, mCurrentPage, pageSize);
+                refreshlayout.finishRefresh();
+            }
+        });
+
+        //重置没有更多数据状态
+        smartRefreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
+            @Override
+            public void onLoadMore(@NonNull final RefreshLayout refreshLayout) {
+                mCurrentPage++;
+                getUndon(token, mCurrentPage, pageSize * mCurrentPage);
+                smartRefreshLayout.finishLoadMore();
+            }
+        });
     }
 }

@@ -4,21 +4,28 @@ import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.vondear.rxtools.view.dialog.RxDialogSureCancel;
 import com.xqlh.heartsmart.R;
 import com.xqlh.heartsmart.api.RetrofitHelper;
 import com.xqlh.heartsmart.api.base.BaseObserval;
 import com.xqlh.heartsmart.base.BaseActivity;
 import com.xqlh.heartsmart.bean.EntityAppraisalAnswer;
 import com.xqlh.heartsmart.bean.EntityAppraisalTopic;
+import com.xqlh.heartsmart.bean.EntityReportAnswer;
 import com.xqlh.heartsmart.ui.appraisal.adapter.AdapterAnswerApprisal;
+import com.xqlh.heartsmart.ui.mine.ui.UndoneAppraisalActivity;
+import com.xqlh.heartsmart.utils.Constants;
 import com.xqlh.heartsmart.utils.ContextUtils;
 import com.xqlh.heartsmart.utils.ProgressUtils;
+import com.xqlh.heartsmart.utils.SharedPreferencesHelper;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -33,14 +40,18 @@ public class AppraisalActivity extends BaseActivity {
 
     @BindView(R.id.rv_appraisal_answer)
     RecyclerView rv_appraisal_answer;
-    private String id;
+    private String psyID;
+    private String token;
+    private String testRecordId;
+    private String topicid;
 
     private List<EntityAppraisalTopic.ResultBean> lisTopic;
-    private List<EntityAppraisalAnswer.ResultBean> listAnswer;
+    private List<String> listAnswer = new ArrayList<>();
 
     private AdapterAnswerApprisal adapterAnswerApprisal;
 
     private int topicIndex = 0;
+    SharedPreferencesHelper sp;
 
 
     @Override
@@ -56,9 +67,21 @@ public class AppraisalActivity extends BaseActivity {
     @Override
     public void init() {
         Intent intent = getIntent();
-        id = intent.getStringExtra("id");
+        psyID = intent.getStringExtra("PsyID");//测评的id
+        testRecordId = intent.getStringExtra("TestRecordId");
+
+
+        Log.i(TAG, "测评记录的id       " + testRecordId);
+
         rv_appraisal_answer.setLayoutManager(new LinearLayoutManager(this));
-        initTopic(id);
+
+        sp = new SharedPreferencesHelper(ContextUtils.getContext(), Constants.CHECKINFOR);
+
+        topicIndex = (int) sp.getSharedPreference(Constants.TOPIC_INDEX, 0);
+
+        token = sp.getSharedPreference(Constants.LOGIN_TOKEN, "").toString();
+
+        initTopic(psyID);
 
     }
 
@@ -83,14 +106,19 @@ public class AppraisalActivity extends BaseActivity {
                                 //设置题目
                                 tv_topic.setText(lisTopic.get(topicIndex).getTopicNumber() + ".  " + lisTopic.get(topicIndex).getContent());
 
-                                initAnswer(lisTopic.get(topicIndex).getID());//获取题目的id
+                                topicid = lisTopic.get(topicIndex).getID();//获取题目的id
+
+                                initAnswer(topicid);
 
                             } else {
                                 runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
-                                        startActivity(new Intent(AppraisalActivity.this, AppraisalReportActivity.class));
-
+                                        //跳转到测试报告界面
+                                        Intent intent = new Intent(AppraisalActivity.this, AppraisalReportActivity.class);
+                                        intent.putExtra("TestRecordId", testRecordId);
+                                        startActivity(intent);
+                                        Log.i(TAG, "测评答案的集合" + listAnswer.size());
                                     }
                                 });
                             }
@@ -102,7 +130,7 @@ public class AppraisalActivity extends BaseActivity {
                 });
     }
 
-    public void initAnswer(String topicid) {
+    public void initAnswer(final String topicid) {
         RetrofitHelper.getApiService()
                 .getAppraisalAnswer(topicid)
                 .subscribeOn(Schedulers.io())
@@ -124,8 +152,12 @@ public class AppraisalActivity extends BaseActivity {
                             adapterAnswerApprisal.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
                                 @Override
                                 public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+
                                     topicIndex++;
-                                    initTopic(id);
+                                    //提交答案
+                                    reportAnswer(testRecordId, response.getResult().get(position).getOptionNumber(), topicid);
+
+                                    listAnswer.add(response.getResult().get(position).getOptionNumber() + "");
                                 }
                             });
                         } else {
@@ -135,4 +167,63 @@ public class AppraisalActivity extends BaseActivity {
                     }
                 });
     }
+
+//    提交测评答案【api/psychtest/savepuo】
+//
+//    POST 登录状态
+//
+//    参数	类型	说明
+//    ptestUserid	string	测评记录ID
+//    optionNumber	string	选项编号。如A，B，C，1,2,3等
+//    topicID	string	题目ID
+
+    public void reportAnswer(String ptestUserid, String optionNumber, String topicID) {
+        RetrofitHelper.getApiService()
+                .reportAnswer(token, ptestUserid, optionNumber, topicID)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseObserval<EntityReportAnswer>() {
+                    @Override
+                    public void onSuccess(final EntityReportAnswer response) {
+                        if (response.getCode() == 1) {
+                            //提交成功刷新下一题
+                            initTopic(psyID);//刷新下一题
+                        } else {
+                            Toasty.warning(ContextUtils.getContext(), "服务器异常", Toast.LENGTH_SHORT, true).show();
+                        }
+                    }
+                });
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            showDoalog();
+        }
+        return true;
+    }
+
+    public void showDoalog() {
+
+        final RxDialogSureCancel rxDialogSureCancel = new RxDialogSureCancel(mContext);//提示弹窗
+        rxDialogSureCancel.getContentView().setText("是否退出测试");
+        rxDialogSureCancel.getSureView().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sp.put(Constants.TOPIC_INDEX, topicIndex);
+                Intent intent = new Intent(AppraisalActivity.this, UndoneAppraisalActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+
+            }
+        });
+        rxDialogSureCancel.getCancelView().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                rxDialogSureCancel.cancel();
+            }
+        });
+        rxDialogSureCancel.show();
+    }
+
 }

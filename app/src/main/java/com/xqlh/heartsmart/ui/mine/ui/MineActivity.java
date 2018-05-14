@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.support.v4.app.ActivityCompat;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -130,20 +131,35 @@ public class MineActivity extends BaseActivity {
                     @Override
                     public void onSuccess(EntityUserInfor response) {
                         if (response.getCode() == 1) {
-                            mine_tv_nickname.setText(response.getResult().getName());
-                            Glide.with(MineActivity.this)
-                                    .load(response.getResult().getHeadimgurl())
-                                    .error(R.drawable.head_default)
-                                    .into(mine_iv_head);
+                            if (!TextUtils.isEmpty(response.getResult().getName())) {
+                                mine_tv_nickname.setText(response.getResult().getName());
+                            }else {
+                                mine_tv_nickname.setText("未设置");
+                            }
+                            if (!TextUtils.isEmpty(response.getResult().getHeadimgurl())) {
+                                Glide.with(MineActivity.this)
+                                        .load(response.getResult().getHeadimgurl())
+                                        .error(R.drawable.head_default)
+                                        .into(mine_iv_head);
+                            }
                             if ("0".equals(response.getResult().getSex())) {
-                                mine_tv_sex.setText("请设置");
+                                mine_tv_sex.setText("未设置");
                             } else if ("1".equals(response.getResult().getSex())) {
                                 mine_tv_sex.setText("男");
                             } else if ("2".equals(response.getResult().getSex())) {
                                 mine_tv_sex.setText("女");
                             }
-                            mine_tv_birthday.setText(response.getResult().getBirthDate());
-                            mine_tv_phone.setText(CommonUtil.hidePhone(response.getResult().getTelephone()));
+                            if (!TextUtils.isEmpty(response.getResult().getBirthDate())) {
+                                mine_tv_birthday.setText(response.getResult().getBirthDate());
+                            }else{
+                                mine_tv_birthday.setText("未设置");
+                            }
+                            if (!TextUtils.isEmpty(response.getResult().getTelephone())) {
+                                mine_tv_phone.setText(CommonUtil.hidePhone(response.getResult().getTelephone()));
+                            }else {
+                                mine_tv_phone.setText("未绑定手机号");
+                            }
+
                         } else {
                             Toasty.warning(ContextUtils.getContext(), "服务器异常", Toast.LENGTH_SHORT, true).show();
                         }

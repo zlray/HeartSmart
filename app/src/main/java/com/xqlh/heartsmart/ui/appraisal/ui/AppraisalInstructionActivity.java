@@ -22,8 +22,7 @@ import es.dmoral.toasty.Toasty;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
-public class AppraisalIntroduceActivity extends BaseActivity {
-
+public class AppraisalInstructionActivity extends BaseActivity {
 
     @BindView(R.id.iv_pic)
     ImageView iv_pic;
@@ -46,11 +45,6 @@ public class AppraisalIntroduceActivity extends BaseActivity {
     @BindView(R.id.tv_introduce)
     TextView tv_introduce;
 
-    @BindView(R.id.tv_price2)
-    TextView tv_price2;
-
-    @BindView(R.id.tv_price)
-    TextView tv_price;
 
     @BindView(R.id.tv_topic_number2)
     TextView tv_topic_number2;
@@ -62,11 +56,12 @@ public class AppraisalIntroduceActivity extends BaseActivity {
     @BindView(R.id.bt_appraisal)
     Button bt_appraisal;
 
-    private String psyID;
+    private String psyID;//测评id
+    private String testRecordId;//测试记录id
 
     @Override
     public int setContent() {
-        return R.layout.activity_appraisal_introduce;
+        return R.layout.activity_appraisal_instruction;
     }
 
     @Override
@@ -77,8 +72,10 @@ public class AppraisalIntroduceActivity extends BaseActivity {
     @Override
     public void init() {
         Intent intent = getIntent();
-        psyID = intent.getStringExtra("PsyID");//
-        Log.i(TAG, "测评的id" + psyID);
+        psyID = intent.getStringExtra("PsyID");//测评的id
+        testRecordId = intent.getStringExtra("TestRecordId");
+
+        Log.i(TAG, "测评的psyID" + psyID);
         initData(psyID);
     }
 
@@ -95,14 +92,12 @@ public class AppraisalIntroduceActivity extends BaseActivity {
                                     .into(iv_pic);
                             tv_name.setText(response.getResult().getName());
                             tv_title.setText(response.getResult().getTitle());
-                            tv_price.setText("￥" + response.getResult().getPrice());
                             tv_topic_number.setText(response.getResult().getTopicNu() + "精选问题");
                             tv_show_number.setText(response.getResult().getShowTimes() + "浏览次数");
                             tv_share_number.setText(response.getResult().getShareTimes() + "分享次数");
 
                             tv_introduce.setText(response.getResult().getTestAbstract());
 
-                            tv_price2.setText("本次测评为付费测评,测评体验价为" + response.getResult().getPrice() + "元");
                             tv_topic_number2.setText(response.getResult().getTopicNu() + "题");
                             tv_time.setText(response.getResult().getTestTime() + "分钟");
                         } else {
@@ -117,8 +112,9 @@ public class AppraisalIntroduceActivity extends BaseActivity {
     public void OnClick(View view) {
         switch (view.getId()) {
             case R.id.bt_appraisal:
-                Intent intent = new Intent(AppraisalIntroduceActivity.this,AppraisalActivity.class);
-                intent.putExtra("PsyID",psyID);
+                Intent intent = new Intent(AppraisalInstructionActivity.this, AppraisalActivity.class);
+                intent.putExtra("PsyID", psyID);
+                intent.putExtra("TestRecordId", testRecordId);
                 startActivity(intent);
                 break;
         }

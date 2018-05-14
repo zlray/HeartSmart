@@ -13,9 +13,9 @@
         android:background="@color/color_title_bar"></com.xqlh.heartsmart.widget.TitleBar>
 
     <ScrollView
-        android:layout_below="@+id/equipment_report_titlebar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_below="@+id/equipment_report_titlebar">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -129,12 +129,13 @@
                 android:textColor="@color/colorPrimary"
                 android:textSize="14sp" />
 
-            <com.borjabravo.readmoretextview.ReadMoreTextView
+            <cn.carbs.android.expandabletextview.library.ExpandableTextView
                 android:id="@+id/tv_analys"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/tv_1"
                 android:layout_marginTop="10dp"
+                android:text="@string/lorem_ipsum3"
                 app:colorClickableText="@color/colorPrimary"
                 app:trimCollapsedText="@string/show_all_content" />
 
@@ -148,14 +149,36 @@
                 android:textColor="@color/colorPrimary"
                 android:textSize="14sp" />
 
-            <com.borjabravo.readmoretextview.ReadMoreTextView
+            <cn.carbs.android.expandabletextview.library.ExpandableTextView
                 android:id="@+id/tv_advice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/tv_2"
                 android:layout_marginTop="10dp"
+                android:text="@string/lorem_ipsum3"
                 app:colorClickableText="@color/colorPrimary"
                 app:trimCollapsedText="@string/show_all_content" />
+
+            <TextView
+                android:id="@+id/tv_3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_advice"
+                android:layout_marginTop="10dp"
+                android:text="测评总结果说明:"
+                android:textColor="@color/colorPrimary"
+                android:textSize="14sp" />
+
+            <cn.carbs.android.expandabletextview.library.ExpandableTextView
+                android:id="@+id/tv_comment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_3"
+                android:layout_marginTop="10dp"
+                android:text="@string/lorem_ipsum3"
+                app:colorClickableText="@color/colorPrimary"
+                app:trimCollapsedText="@string/show_all_content" />
+
 
         </RelativeLayout>
     </ScrollView>
