@@ -112,7 +112,7 @@ public class AppraisalInstructionActivity extends BaseActivity {
     public void OnClick(View view) {
         switch (view.getId()) {
             case R.id.bt_appraisal:
-                Intent intent = new Intent(AppraisalInstructionActivity.this, AppraisalActivity.class);
+                Intent intent = new Intent(AppraisalInstructionActivity.this, AppraisalUndoneActivity.class);
                 intent.putExtra("PsyID", psyID);
                 intent.putExtra("TestRecordId", testRecordId);
                 startActivity(intent);

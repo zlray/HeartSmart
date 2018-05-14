@@ -6,10 +6,13 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.vondear.rxtools.view.dialog.RxDialogSureCancel;
 import com.xqlh.heartsmart.R;
 import com.xqlh.heartsmart.api.RetrofitHelper;
 import com.xqlh.heartsmart.api.base.BaseObserval;
@@ -18,6 +21,7 @@ import com.xqlh.heartsmart.bean.EntityAppraisalAnswer;
 import com.xqlh.heartsmart.bean.EntityAppraisalTopic;
 import com.xqlh.heartsmart.bean.EntityReportAnswer;
 import com.xqlh.heartsmart.ui.appraisal.adapter.AdapterAnswerApprisal;
+import com.xqlh.heartsmart.ui.mine.ui.UndoneAppraisalActivity;
 import com.xqlh.heartsmart.utils.Constants;
 import com.xqlh.heartsmart.utils.ContextUtils;
 import com.xqlh.heartsmart.utils.ProgressUtils;
@@ -31,13 +35,20 @@ import es.dmoral.toasty.Toasty;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
-public class AppraisalActivity extends BaseActivity {
+public class AppraisalUndoneActivity extends BaseActivity {
 
     @BindView(R.id.tv_topic)
     TextView tv_topic;
 
+    @BindView(R.id.tv_topic_number)
+    TextView tv_topic_number;
+
     @BindView(R.id.rv_appraisal_answer)
     RecyclerView rv_appraisal_answer;
+    @BindView(R.id.iv_topic)
+    ImageView iv_topic;
+
+
     private String psyID;
     private String token;
     private String testRecordId;
@@ -51,10 +62,9 @@ public class AppraisalActivity extends BaseActivity {
     private int topicIndex = 0;
     SharedPreferencesHelper sp;
 
-
     @Override
     public int setContent() {
-        return R.layout.activity_appraisal;
+        return R.layout.activity_appraisal_undone_activity;
     }
 
     @Override
@@ -96,14 +106,23 @@ public class AppraisalActivity extends BaseActivity {
                         if (response.getCode() == 1) {
 
                             lisTopic = response.getResult();
-
                             Log.i(TAG, "集合大小" + lisTopic.size() + "........");
-
                             if (topicIndex < lisTopic.size()) {
 
                                 Log.i(TAG, "题目id: " + lisTopic.get(topicIndex).getID());
 
                                 //设置题目
+                                //如果包含|线
+                                if (lisTopic.get(topicIndex).getContent().contains("|".toString())) {
+
+                                } else {
+                                    if (lisTopic.get(topicIndex).getContent().startsWith("http")) {
+                                        iv_topic.setVisibility(View.VISIBLE);
+
+                                        Glide.with(mContext).load(lisTopic.get(topicIndex).getContent()).into(iv_topic);
+                                    }
+                                }
+
                                 tv_topic.setText(lisTopic.get(topicIndex).getTopicNumber() + ".  " + lisTopic.get(topicIndex).getContent());
 
                                 topicid = lisTopic.get(topicIndex).getID();//获取题目的id
@@ -115,7 +134,7 @@ public class AppraisalActivity extends BaseActivity {
                                     @Override
                                     public void run() {
                                         //跳转到测试报告界面
-                                        Intent intent = new Intent(AppraisalActivity.this, AppraisalReportActivity.class);
+                                        Intent intent = new Intent(AppraisalUndoneActivity.this, AppraisalReportActivity.class);
                                         intent.putExtra("TestRecordId", testRecordId);
                                         startActivity(intent);
                                         Log.i(TAG, "测评答案的集合" + listAnswer.size());
@@ -154,8 +173,7 @@ public class AppraisalActivity extends BaseActivity {
                                 public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
 
                                     topicIndex++;
-
-//                                    sp.put(Constants.TOPIC_INDEX, topicIndex);
+                                    sp.put(Constants.TOPIC_INDEX, topicIndex);
 
                                     //提交答案
                                     reportAnswer(testRecordId, response.getResult().get(position).getOptionNumber(), topicid);
@@ -201,32 +219,31 @@ public class AppraisalActivity extends BaseActivity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-//            showDoalog();
+            showDoalog();
         }
         return true;
     }
 
-//    public void showDoalog() {
-//
-//        final RxDialogSureCancel rxDialogSureCancel = new RxDialogSureCancel(mContext);//提示弹窗
-//        rxDialogSureCancel.getContentView().setText("是否退出测试");
-//        rxDialogSureCancel.getSureView().setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                sp.put(Constants.TOPIC_INDEX, topicIndex);
-//                Intent intent = new Intent(AppraisalActivity.this, UndoneAppraisalActivity.class);
-//                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//                startActivity(intent);
-//
-//            }
-//        });
-//        rxDialogSureCancel.getCancelView().setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                rxDialogSureCancel.cancel();
-//            }
-//        });
-//        rxDialogSureCancel.show();
-//    }
+    public void showDoalog() {
 
+        final RxDialogSureCancel rxDialogSureCancel = new RxDialogSureCancel(mContext);//提示弹窗
+        rxDialogSureCancel.getContentView().setText("是否退出测试");
+        rxDialogSureCancel.getSureView().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sp.put(Constants.TOPIC_INDEX, topicIndex);
+                Intent intent = new Intent(AppraisalUndoneActivity.this, UndoneAppraisalActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+
+            }
+        });
+        rxDialogSureCancel.getCancelView().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                rxDialogSureCancel.cancel();
+            }
+        });
+        rxDialogSureCancel.show();
+    }
 }

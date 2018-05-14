@@ -57,7 +57,6 @@ public class AppraisalReportActivity extends BaseActivity {
     TextView tv_text_comment;
 
 
-
     @BindView(R.id.titlebar)
     TitleBar titlebar;
 
@@ -105,6 +104,20 @@ public class AppraisalReportActivity extends BaseActivity {
         });
     }
 
+//    完成测试生成测评报告【api/psychtest/psytestend】
+//
+//    GET 登录状态
+//
+//    参数	类型	说明
+//    ptestUserid	string	测评记录ID
+
+//    {
+//        "code":1
+//        "msg":"OK",
+//            "Result":true---是否可以看测评报告,
+//            "ResultMsg":"xxxxxxxxxxxxxx" --测评报告ID
+//    }
+
 
     public void getReportID(String token, String testRecordId) {
         RetrofitHelper.getApiService()
@@ -129,6 +142,7 @@ public class AppraisalReportActivity extends BaseActivity {
 
     }
 
+    //获得报告的信息
     public void initData(String id) {
         RetrofitHelper.getApiService()
                 .getReportBasic(token, id)

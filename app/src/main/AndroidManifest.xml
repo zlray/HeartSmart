@@ -72,7 +72,8 @@
         <activity android:name=".ui.appraisal.ui.AppraisalActivity" />
         <activity android:name=".ui.appraisal.ui.AppraisalReportActivity" />
         <activity android:name=".ui.mine.ui.UndoneAppraisalActivity" />
-        <activity android:name=".ui.appraisal.ui.AppraisalInstructionActivity"></activity>
+        <activity android:name=".ui.appraisal.ui.AppraisalInstructionActivity" />
+        <activity android:name=".ui.appraisal.ui.AppraisalUndoneActivity"></activity>
     </application>
 
 </manifest>

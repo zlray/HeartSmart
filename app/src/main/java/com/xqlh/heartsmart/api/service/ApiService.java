@@ -228,6 +228,7 @@ public interface ApiService {
                                                 @Field("optionNumber") String optionNumber,
                                                 @Field("topicID") String topicID);
 
+    //获得报告的id
     @GET("api/psychtest/psytestend")
     Observable<EntityAppraisalReportID> getAppraisalReportID(@Header("Authorization") String Authorization,
                                                              @Query("ptestUserid") String ptestUserid);
