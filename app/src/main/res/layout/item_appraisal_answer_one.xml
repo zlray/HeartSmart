@@ -10,15 +10,15 @@
         android:id="@+id/tv_answer_number"
         android:layout_width="20dp"
         android:layout_height="20dp"
+        android:layout_gravity="center"
         android:gravity="center|left"
         android:text="A. "
         android:textSize="14sp" />
 
-    <TextView
-        android:id="@+id/tv_answer"
-        android:layout_width="match_parent"
-        android:layout_height="20dp"
-        android:gravity="center|left"
-        android:text="哈啊啊啊啊啊啊啊啊啊啊"
-        android:textSize="14sp" />
+    <ImageView
+        android:id="@+id/iv_answer"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_gravity="center"
+        android:scaleType="centerCrop" />
 </LinearLayout>

@@ -9,16 +9,16 @@
         android:id="@+id/ll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
         android:layout_marginTop="20dp"
         android:orientation="horizontal">
 
         <TextView
             android:id="@+id/tv_topic_number"
-            android:layout_width="100dp"
+            android:layout_width="20dp"
             android:layout_height="20dp"
-            android:background="@color/palegreen"
             android:gravity="center"
-            android:text="1.  "
+            android:text="1."
             android:textSize="14sp" />
 
         <TextView
@@ -35,11 +35,11 @@
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:layout_below="@+id/ll"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         android:layout_marginTop="20dp"
         android:scaleType="centerCrop"
-        android:visibility="gone" />
+        android:visibility="visible" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_appraisal_answer"

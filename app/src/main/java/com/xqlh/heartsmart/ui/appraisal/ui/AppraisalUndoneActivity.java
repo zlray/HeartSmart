@@ -21,6 +21,7 @@ import com.xqlh.heartsmart.bean.EntityAppraisalAnswer;
 import com.xqlh.heartsmart.bean.EntityAppraisalTopic;
 import com.xqlh.heartsmart.bean.EntityReportAnswer;
 import com.xqlh.heartsmart.ui.appraisal.adapter.AdapterAnswerApprisal;
+import com.xqlh.heartsmart.ui.appraisal.adapter.AdapterAnswerApprisalOne;
 import com.xqlh.heartsmart.ui.mine.ui.UndoneAppraisalActivity;
 import com.xqlh.heartsmart.utils.Constants;
 import com.xqlh.heartsmart.utils.ContextUtils;
@@ -59,8 +60,12 @@ public class AppraisalUndoneActivity extends BaseActivity {
 
     private AdapterAnswerApprisal adapterAnswerApprisal;
 
+    private AdapterAnswerApprisalOne adapterAnswerApprisalOne;
+
     private int topicIndex = 0;
     SharedPreferencesHelper sp;
+    RxDialogSureCancel rxDialogSureCancel;
+
 
     @Override
     public int setContent() {
@@ -74,6 +79,7 @@ public class AppraisalUndoneActivity extends BaseActivity {
 
     @Override
     public void init() {
+        rxDialogSureCancel = new RxDialogSureCancel(mContext);//提示弹窗
         Intent intent = getIntent();
         psyID = intent.getStringExtra("PsyID");//测评的id
         testRecordId = intent.getStringExtra("TestRecordId");
@@ -111,23 +117,36 @@ public class AppraisalUndoneActivity extends BaseActivity {
 
                                 Log.i(TAG, "题目id: " + lisTopic.get(topicIndex).getID());
 
+                                tv_topic_number.setText(lisTopic.get(topicIndex).getTopicNumber() + ".   ");
+
                                 //设置题目
                                 //如果包含|线
-                                if (lisTopic.get(topicIndex).getContent().contains("|".toString())) {
+                                String str = lisTopic.get(topicIndex).getContent();
 
+                                if (str.contains("|".toString())) {
+
+                                    tv_topic.setText(str.substring(0, str.indexOf("|")));
+
+                                    iv_topic.setVisibility(View.VISIBLE);
+
+                                    Glide.with(mContext).load(str.substring(str.indexOf("|"))).into(iv_topic);
                                 } else {
-                                    if (lisTopic.get(topicIndex).getContent().startsWith("http")) {
-                                        iv_topic.setVisibility(View.VISIBLE);
+                                    //题目为图片
+                                    if (str.startsWith("http")) {
+                                        tv_topic.setVisibility(View.GONE);
 
-                                        Glide.with(mContext).load(lisTopic.get(topicIndex).getContent()).into(iv_topic);
+                                        iv_topic.setVisibility(View.VISIBLE);
+                                        Glide.with(mContext).load(str).into(iv_topic);
+                                    } else {
+                                        //题目为文字
+                                        iv_topic.setVisibility(View.GONE);
+                                        tv_topic.setText(str);
                                     }
                                 }
 
-                                tv_topic.setText(lisTopic.get(topicIndex).getTopicNumber() + ".  " + lisTopic.get(topicIndex).getContent());
-
                                 topicid = lisTopic.get(topicIndex).getID();//获取题目的id
 
-                                initAnswer(topicid);
+                                initAnswer(topicid, str);
 
                             } else {
                                 runOnUiThread(new Runnable() {
@@ -149,7 +168,7 @@ public class AppraisalUndoneActivity extends BaseActivity {
                 });
     }
 
-    public void initAnswer(final String topicid) {
+    public void initAnswer(final String topicid, final String str) {
         RetrofitHelper.getApiService()
                 .getAppraisalAnswer(topicid)
                 .subscribeOn(Schedulers.io())
@@ -158,29 +177,81 @@ public class AppraisalUndoneActivity extends BaseActivity {
                     @Override
                     public void onSuccess(final EntityAppraisalAnswer response) {
                         if (response.getCode() == 1) {
-                            adapterAnswerApprisal
-                                    = new AdapterAnswerApprisal(
-                                    R.layout.item_appraisal_answer,
-                                    ContextUtils.getContext(),
-                                    response.getResult());
+                            if (str.contains("|".toString())) {
 
-                            rv_appraisal_answer.setAdapter(adapterAnswerApprisal);
+                                adapterAnswerApprisalOne
+                                        = new AdapterAnswerApprisalOne(
+                                        R.layout.item_appraisal_answer_one,
+                                        ContextUtils.getContext(),
+                                        response.getResult());
 
-                            adapterAnswerApprisal.openLoadAnimation();
+                                rv_appraisal_answer.setAdapter(adapterAnswerApprisalOne);
+                                adapterAnswerApprisalOne.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+                                    @Override
+                                    public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
 
-                            adapterAnswerApprisal.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-                                @Override
-                                public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                                        topicIndex++;
+                                        sp.put(Constants.TOPIC_INDEX, topicIndex);
 
-                                    topicIndex++;
-                                    sp.put(Constants.TOPIC_INDEX, topicIndex);
+                                        //提交答案
+                                        reportAnswer(testRecordId, response.getResult().get(position).getOptionNumber(), topicid);
 
-                                    //提交答案
-                                    reportAnswer(testRecordId, response.getResult().get(position).getOptionNumber(), topicid);
+                                        listAnswer.add(response.getResult().get(position).getOptionNumber() + "");
+                                    }
+                                });
+                            } else {
+                                //题目为图片
+                                if (str.startsWith("http")) {
+                                    adapterAnswerApprisalOne
+                                            = new AdapterAnswerApprisalOne(
+                                            R.layout.item_appraisal_answer_one,
+                                            ContextUtils.getContext(),
+                                            response.getResult());
 
-                                    listAnswer.add(response.getResult().get(position).getOptionNumber() + "");
+                                    rv_appraisal_answer.setAdapter(adapterAnswerApprisalOne);
+                                    adapterAnswerApprisalOne.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+                                        @Override
+                                        public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+
+                                            topicIndex++;
+                                            sp.put(Constants.TOPIC_INDEX, topicIndex);
+
+                                            //提交答案
+                                            reportAnswer(testRecordId, response.getResult().get(position).getOptionNumber(), topicid);
+
+                                            listAnswer.add(response.getResult().get(position).getOptionNumber() + "");
+                                        }
+                                    });
+                                } else {
+                                    //题目为文字
+                                    adapterAnswerApprisal
+                                            = new AdapterAnswerApprisal(
+                                            R.layout.item_appraisal_answer,
+                                            ContextUtils.getContext(),
+                                            response.getResult());
+                                    adapterAnswerApprisal.openLoadAnimation();
+
+                                    rv_appraisal_answer.setAdapter(adapterAnswerApprisal);
+
+                                    adapterAnswerApprisal.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+                                        @Override
+                                        public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+
+                                            topicIndex++;
+                                            sp.put(Constants.TOPIC_INDEX, topicIndex);
+
+                                            //提交答案
+                                            reportAnswer(testRecordId, response.getResult().get(position).getOptionNumber(), topicid);
+
+                                            listAnswer.add(response.getResult().get(position).getOptionNumber() + "");
+                                        }
+                                    });
+
                                 }
-                            });
+                            }
+
+
+
                         } else {
                             Toasty.warning(ContextUtils.getContext(), "服务器异常", Toast.LENGTH_SHORT, true).show();
                         }
@@ -226,7 +297,6 @@ public class AppraisalUndoneActivity extends BaseActivity {
 
     public void showDoalog() {
 
-        final RxDialogSureCancel rxDialogSureCancel = new RxDialogSureCancel(mContext);//提示弹窗
         rxDialogSureCancel.getContentView().setText("是否退出测试");
         rxDialogSureCancel.getSureView().setOnClickListener(new View.OnClickListener() {
             @Override
@@ -245,5 +315,11 @@ public class AppraisalUndoneActivity extends BaseActivity {
             }
         });
         rxDialogSureCancel.show();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        rxDialogSureCancel.cancel();
     }
 }
