@@ -80,10 +80,12 @@ public class AppraisalUndoneActivity extends BaseActivity {
     @Override
     public void init() {
         rxDialogSureCancel = new RxDialogSureCancel(mContext);//提示弹窗
-        Intent intent = getIntent();
-        psyID = intent.getStringExtra("PsyID");//测评的id
-        testRecordId = intent.getStringExtra("TestRecordId");
 
+        Intent intent = getIntent();
+
+        psyID = intent.getStringExtra("PsyID");//测评的id
+
+        testRecordId = intent.getStringExtra("TestRecordId");
 
         Log.i(TAG, "测评记录的id       " + testRecordId);
 
@@ -91,12 +93,11 @@ public class AppraisalUndoneActivity extends BaseActivity {
 
         sp = new SharedPreferencesHelper(ContextUtils.getContext(), Constants.CHECKINFOR);
 
-        topicIndex = (int) sp.getSharedPreference(Constants.TOPIC_INDEX, 0);
+        topicIndex = (int) sp.getSharedPreference(testRecordId, 0);
 
         token = sp.getSharedPreference(Constants.LOGIN_TOKEN, "").toString();
 
         initTopic(psyID);
-
     }
 
     //根据测评id获取题目的信息
@@ -112,7 +113,9 @@ public class AppraisalUndoneActivity extends BaseActivity {
                         if (response.getCode() == 1) {
 
                             lisTopic = response.getResult();
+
                             Log.i(TAG, "集合大小" + lisTopic.size() + "........");
+
                             if (topicIndex < lisTopic.size()) {
 
                                 Log.i(TAG, "题目id: " + lisTopic.get(topicIndex).getID());
@@ -121,32 +124,36 @@ public class AppraisalUndoneActivity extends BaseActivity {
 
                                 //设置题目
                                 //如果包含|线
-                                String str = lisTopic.get(topicIndex).getContent();
+                                String topic = lisTopic.get(topicIndex).getContent();
 
-                                if (str.contains("|".toString())) {
+                                Log.i(TAG, "str" + topic);
 
-                                    tv_topic.setText(str.substring(0, str.indexOf("|")));
+                                if (topic.contains("|".toString())) {
+
+                                    tv_topic.setText(topic.substring(0, topic.indexOf("|")));
+                                    Log.i(TAG, "之前的" + topic.substring(0, topic.indexOf("|")));
 
                                     iv_topic.setVisibility(View.VISIBLE);
 
-                                    Glide.with(mContext).load(str.substring(str.indexOf("|"))).into(iv_topic);
+                                    Glide.with(mContext).load(topic.substring(topic.indexOf("|") + 1)).into(iv_topic);
+                                    Log.i(TAG, "之后的" + topic.substring(topic.indexOf("|") + 1));
                                 } else {
                                     //题目为图片
-                                    if (str.startsWith("http")) {
+                                    if (topic.startsWith("http")) {
                                         tv_topic.setVisibility(View.GONE);
 
                                         iv_topic.setVisibility(View.VISIBLE);
-                                        Glide.with(mContext).load(str).into(iv_topic);
+                                        Glide.with(mContext).load(topic).into(iv_topic);
                                     } else {
                                         //题目为文字
                                         iv_topic.setVisibility(View.GONE);
-                                        tv_topic.setText(str);
+                                        tv_topic.setText(topic);
                                     }
                                 }
 
                                 topicid = lisTopic.get(topicIndex).getID();//获取题目的id
 
-                                initAnswer(topicid, str);
+                                initAnswer(topicid);
 
                             } else {
                                 runOnUiThread(new Runnable() {
@@ -168,7 +175,7 @@ public class AppraisalUndoneActivity extends BaseActivity {
                 });
     }
 
-    public void initAnswer(final String topicid, final String str) {
+    public void initAnswer(final String topicid) {
         RetrofitHelper.getApiService()
                 .getAppraisalAnswer(topicid)
                 .subscribeOn(Schedulers.io())
@@ -177,8 +184,10 @@ public class AppraisalUndoneActivity extends BaseActivity {
                     @Override
                     public void onSuccess(final EntityAppraisalAnswer response) {
                         if (response.getCode() == 1) {
-                            if (str.contains("|".toString())) {
+                            //获得答案，判断答案的
+                            String answer = response.getResult().get(0).getContent();
 
+                            if (answer.startsWith("http")){
                                 adapterAnswerApprisalOne
                                         = new AdapterAnswerApprisalOne(
                                         R.layout.item_appraisal_answer_one,
@@ -191,7 +200,7 @@ public class AppraisalUndoneActivity extends BaseActivity {
                                     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
 
                                         topicIndex++;
-                                        sp.put(Constants.TOPIC_INDEX, topicIndex);
+                                        sp.put(testRecordId, topicIndex);
 
                                         //提交答案
                                         reportAnswer(testRecordId, response.getResult().get(position).getOptionNumber(), topicid);
@@ -199,58 +208,32 @@ public class AppraisalUndoneActivity extends BaseActivity {
                                         listAnswer.add(response.getResult().get(position).getOptionNumber() + "");
                                     }
                                 });
-                            } else {
-                                //题目为图片
-                                if (str.startsWith("http")) {
-                                    adapterAnswerApprisalOne
-                                            = new AdapterAnswerApprisalOne(
-                                            R.layout.item_appraisal_answer_one,
-                                            ContextUtils.getContext(),
-                                            response.getResult());
 
-                                    rv_appraisal_answer.setAdapter(adapterAnswerApprisalOne);
-                                    adapterAnswerApprisalOne.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-                                        @Override
-                                        public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                            }else {
+                                adapterAnswerApprisal
+                                        = new AdapterAnswerApprisal(
+                                        R.layout.item_appraisal_answer,
+                                        ContextUtils.getContext(),
+                                        response.getResult());
+                                adapterAnswerApprisal.openLoadAnimation();
 
-                                            topicIndex++;
-                                            sp.put(Constants.TOPIC_INDEX, topicIndex);
+                                rv_appraisal_answer.setAdapter(adapterAnswerApprisal);
 
-                                            //提交答案
-                                            reportAnswer(testRecordId, response.getResult().get(position).getOptionNumber(), topicid);
+                                adapterAnswerApprisal.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+                                    @Override
+                                    public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
 
-                                            listAnswer.add(response.getResult().get(position).getOptionNumber() + "");
-                                        }
-                                    });
-                                } else {
-                                    //题目为文字
-                                    adapterAnswerApprisal
-                                            = new AdapterAnswerApprisal(
-                                            R.layout.item_appraisal_answer,
-                                            ContextUtils.getContext(),
-                                            response.getResult());
-                                    adapterAnswerApprisal.openLoadAnimation();
+                                        topicIndex++;
+                                        sp.put(testRecordId, topicIndex);
 
-                                    rv_appraisal_answer.setAdapter(adapterAnswerApprisal);
+                                        //提交答案
+                                        reportAnswer(testRecordId, response.getResult().get(position).getOptionNumber(), topicid);
 
-                                    adapterAnswerApprisal.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-                                        @Override
-                                        public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                                        listAnswer.add(response.getResult().get(position).getOptionNumber() + "");
+                                    }
+                                });
 
-                                            topicIndex++;
-                                            sp.put(Constants.TOPIC_INDEX, topicIndex);
-
-                                            //提交答案
-                                            reportAnswer(testRecordId, response.getResult().get(position).getOptionNumber(), topicid);
-
-                                            listAnswer.add(response.getResult().get(position).getOptionNumber() + "");
-                                        }
-                                    });
-
-                                }
                             }
-
-
 
                         } else {
                             Toasty.warning(ContextUtils.getContext(), "服务器异常", Toast.LENGTH_SHORT, true).show();
@@ -301,7 +284,7 @@ public class AppraisalUndoneActivity extends BaseActivity {
         rxDialogSureCancel.getSureView().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sp.put(Constants.TOPIC_INDEX, topicIndex);
+                sp.put(testRecordId, topicIndex);
                 Intent intent = new Intent(AppraisalUndoneActivity.this, UndoneAppraisalActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);

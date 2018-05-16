@@ -6,10 +6,13 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.vondear.rxtools.view.dialog.RxDialogSureCancel;
 import com.xqlh.heartsmart.R;
 import com.xqlh.heartsmart.api.RetrofitHelper;
 import com.xqlh.heartsmart.api.base.BaseObserval;
@@ -18,6 +21,7 @@ import com.xqlh.heartsmart.bean.EntityAppraisalAnswer;
 import com.xqlh.heartsmart.bean.EntityAppraisalTopic;
 import com.xqlh.heartsmart.bean.EntityReportAnswer;
 import com.xqlh.heartsmart.ui.appraisal.adapter.AdapterAnswerApprisal;
+import com.xqlh.heartsmart.ui.appraisal.adapter.AdapterAnswerApprisalOne;
 import com.xqlh.heartsmart.utils.Constants;
 import com.xqlh.heartsmart.utils.ContextUtils;
 import com.xqlh.heartsmart.utils.ProgressUtils;
@@ -36,8 +40,14 @@ public class AppraisalActivity extends BaseActivity {
     @BindView(R.id.tv_topic)
     TextView tv_topic;
 
+    @BindView(R.id.tv_topic_number)
+    TextView tv_topic_number;
+
     @BindView(R.id.rv_appraisal_answer)
     RecyclerView rv_appraisal_answer;
+    @BindView(R.id.iv_topic)
+    ImageView iv_topic;
+
     private String psyID;
     private String token;
     private String testRecordId;
@@ -47,9 +57,11 @@ public class AppraisalActivity extends BaseActivity {
     private List<String> listAnswer = new ArrayList<>();
 
     private AdapterAnswerApprisal adapterAnswerApprisal;
+    private AdapterAnswerApprisalOne adapterAnswerApprisalOne;
 
     private int topicIndex = 0;
     SharedPreferencesHelper sp;
+    RxDialogSureCancel rxDialogSureCancel;//提示弹窗
 
 
     @Override
@@ -64,23 +76,22 @@ public class AppraisalActivity extends BaseActivity {
 
     @Override
     public void init() {
+        rxDialogSureCancel = new RxDialogSureCancel(mContext);//提示弹窗
         Intent intent = getIntent();
+
         psyID = intent.getStringExtra("PsyID");//测评的id
+        Log.i(TAG, "测评的id..........." + psyID);
+
         testRecordId = intent.getStringExtra("TestRecordId");
-
-
         Log.i(TAG, "测评记录的id       " + testRecordId);
 
         rv_appraisal_answer.setLayoutManager(new LinearLayoutManager(this));
 
         sp = new SharedPreferencesHelper(ContextUtils.getContext(), Constants.CHECKINFOR);
-
-        topicIndex = (int) sp.getSharedPreference(Constants.TOPIC_INDEX, 0);
-
+        
         token = sp.getSharedPreference(Constants.LOGIN_TOKEN, "").toString();
 
         initTopic(psyID);
-
     }
 
     //根据测评id获取题目的信息
@@ -97,14 +108,40 @@ public class AppraisalActivity extends BaseActivity {
 
                             lisTopic = response.getResult();
 
-                            Log.i(TAG, "集合大小" + lisTopic.size() + "........");
-
                             if (topicIndex < lisTopic.size()) {
 
                                 Log.i(TAG, "题目id: " + lisTopic.get(topicIndex).getID());
 
+                                tv_topic_number.setText(lisTopic.get(topicIndex).getTopicNumber() + ".   ");
+
                                 //设置题目
-                                tv_topic.setText(lisTopic.get(topicIndex).getTopicNumber() + ".  " + lisTopic.get(topicIndex).getContent());
+                                //如果包含|线
+                                String topic = lisTopic.get(topicIndex).getContent();
+
+                                Log.i(TAG, "str" + topic);
+
+                                if (topic.contains("|".toString())) {
+
+                                    tv_topic.setText(topic.substring(0, topic.indexOf("|")));
+                                    Log.i(TAG, "之前的" + topic.substring(0, topic.indexOf("|")));
+
+                                    iv_topic.setVisibility(View.VISIBLE);
+
+                                    Glide.with(mContext).load(topic.substring(topic.indexOf("|") + 1)).into(iv_topic);
+                                    Log.i(TAG, "之后的" + topic.substring(topic.indexOf("|") + 1));
+                                } else {
+                                    //题目为图片
+                                    if (topic.startsWith("http")) {
+                                        tv_topic.setVisibility(View.GONE);
+
+                                        iv_topic.setVisibility(View.VISIBLE);
+                                        Glide.with(mContext).load(topic).into(iv_topic);
+                                    } else {
+                                        //题目为文字
+                                        iv_topic.setVisibility(View.GONE);
+                                        tv_topic.setText(topic);
+                                    }
+                                }
 
                                 topicid = lisTopic.get(topicIndex).getID();//获取题目的id
 
@@ -139,30 +176,57 @@ public class AppraisalActivity extends BaseActivity {
                     @Override
                     public void onSuccess(final EntityAppraisalAnswer response) {
                         if (response.getCode() == 1) {
-                            adapterAnswerApprisal
-                                    = new AdapterAnswerApprisal(
-                                    R.layout.item_appraisal_answer,
-                                    ContextUtils.getContext(),
-                                    response.getResult());
+                            //获得答案，判断答案的
+                            String answer = response.getResult().get(0).getContent();
 
-                            rv_appraisal_answer.setAdapter(adapterAnswerApprisal);
+                            if (answer.startsWith("http")) {
+                                adapterAnswerApprisalOne
+                                        = new AdapterAnswerApprisalOne(
+                                        R.layout.item_appraisal_answer_one,
+                                        ContextUtils.getContext(),
+                                        response.getResult());
 
-                            adapterAnswerApprisal.openLoadAnimation();
+                                rv_appraisal_answer.setAdapter(adapterAnswerApprisalOne);
+                                adapterAnswerApprisalOne.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+                                    @Override
+                                    public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
 
-                            adapterAnswerApprisal.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-                                @Override
-                                public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                                        topicIndex++;
 
-                                    topicIndex++;
+                                        //提交答案
+                                        reportAnswer(testRecordId, response.getResult().get(position).getOptionNumber(), topicid);
 
-//                                    sp.put(Constants.TOPIC_INDEX, topicIndex);
+                                        listAnswer.add(response.getResult().get(position).getOptionNumber() + "");
+                                    }
+                                });
+                                adapterAnswerApprisalOne.openLoadAnimation();
 
-                                    //提交答案
-                                    reportAnswer(testRecordId, response.getResult().get(position).getOptionNumber(), topicid);
+                            } else {
+                                adapterAnswerApprisal
+                                        = new AdapterAnswerApprisal(
+                                        R.layout.item_appraisal_answer,
+                                        ContextUtils.getContext(),
+                                        response.getResult());
+                                adapterAnswerApprisal.openLoadAnimation();
 
-                                    listAnswer.add(response.getResult().get(position).getOptionNumber() + "");
-                                }
-                            });
+                                rv_appraisal_answer.setAdapter(adapterAnswerApprisal);
+
+                                adapterAnswerApprisal.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+                                    @Override
+                                    public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+
+                                        topicIndex++;
+
+                                        //提交答案
+                                        reportAnswer(testRecordId, response.getResult().get(position).getOptionNumber(), topicid);
+
+                                        listAnswer.add(response.getResult().get(position).getOptionNumber() + "");
+                                    }
+                                });
+                                adapterAnswerApprisal.openLoadAnimation();
+
+                            }
+
                         } else {
                             Toasty.warning(ContextUtils.getContext(), "服务器异常", Toast.LENGTH_SHORT, true).show();
                         }
@@ -201,32 +265,34 @@ public class AppraisalActivity extends BaseActivity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-//            showDoalog();
+            showDoalog();
         }
         return true;
     }
 
-//    public void showDoalog() {
-//
-//        final RxDialogSureCancel rxDialogSureCancel = new RxDialogSureCancel(mContext);//提示弹窗
-//        rxDialogSureCancel.getContentView().setText("是否退出测试");
-//        rxDialogSureCancel.getSureView().setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                sp.put(Constants.TOPIC_INDEX, topicIndex);
-//                Intent intent = new Intent(AppraisalActivity.this, UndoneAppraisalActivity.class);
-//                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//                startActivity(intent);
-//
-//            }
-//        });
-//        rxDialogSureCancel.getCancelView().setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                rxDialogSureCancel.cancel();
-//            }
-//        });
-//        rxDialogSureCancel.show();
-//    }
+    public void showDoalog() {
+
+        rxDialogSureCancel.getContentView().setText("是否退出测试");
+        rxDialogSureCancel.getSureView().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+
+            }
+        });
+        rxDialogSureCancel.getCancelView().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                rxDialogSureCancel.cancel();
+            }
+        });
+        rxDialogSureCancel.show();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        rxDialogSureCancel.cancel();
+    }
 
 }

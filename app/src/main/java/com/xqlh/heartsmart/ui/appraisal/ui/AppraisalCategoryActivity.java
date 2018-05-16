@@ -92,7 +92,7 @@ public class AppraisalCategoryActivity extends BaseActivity {
                                 @Override
                                 public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                                     Intent intent = new Intent(AppraisalCategoryActivity.this, AppraisalIntroduceActivity.class);
-                                    intent.putExtra("id", response.getResult().get(position).getID().trim());//id
+                                    intent.putExtra("PsyID", response.getResult().get(position).getID().trim());//id
                                     startActivity(intent);
                                 }
                             });

@@ -4,21 +4,25 @@
     android:layout_height="wrap_content"
     android:layout_marginLeft="20dp"
     android:layout_marginTop="20dp"
+    android:background="?android:attr/selectableItemBackground"
+    android:clickable="true"
+    android:focusable="true"
     android:orientation="horizontal">
 
     <TextView
         android:id="@+id/tv_answer_number"
-        android:layout_width="20dp"
+        android:layout_width="50dp"
         android:layout_height="20dp"
-        android:gravity="center|left"
+        android:gravity="center"
         android:text="A. "
         android:textSize="14sp" />
 
     <TextView
         android:id="@+id/tv_answer"
+        android:maxLines="3"
+        android:ellipsize="end"
         android:layout_width="match_parent"
-        android:layout_height="20dp"
+        android:layout_height="wrap_content"
         android:gravity="center|left"
-        android:text="哈啊啊啊啊啊啊啊啊啊啊"
         android:textSize="14sp" />
 </LinearLayout>

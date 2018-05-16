@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.http.SslError;
+import android.os.Build;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
@@ -42,6 +43,7 @@ public class ArticleDetailActivity extends BaseActivity {
     HProgressBarLoading top_progress;
     @BindView(R.id.rl_retory)
     RelativeLayout rl_retory;
+
 
     private String id;
 
@@ -94,14 +96,8 @@ public class ArticleDetailActivity extends BaseActivity {
                     @Override
                     public void onSuccess(EntityArticleDetail response) {
                         if (response.getCode() == 1) {
-                            Log.i(TAG, "标题: " + response.getResult().getArticleTitle());
-                            Log.i(TAG, "H5的内容: " + response.getResult().getContent());
-                            String replace1 = response.getResult().getContent().replace("%", "%25");
-                            String replace2 = replace1.replace("/", "%27");
-                            Log.i(TAG, "网页replace3replace3   " + replace2);
-
                             article_detail_wb.loadDataWithBaseURL(null,
-                                    replace2,
+                                    response.getResult().getContent(),
                                     "text/html", "UTF-8", null);
 
 //                            article_detail_wb.loadData(response.getResult().getContent(), "text/html; charset=UTF-8", null);
@@ -116,23 +112,16 @@ public class ArticleDetailActivity extends BaseActivity {
 
 
     private void setWebView() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+            article_detail_wb.setLayerType(View.LAYER_TYPE_SOFTWARE, null);//软件解码
+        }
+        article_detail_wb.setLayerType(View.LAYER_TYPE_HARDWARE, null);//硬件解码
 
-        WebSettings webSettings = article_detail_wb.getSettings();
-        webSettings.setDefaultTextEncodingName("UTF-8");
+        final WebSettings webSettings = article_detail_wb.getSettings();
         webSettings.setJavaScriptEnabled(true);
         webSettings.setDomStorageEnabled(false);
-        // 设置可以支持缩放
-        webSettings.setSupportZoom(true);
-        // 设置出现缩放工具
-        webSettings.setBuiltInZoomControls(true);
-        //扩大比例的缩放
-        webSettings.setUseWideViewPort(true);
-        //自适应屏幕
-        webSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
-        webSettings.setLoadWithOverviewMode(true);
 
         article_detail_wb.setWebChromeClient(webChromeClient);
-
         article_detail_wb.setWebViewClient(webViewClient);
 
     }

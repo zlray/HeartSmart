@@ -34,7 +34,10 @@ public class RetrofitService {
             @Override
             public void log(String message) {
                 try {
-                    LogUtils.e("OKHttp-----", URLDecoder.decode(message, "utf-8"));
+//                    Log.i("lz", "之前");
+                    LogUtils.e("OKHttp-----", URLDecoder.decode(message.replaceAll("%", "%25"), "utf-8"));
+//                    Log.i("lz", "message" + message);
+//                    Log.i("lz", "之后");
                 } catch (UnsupportedEncodingException e) {
                     e.printStackTrace();
                     LogUtils.e("OKHttp-----", message);

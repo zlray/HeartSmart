@@ -62,7 +62,7 @@ public class ProductFragment extends BaseLazyFragment {
     protected void init() {
         initTtileBar();
         rv_right.setLayoutManager(new LinearLayoutManager(getActivity()));
-        bt_hardware.setBackgroundColor(Color.GRAY);
+        bt_hardware.setBackgroundColor(getResources().getColor(R.color.lightgrey));
         bt_software.setBackgroundColor(Color.WHITE);
     }
 
@@ -82,13 +82,13 @@ public class ProductFragment extends BaseLazyFragment {
     public void OnClick(View view) {
         switch (view.getId()) {
             case R.id.bt_hardware:
-                bt_hardware.setBackgroundColor(Color.GRAY);
+                bt_hardware.setBackgroundColor(getResources().getColor(R.color.lightgrey));
                 bt_software.setBackgroundColor(Color.WHITE);
                 initHardData();
                 break;
             case R.id.bt_software:
                 bt_hardware.setBackgroundColor(Color.WHITE);
-                bt_software.setBackgroundColor(Color.GRAY);
+                bt_software.setBackgroundColor(getResources().getColor(R.color.lightgrey));
                 initSoftdData();
                 break;
         }

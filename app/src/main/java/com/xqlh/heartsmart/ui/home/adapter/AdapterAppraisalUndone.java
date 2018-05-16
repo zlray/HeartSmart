@@ -16,11 +16,21 @@ import java.util.List;
 
 public class AdapterAppraisalUndone extends BaseQuickAdapter<EntityUndoneAppraisal.ResultBean, BaseViewHolder> {
     private Context mContext;
+    List<EntityUndoneAppraisal.ResultBean> listUndone;
 
-    public AdapterAppraisalUndone(int layoutResId, @Nullable List<EntityUndoneAppraisal.ResultBean> data) {
-        super(layoutResId, data);
+    public AdapterAppraisalUndone(int layoutResId, @Nullable List<EntityUndoneAppraisal.ResultBean> list) {
+        super(layoutResId, list);
         this.mContext = mContext;
+        this.listUndone = list;
     }
+
+    public void addUndoneList(List<EntityUndoneAppraisal.ResultBean> list) {
+        //增加数据
+        int position = listUndone.size();
+        listUndone.addAll(position, list);
+        notifyItemInserted(position);
+    }
+
 
     @Override
     protected void convert(BaseViewHolder helper, EntityUndoneAppraisal.ResultBean item) {

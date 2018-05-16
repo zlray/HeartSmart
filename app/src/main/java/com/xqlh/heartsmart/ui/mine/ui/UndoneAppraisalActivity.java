@@ -67,6 +67,7 @@ public class UndoneAppraisalActivity extends BaseActivity {
         sp = new SharedPreferencesHelper(ContextUtils.getContext(), Constants.CHECKINFOR);
         token = sp.getSharedPreference(Constants.LOGIN_TOKEN, "").toString();
         getUndon(token, mCurrentPage, pageSize);
+        initRefresh();
     }
 
     public void initTtileBar() {
@@ -90,7 +91,9 @@ public class UndoneAppraisalActivity extends BaseActivity {
                     @Override
                     public void onSuccess(final EntityUndoneAppraisal response) {
                         if (response.getCode() == 1) {
-                            adapterAppraisalUndone = new AdapterAppraisalUndone(R.layout.item_rv_appraisal_undone, response.getResult());
+                            adapterAppraisalUndone = new AdapterAppraisalUndone(
+                                    R.layout.item_rv_appraisal_undone,
+                                    response.getResult());
                             rv_appraisal_undone.setAdapter(adapterAppraisalUndone);
                             adapterAppraisalUndone.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
                                 @Override
@@ -113,7 +116,7 @@ public class UndoneAppraisalActivity extends BaseActivity {
         smartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
-                getUndon(token, mCurrentPage, pageSize);
+                getUndon(token, 1, 6);
                 refreshlayout.finishRefresh();
             }
         });
@@ -123,9 +126,27 @@ public class UndoneAppraisalActivity extends BaseActivity {
             @Override
             public void onLoadMore(@NonNull final RefreshLayout refreshLayout) {
                 mCurrentPage++;
-                getUndon(token, mCurrentPage, pageSize * mCurrentPage);
+                getRefereshUndon(token, mCurrentPage, pageSize * mCurrentPage);
                 smartRefreshLayout.finishLoadMore();
             }
         });
+    }
+
+    public void getRefereshUndon(String token, int mCurrentPage, int pageSize) {
+        RetrofitHelper.getApiService()
+                .getAppraisalUndone(token, mCurrentPage, pageSize)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseObserval<EntityUndoneAppraisal>() {
+                    @Override
+                    public void onSuccess(final EntityUndoneAppraisal response) {
+                        if (response.getCode() == 1) {
+                            adapterAppraisalUndone.addUndoneList(response.getResult());
+                            adapterAppraisalUndone.notifyDataSetChanged();
+                        } else {
+                            Toasty.warning(ContextUtils.getContext(), "服务器异常", Toast.LENGTH_SHORT, true).show();
+                        }
+                    }
+                });
     }
 }

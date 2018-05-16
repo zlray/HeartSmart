@@ -200,55 +200,6 @@ public class AdapterAppraisalHome extends RecyclerView.Adapter<RecyclerView.View
             }
         });
 
-//        AdapterAppraisalVP adapterAppraisalVP;
-//        adapterAppraisalVP = new AdapterAppraisalVP(mDataList);
-//        eightHolder.viewPager.setAdapter(adapterAppraisalVP);
-//
-//        CommonNavigator commonNavigator = new CommonNavigator(context);
-//
-//        commonNavigator.setAdapter(new CommonNavigatorAdapter() {
-//            @Override
-//            public int getCount() {
-//                return mDataList == null ? 0 : mDataList.size();
-//            }
-//
-//            @Override
-//            public IPagerTitleView getTitleView(Context context, final int index) {
-//                BadgePagerTitleView badgePagerTitleView = new BadgePagerTitleView(context);
-//
-//                ClipPagerTitleView clipPagerTitleView = new ClipPagerTitleView(context);
-//
-//                clipPagerTitleView.setText(mDataList.get(index));
-//
-//                clipPagerTitleView.setTextColor(Color.parseColor("#e94220"));
-//
-//                clipPagerTitleView.setClipColor(Color.WHITE);
-//
-//                clipPagerTitleView.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        eightHolder.viewPager.setCurrentItem(index);
-//                    }
-//                });
-//                badgePagerTitleView.setInnerPagerTitleView(clipPagerTitleView);
-//
-//                return badgePagerTitleView;
-//            }
-//
-//            @Override
-//            public IPagerIndicator getIndicator(Context context) {
-//                LinePagerIndicator indicator = new LinePagerIndicator(context);
-//                float navigatorHeight = context.getResources().getDimension(R.dimen.common_navigator_height);
-//                float borderWidth = UIUtil.dip2px(context, 1);
-//                float lineHeight = navigatorHeight - 2 * borderWidth;
-//                indicator.setLineHeight(lineHeight);
-//                indicator.setColors(Color.parseColor("#bc2a2a"));
-//                return indicator;
-//            }
-//        });
-//        eightHolder.magic_indicator.setNavigator(commonNavigator);
-//        ViewPagerHelper.bind(eightHolder.magic_indicator, eightHolder.viewPager);
-
     }
 
 
