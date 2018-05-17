@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
@@ -18,6 +19,9 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.xqlh.heartsmart.R;
 import com.xqlh.heartsmart.bean.EntityArticleBeautiful;
 import com.xqlh.heartsmart.bean.EntityArticleNewest;
+import com.xqlh.heartsmart.bean.EntityUserReport;
+import com.xqlh.heartsmart.ui.appraisal.adapter.AdapterUserReportSimple;
+import com.xqlh.heartsmart.ui.equipment.ui.EquipmentReportActivity;
 import com.xqlh.heartsmart.ui.home.model.IconTitleModel;
 import com.xqlh.heartsmart.ui.home.ui.ArticleDetailActivity;
 import com.xqlh.heartsmart.ui.home.ui.ArticleHomeActivity;
@@ -37,13 +41,16 @@ import java.util.List;
 public class AdapterHome extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private Context context;
-    private List<Uri> listBanner; //banner
+    private List<Uri> listBanner = new ArrayList<>(); //banner
 
-    private List<IconTitleModel> listEight; //8个按钮
+    private List<IconTitleModel> listEight = new ArrayList<>(); //8个按钮
 
     private List<EntityArticleBeautiful.ResultBean> listBeautiful = new ArrayList<>(); //美文
 
     private List<EntityArticleNewest.ResultBean> listNewest = new ArrayList<>(); //最新
+
+    private List<EntityUserReport.ResultBean> listReport = new ArrayList<>(); //报告
+
 
     private final int BUTTON_VIEW_TYPE = 0;//点击测试按钮
 
@@ -51,11 +58,13 @@ public class AdapterHome extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private final int TEXT_VIEW_TYPE_ONE = 2;//第一个文字
 
-    private final int BANNER_VIEW_TYPE = 3;//轮播图
+    private final int REPORT_VIEW_TYPE = 3;//第一个文字
 
-    private final int TEXT_VIEW_TYPE_TWO = 4;//第二个文字
+    private final int BANNER_VIEW_TYPE = 4;//轮播图
 
-    private final int NEWEST_VIEW_TYPE = 5;//最新文章
+    private final int TEXT_VIEW_TYPE_TWO = 5;//第二个文字
+
+    private final int NEWEST_VIEW_TYPE = 6;//最新文章
 
     //最新
     public AdapterHome(Context context) {
@@ -65,6 +74,11 @@ public class AdapterHome extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public void setNewestList(List<EntityArticleNewest.ResultBean> list) {
         this.listNewest = list;
         Log.i("lz", listNewest.size() + "setNewestList");
+    }
+
+    public void setReportList(List<EntityUserReport.ResultBean> list) {
+        this.listReport = list;
+        Log.i("lz", listReport.size() + "setReportList");
     }
 
     public void addNewestList(List<EntityArticleNewest.ResultBean> list) {
@@ -87,11 +101,9 @@ public class AdapterHome extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         View view;
         RecyclerView.LayoutParams lp = new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         if (viewType == BUTTON_VIEW_TYPE) {//
-
             view = getView(R.layout.item_layout_banner);
             view.setLayoutParams(lp);
             return new BannerHolder(view);
-
         } else if (viewType == EIGHT_VIEW_TYPE) {//8个按钮
             view = getView(R.layout.item_layout_eight);
             view.setLayoutParams(lp);
@@ -100,14 +112,18 @@ public class AdapterHome extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             view = getView(R.layout.item_layout_text);
             view.setLayoutParams(lp);
             return new TextHolder(view);
+        } else if (viewType == REPORT_VIEW_TYPE) { //报告
+            view = getView(R.layout.item_layout_report);
+            view.setLayoutParams(lp);
+            return new ReportHolder(view);
         } else if (viewType == BANNER_VIEW_TYPE) {//轮播
             view = getView(R.layout.item_layout_banner);
             view.setLayoutParams(lp);
             return new BannerHolder(view);
-        } else if (viewType == TEXT_VIEW_TYPE_ONE) {// 第二文字
+        } else if (viewType == TEXT_VIEW_TYPE_TWO) {// 第二文字
             view = getView(R.layout.item_layout_text);
             view.setLayoutParams(lp);
-            return new TextHolder(view);
+            return new TextHolder2(view);
         } else {//正常
             view = getView(R.layout.item_rv_newest);
             view.setLayoutParams(lp);
@@ -143,8 +159,8 @@ public class AdapterHome extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         } else if (holder instanceof BannerHolder) {//轮播图
             BannerHolder bannerHolder = (BannerHolder) holder;
             setBanner(bannerHolder);
-        } else if (holder instanceof TextHolder) {//最热文章文字
-            TextHolder textHolderTwo = (TextHolder) holder;
+        } else if (holder instanceof TextHolder2) {//最热文章文字
+            TextHolder2 textHolderTwo = (TextHolder2) holder;
             setTextTwo(textHolderTwo);
         } else if (holder instanceof NewestHolder) {//正常布局
             NewestHolder newestHolder = (NewestHolder) holder;
@@ -156,7 +172,22 @@ public class AdapterHome extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     }
 
+    //设备报告
     private void setReport(ReportHolder reportHolder) {
+        AdapterUserReportSimple adapterUserReportSimple;
+
+        reportHolder.rv_report.setLayoutManager(new LinearLayoutManager(context));
+
+        adapterUserReportSimple = new AdapterUserReportSimple(R.layout.item_layout_report_simple, listReport);
+
+        reportHolder.rv_report.setAdapter(adapterUserReportSimple);
+
+        adapterUserReportSimple.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+
+            }
+        });
 
     }
 
@@ -193,8 +224,14 @@ public class AdapterHome extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         adapterEightButton.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                Intent intent = new Intent(context, ArticleHomeActivity.class);
-
+                Intent intent;
+                if (listEight.get(position).getTitle().equals("心理文章") || listEight.get(position).getTitle().equals("测评系统")) {
+                    intent = new Intent(context, ArticleHomeActivity.class);
+                } else {
+                    intent = new Intent(context, EquipmentReportActivity.class);
+                    intent.putExtra("id", listEight.get(position).getArticleTypeID());
+                    intent.putExtra("title", listEight.get(position).getTitle());
+                }
                 context.startActivity(intent);
             }
         });
@@ -211,7 +248,7 @@ public class AdapterHome extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     }
 
-    private void setTextTwo(TextHolder textHolder) {
+    private void setTextTwo(TextHolder2 textHolder) {
         textHolder.tv.setText("文章最热");
         textHolder.rv_more.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -247,15 +284,17 @@ public class AdapterHome extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
          *  在onCreateViewHolder方法中用viewType来创建不同的ViewHolder
          */
         if (position == 0) {
-            return BUTTON_VIEW_TYPE;
+            return BUTTON_VIEW_TYPE; //按钮
         } else if (position == 1) {
-            return EIGHT_VIEW_TYPE;
+            return EIGHT_VIEW_TYPE; //8个
         } else if (position == 2) {
-            return TEXT_VIEW_TYPE_ONE;
+            return TEXT_VIEW_TYPE_ONE;//文字
         } else if (position == 3) {
-            return BANNER_VIEW_TYPE;
+            return REPORT_VIEW_TYPE;//报告
         } else if (position == 4) {
-            return TEXT_VIEW_TYPE_TWO;
+            return BANNER_VIEW_TYPE;//banner
+        } else if (position == 5) {
+            return TEXT_VIEW_TYPE_TWO;//文字
         } else {
             return NEWEST_VIEW_TYPE;
         }
@@ -283,7 +322,19 @@ public class AdapterHome extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public static class TextHolder extends RecyclerView.ViewHolder {
         RelativeLayout rv_more;
         TextView tv;
+
         public TextHolder(View itemView) {
+            super(itemView);
+            rv_more = (RelativeLayout) itemView.findViewById(R.id.rv_more);
+            tv = itemView.findViewById(R.id.tv);
+        }
+    }
+
+    public static class TextHolder2 extends RecyclerView.ViewHolder {
+        RelativeLayout rv_more;
+        TextView tv;
+
+        public TextHolder2(View itemView) {
             super(itemView);
             rv_more = (RelativeLayout) itemView.findViewById(R.id.rv_more);
             tv = itemView.findViewById(R.id.tv);
@@ -319,11 +370,11 @@ public class AdapterHome extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
      * 设备报告
      */
     public static class ReportHolder extends RecyclerView.ViewHolder {
-        RecyclerView rv_beautiful;
+        RecyclerView rv_report;
 
         public ReportHolder(View itemView) {
             super(itemView);
-            rv_beautiful = (RecyclerView) itemView.findViewById(R.id.rv_beautifu);
+            rv_report = (RecyclerView) itemView.findViewById(R.id.rv_report);
         }
     }
 

@@ -83,7 +83,7 @@ dependencies {
     compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.30'
     compile 'com.borjabravo:readmoretextview:2.1.0'
     compile 'cn.carbs.android:ExpandableTextView:1.0.3'
-
+    implementation 'com.elyeproj.libraries:loaderviewlibrary:1.4.1'
     compile files('libs/eventbus-3.0.0.jar')
 
 

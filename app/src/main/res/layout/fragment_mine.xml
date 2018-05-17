@@ -2,13 +2,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context="com.xqlh.heartsmart.ui.mine.ui.MineFragment">
 
     <com.xqlh.heartsmart.widget.TitleBar
         android:id="@+id/mine_titleBar"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="@color/color_title_bar"></com.xqlh.heartsmart.widget.TitleBar>
+        android:background="@color/color_title_bar">
+    </com.xqlh.heartsmart.widget.TitleBar>
 
     <RelativeLayout
         android:id="@+id/rv_head"
@@ -16,7 +18,9 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/mine_titleBar"
         android:layout_marginTop="50dp"
-        android:background="@color/white">
+        android:background="?android:attr/selectableItemBackground"
+        android:clickable="true"
+        android:focusable="true">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/mine_iv_head"
@@ -53,6 +57,7 @@
     </RelativeLayout>
 
     <LinearLayout
+
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/rv_head"
@@ -64,6 +69,9 @@
             android:id="@+id/rv_appraisal"
             android:layout_width="match_parent"
             android:layout_height="50dp"
+            android:background="?android:attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true"
             android:orientation="horizontal">
 
             <ImageView
@@ -104,6 +112,9 @@
             android:id="@+id/rv_collection"
             android:layout_width="match_parent"
             android:layout_height="50dp"
+            android:background="?android:attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true"
             android:orientation="horizontal">
 
             <ImageView
@@ -141,9 +152,12 @@
             android:background="#EEEEEE"></LinearLayout>
 
         <RelativeLayout
-            android:id="@+id/rv_message"
+            android:id="@+id/rv_report"
             android:layout_width="match_parent"
             android:layout_height="50dp"
+            android:background="?android:attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true"
             android:orientation="horizontal">
 
             <ImageView
@@ -161,7 +175,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="15dp"
                 android:layout_toRightOf="@+id/mine_message_iv"
-                android:text="我的消息"
+                android:text="我的报告"
                 android:textSize="14sp" />
 
             <ImageView
@@ -180,6 +194,9 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginTop="20dp"
+            android:background="?android:attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true"
             android:orientation="horizontal">
 
             <ImageView
@@ -216,6 +233,9 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginTop="20dp"
+            android:background="?android:attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true"
             android:orientation="horizontal">
 
             <ImageView
@@ -245,7 +265,6 @@
                 android:layout_marginRight="15dp"
                 android:background="@drawable/arrow_right" />
         </RelativeLayout>
-
 
 
     </LinearLayout>

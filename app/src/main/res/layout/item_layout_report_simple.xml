@@ -1,34 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:paddingTop="@dimen/dp_10"
-    android:layout_height="match_parent">
+    android:orientation="vertical"
+    android:layout_height="wrap_content">
+    <LinearLayout
+        android:background="@color/line"
+        android:layout_width="match_parent"
+        android:layout_height="0.1dp">
+    </LinearLayout>
 
     <RelativeLayout
         android:id="@+id/rv_more"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:background="@color/white">
 
         <TextView
-            android:id="@+id/tv"
+            android:id="@+id/tv_report_name"
             android:layout_width="wrap_content"
-            android:layout_height="50dp"
+            android:layout_height="20dp"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
+            android:layout_marginLeft="20dp"
             android:gravity="center|left"
             android:text="哈哈哈哈"
-            android:layout_marginLeft="20dp"
             android:textColor="#222222"
-            android:textSize="20sp" />
+            android:textSize="15sp" />
 
-        <ImageView
+        <TextView
+            android:id="@+id/tv_report_date"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="30dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="20dp"
-            android:background="@drawable/arrow_right" />
+            android:gravity="center"
+            android:text="2018-1-48"
+            android:textSize="15sp" />
     </RelativeLayout>
 
 </LinearLayout>

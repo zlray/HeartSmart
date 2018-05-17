@@ -46,10 +46,8 @@ public class SettingActivity extends BaseActivity {
 
     public void initTtileBar() {
         setting_titleBar.setLeftImageResource(R.drawable.return_button);
-        setting_titleBar.setLeftText("返回");
         setting_titleBar.setTitle("设置");
         setting_titleBar.setTitleColor(Color.WHITE);
-        setting_titleBar.setLeftTextColor(Color.WHITE);
         setting_titleBar.setLeftClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

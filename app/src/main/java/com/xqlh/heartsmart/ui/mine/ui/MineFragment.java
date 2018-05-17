@@ -49,6 +49,15 @@ public class MineFragment extends BaseLazyFragment {
     @BindView(R.id.rv_appraisal)
     RelativeLayout rv_appraisal;
 
+    @BindView(R.id.rv_head)
+    RelativeLayout rv_head;
+
+    @BindView(R.id.rv_collection)
+    RelativeLayout rv_collection;
+
+    @BindView(R.id.rv_report)
+    RelativeLayout rv_report;
+
 
     private SharedPreferencesHelper sp_login_token;
 
@@ -117,14 +126,17 @@ public class MineFragment extends BaseLazyFragment {
 
     }
 
-    @OnClick({R.id.mine_iv_head,R.id.rv_appraisal})
+    @OnClick({R.id.rv_head, R.id.rv_appraisal, R.id.rv_report})
     public void OnClick(View view) {
         switch (view.getId()) {
-            case R.id.mine_iv_head:
+            case R.id.rv_head:
                 startActivity(new Intent(getActivity(), MineActivity.class));
                 break;
             case R.id.rv_appraisal:
                 startActivity(new Intent(getActivity(), UndoneAppraisalActivity.class));
+                break;
+            case R.id.rv_report:
+                startActivity(new Intent(getActivity(), UserReportCategoryActivity.class));
                 break;
         }
     }

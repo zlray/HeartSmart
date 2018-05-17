@@ -40,9 +40,9 @@ import java.util.List;
 public class AdapterAppraisalHome extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private Context context;
-    private List<Uri> listBanner; //banner
+    private List<Uri> listBanner = new ArrayList<>(); //banner
 
-    private List<IconTitleModel> listEight; //8个按钮
+    private List<IconTitleModel> listEight = new ArrayList<>(); //8个按钮
 
 
 

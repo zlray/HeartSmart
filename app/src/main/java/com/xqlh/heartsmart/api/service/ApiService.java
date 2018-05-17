@@ -26,6 +26,7 @@ import com.xqlh.heartsmart.bean.EntityUpdatePassword;
 import com.xqlh.heartsmart.bean.EntityUpdateUserInfor;
 import com.xqlh.heartsmart.bean.EntityUploadHead;
 import com.xqlh.heartsmart.bean.EntityUserInfor;
+import com.xqlh.heartsmart.bean.EntityUserReport;
 import com.xqlh.heartsmart.bean.EntityWelcome;
 
 import io.reactivex.Observable;
@@ -232,5 +233,11 @@ public interface ApiService {
     @GET("api/psychtest/psytestend")
     Observable<EntityAppraisalReportID> getAppraisalReportID(@Header("Authorization") String Authorization,
                                                              @Query("ptestUserid") String ptestUserid);
+
+    //获取用户的测评报告 【api/console/user/evalresult】 GET
+    @GET("api/console/user/evalresult")
+    Observable<EntityUserReport> getUserReport(@Header("Authorization") String Authorization,
+                                               @Query("pageIndex") int pageIndex,
+                                               @Query("pageSize") int pageSize);
 
 }
