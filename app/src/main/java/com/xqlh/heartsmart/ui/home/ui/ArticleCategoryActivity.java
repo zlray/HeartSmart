@@ -135,7 +135,7 @@ public class ArticleCategoryActivity extends BaseActivity {
         smartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
-                initData(articleTypeID, mCurrentPage, PAGE_SIZE);
+                initData(articleTypeID, 1, 6);
                 refreshlayout.finishRefresh();
             }
         });

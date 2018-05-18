@@ -81,7 +81,7 @@ public class EquipmentReportActivity extends BaseActivity {
         initTtileBar();
         initRv();
 
-        initData(token, id, page, pageSize);
+         initData(token, id, page, pageSize);
 
         initRefresh(id);
     }

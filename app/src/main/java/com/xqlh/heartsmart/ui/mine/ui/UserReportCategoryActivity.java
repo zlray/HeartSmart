@@ -1,5 +1,6 @@
 package com.xqlh.heartsmart.ui.mine.ui;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
@@ -7,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Toast;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
@@ -16,6 +18,7 @@ import com.xqlh.heartsmart.api.RetrofitHelper;
 import com.xqlh.heartsmart.api.base.BaseObserval;
 import com.xqlh.heartsmart.base.BaseActivity;
 import com.xqlh.heartsmart.bean.EntityUserReport;
+import com.xqlh.heartsmart.ui.appraisal.ui.AppraisalReportActivity;
 import com.xqlh.heartsmart.ui.mine.adapter.AdapterUserReport;
 import com.xqlh.heartsmart.utils.Constants;
 import com.xqlh.heartsmart.utils.ContextUtils;
@@ -92,23 +95,34 @@ public class UserReportCategoryActivity extends BaseActivity {
                     @Override
                     public void onSuccess(final EntityUserReport response) {
                         if (response.getCode() == 1) {
+                            adapterUserReport = new AdapterUserReport(R.layout.item_rv_report,
+                                    UserReportCategoryActivity.this,
+                                    response.getResult());
 
-                            adapterUserReport = new AdapterUserReport(R.layout.item_rv_report, UserReportCategoryActivity.this, response.getResult());
                             rv_report_category.setAdapter(adapterUserReport);
 
+                            adapterUserReport.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+                                @Override
+                                public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                                    Intent intent = new Intent(UserReportCategoryActivity.this, AppraisalReportActivity.class);
+                                    intent.putExtra("","");
+                                    startActivity(intent);
+                                }
+                            });
                         } else {
                             Toasty.warning(ContextUtils.getContext(), "服务器异常", Toast.LENGTH_SHORT, true).show();
                         }
                     }
                 });
-
     }
 
     public void initRefresh(final String token) {
         smartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
-                getReport(token, page, pageSize);
+
+                getReport(token, 1, 6);
+
                 refreshlayout.finishRefresh();
             }
         });

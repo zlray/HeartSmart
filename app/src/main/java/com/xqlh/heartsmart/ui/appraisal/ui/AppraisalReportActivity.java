@@ -139,7 +139,6 @@ public class AppraisalReportActivity extends BaseActivity {
                         }
                     }
                 });
-
     }
 
     //获得报告的信息

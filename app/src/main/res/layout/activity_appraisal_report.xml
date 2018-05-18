@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.xqlh.heartsmart.ui.appraisal.ui.AppraisalReportActivity">
+
     <com.xqlh.heartsmart.widget.TitleBar
         android:id="@+id/titlebar"
         android:layout_width="match_parent"
@@ -15,7 +16,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/titlebar">
-
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -24,7 +24,7 @@
             android:layout_marginTop="20dp">
 
             <LinearLayout
-                android:id="@+id/ll1"
+                android:id="@+id/ll_name"
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true">
@@ -47,7 +47,7 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/ll2"
+                android:id="@+id/ll_time"
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true">
@@ -70,11 +70,11 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/ll3"
+                android:id="@+id/ll_score"
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
-                android:layout_below="@+id/ll1"
+                android:layout_below="@+id/ll_name"
                 android:layout_marginTop="10dp">
 
                 <TextView
@@ -98,7 +98,7 @@
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
-                android:layout_below="@+id/ll2"
+                android:layout_below="@+id/ll_time"
                 android:layout_marginTop="10dp">
 
                 <TextView
@@ -118,66 +118,83 @@
                     android:textSize="14sp" />
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/tv_text_analys"
+            <LinearLayout
+                android:id="@+id/ll_analys"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/ll3"
-                android:layout_marginTop="10dp"
-                android:text="分析说明:"
-                android:textColor="@color/colorPrimary"
-                android:textSize="14sp" />
+                android:layout_below="@+id/ll_score">
 
-            <cn.carbs.android.expandabletextview.library.ExpandableTextView
-                android:id="@+id/tv_analys"
+                <TextView
+                    android:id="@+id/tv_text_analys"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/ll3"
+                    android:layout_marginTop="10dp"
+                    android:text="分析说明:"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="14sp" />
+
+                <cn.carbs.android.expandabletextview.library.ExpandableTextView
+                    android:id="@+id/tv_analys"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/lorem_ipsum3"
+                    app:colorClickableText="@color/colorPrimary"
+                    app:trimCollapsedText="@string/show_all_content" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_advice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/tv_text_analys"
-                android:layout_marginTop="10dp"
-                android:text="@string/lorem_ipsum3"
-                app:colorClickableText="@color/colorPrimary"
-                app:trimCollapsedText="@string/show_all_content" />
+                android:layout_below="@+id/ll_analys">
 
-            <TextView
-                android:id="@+id/tv_text_advice"
+                <TextView
+                    android:id="@+id/tv_text_advice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv_analys"
+                    android:layout_marginTop="10dp"
+                    android:text="指导建议:"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="14sp" />
+
+                <cn.carbs.android.expandabletextview.library.ExpandableTextView
+                    android:id="@+id/tv_advice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/lorem_ipsum3"
+                    app:colorClickableText="@color/colorPrimary"
+                    app:trimCollapsedText="@string/show_all_content" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_comment"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/tv_analys"
-                android:layout_marginTop="10dp"
-                android:text="指导建议:"
-                android:textColor="@color/colorPrimary"
-                android:textSize="14sp" />
+                android:layout_below="@+id/ll_advice">
 
-            <cn.carbs.android.expandabletextview.library.ExpandableTextView
-                android:id="@+id/tv_advice"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/tv_text_advice"
-                android:layout_marginTop="10dp"
-                android:text="@string/lorem_ipsum3"
-                app:colorClickableText="@color/colorPrimary"
-                app:trimCollapsedText="@string/show_all_content" />
+                <TextView
+                    android:id="@+id/tv_text_comment"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv_advice"
+                    android:layout_marginTop="10dp"
+                    android:text="结果说明:"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="14sp" />
 
-            <TextView
-                android:id="@+id/tv_text_comment"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/tv_advice"
-                android:layout_marginTop="10dp"
-                android:text="测评总结果说明:"
-                android:textColor="@color/colorPrimary"
-                android:textSize="14sp" />
-
-            <cn.carbs.android.expandabletextview.library.ExpandableTextView
-                android:id="@+id/tv_comment"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/tv_text_comment"
-                android:layout_marginTop="10dp"
-                android:text="@string/lorem_ipsum3"
-                app:colorClickableText="@color/colorPrimary"
-                app:trimCollapsedText="@string/show_all_content" />
-
+                <cn.carbs.android.expandabletextview.library.ExpandableTextView
+                    android:id="@+id/tv_comment"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/lorem_ipsum3"
+                    app:colorClickableText="@color/colorPrimary"
+                    app:trimCollapsedText="@string/show_all_content" />
+            </LinearLayout>
 
         </RelativeLayout>
     </ScrollView>
