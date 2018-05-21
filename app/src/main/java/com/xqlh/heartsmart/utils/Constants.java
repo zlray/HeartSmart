@@ -38,6 +38,8 @@ public class Constants {
 
     public static final String TOPIC_INDEX = "topicIndex";
 
+    public static final String COLLECT = "collect";
+
 
     public static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
 

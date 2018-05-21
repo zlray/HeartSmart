@@ -6,6 +6,9 @@ import android.graphics.Color;
 import android.net.http.SslError;
 import android.os.Build;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
@@ -15,6 +18,7 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
@@ -24,10 +28,15 @@ import com.xqlh.heartsmart.api.RetrofitHelper;
 import com.xqlh.heartsmart.api.base.BaseObserval;
 import com.xqlh.heartsmart.base.BaseActivity;
 import com.xqlh.heartsmart.bean.EntityArticleDetail;
+import com.xqlh.heartsmart.bean.EntityCollect;
+import com.xqlh.heartsmart.utils.Constants;
+import com.xqlh.heartsmart.utils.ContextUtils;
+import com.xqlh.heartsmart.utils.SharedPreferencesHelper;
 import com.xqlh.heartsmart.widget.HProgressBarLoading;
 import com.xqlh.heartsmart.widget.TitleBar;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 import es.dmoral.toasty.Toasty;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
@@ -43,11 +52,17 @@ public class ArticleDetailActivity extends BaseActivity {
     HProgressBarLoading top_progress;
     @BindView(R.id.rl_retory)
     RelativeLayout rl_retory;
+    @BindView(R.id.bt_collect)
+    Button bt_collect;
 
+
+    SharedPreferencesHelper sp;
 
     private String id;
 
     private boolean isContinue = false;
+    private String token;
+    private String str;
 
     @Override
     public int setContent() {
@@ -62,13 +77,15 @@ public class ArticleDetailActivity extends BaseActivity {
     @Override
     public void init() {
         Intent intent = getIntent();
-
         id = intent.getStringExtra("id");
-
         Log.i(TAG, "文章的id" + id);
+        sp = new SharedPreferencesHelper(ContextUtils.getContext(), Constants.CHECKINFOR);
+        token = sp.getSharedPreference(Constants.LOGIN_TOKEN, "").toString();
+        if (!"".equals(sp.getSharedPreference(id, "").toString())) {
+            bt_collect.setText(sp.getSharedPreference(id, "").toString());
+        }
 
         initTtileBar();
-
 
         setWebView();
 
@@ -84,6 +101,68 @@ public class ArticleDetailActivity extends BaseActivity {
                 finish();
             }
         });
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_actions, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_all_down:
+                break;
+            default:
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+
+    @OnClick(R.id.bt_collect)
+    public void OnClick(View view) {
+        switch (view.getId()) {
+            case R.id.bt_collect:
+                str = sp.getSharedPreference(id, "收藏").toString();
+                if ("收藏".equals(str)) {
+                    collect(str, id, 1);
+                    bt_collect.setText("取消收藏");
+                    sp.put(id, "取消收藏");
+                } else if ("取消收藏".equals(str)) {
+                    collect(str, id, 0);
+                    bt_collect.setText("收藏");
+                    sp.put(id, "收藏");
+                }
+                break;
+        }
+    }
+
+    public void collect(final String str, String id, int collect) {
+        RetrofitHelper.getApiService()
+                .collect(token, id, collect)
+                .subscribeOn(Schedulers.io())
+                .compose(this.<EntityCollect>bindToLifecycle())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseObserval<EntityCollect>() {
+                    @Override
+                    public void onSuccess(EntityCollect response) {
+                        if (response.getCode() == 1) {
+                            if ("收藏".equals(str)) {
+                                Toasty.success(ContextUtils.getContext(), "收藏成功", Toast.LENGTH_SHORT, true).show();
+                            } else if ("取消收藏".equals(str)) {
+                                Toasty.success(ContextUtils.getContext(), "取消成功", Toast.LENGTH_SHORT, true).show();
+                            }
+
+                        } else {
+                            Toasty.warning(ArticleDetailActivity.this, "服务器异常", Toast.LENGTH_SHORT, true).show();
+                        }
+                    }
+                });
+//
     }
 
     public void getData(String id) {

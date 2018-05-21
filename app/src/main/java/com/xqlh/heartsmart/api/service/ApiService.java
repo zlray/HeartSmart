@@ -13,6 +13,7 @@ import com.xqlh.heartsmart.bean.EntityBindPhone;
 import com.xqlh.heartsmart.bean.EntityCheckAccount;
 import com.xqlh.heartsmart.bean.EntityCheckMessage;
 import com.xqlh.heartsmart.bean.EntityCheckPhone;
+import com.xqlh.heartsmart.bean.EntityCollect;
 import com.xqlh.heartsmart.bean.EntityEquipmentReport;
 import com.xqlh.heartsmart.bean.EntityGetMessage;
 import com.xqlh.heartsmart.bean.EntityGetPhoneByAccount;
@@ -25,6 +26,7 @@ import com.xqlh.heartsmart.bean.EntityUndoneAppraisal;
 import com.xqlh.heartsmart.bean.EntityUpdatePassword;
 import com.xqlh.heartsmart.bean.EntityUpdateUserInfor;
 import com.xqlh.heartsmart.bean.EntityUploadHead;
+import com.xqlh.heartsmart.bean.EntityUserCollect;
 import com.xqlh.heartsmart.bean.EntityUserInfor;
 import com.xqlh.heartsmart.bean.EntityUserReport;
 import com.xqlh.heartsmart.bean.EntityWelcome;
@@ -168,6 +170,19 @@ public interface ApiService {
     //获取文章的详细内容
     @GET("api/article/aritcle")
     Observable<EntityArticleDetail> getArticleDetail(@Query("id") String id);
+
+    //收藏文章
+    @FormUrlEncoded
+    @POST("api/article/articlecoll")
+    Observable<EntityCollect> collect(@Header("Authorization") String Authorization,
+                                      @Field("ID") String id,
+                                      @Field("type") int type);
+
+    @GET("api/console/user/articlecol")
+    Observable<EntityUserCollect> getCollect(@Header("Authorization") String Authorization,
+                                             @Query("pageIndex") int pageIndex,
+                                             @Query("pageSize") int pageSize,
+                                             @Query("ArticleTypeID") String ArticleTypeID);
 
 
     //获取智能硬件报告

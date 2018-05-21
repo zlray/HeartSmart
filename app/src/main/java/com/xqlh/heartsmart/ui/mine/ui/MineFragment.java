@@ -59,6 +59,7 @@ public class MineFragment extends BaseLazyFragment {
     RelativeLayout rv_report;
 
 
+
     private SharedPreferencesHelper sp_login_token;
 
     @Override
@@ -126,7 +127,7 @@ public class MineFragment extends BaseLazyFragment {
 
     }
 
-    @OnClick({R.id.rv_head, R.id.rv_appraisal, R.id.rv_report})
+    @OnClick({R.id.rv_head, R.id.rv_appraisal, R.id.rv_report, R.id.rv_collection})
     public void OnClick(View view) {
         switch (view.getId()) {
             case R.id.rv_head:
@@ -137,6 +138,9 @@ public class MineFragment extends BaseLazyFragment {
                 break;
             case R.id.rv_report:
                 startActivity(new Intent(getActivity(), UserReportCategoryActivity.class));
+                break;
+            case R.id.rv_collection:
+                startActivity(new Intent(getActivity(),CollectActivity.class));
                 break;
         }
     }
