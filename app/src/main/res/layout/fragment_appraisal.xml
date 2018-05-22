@@ -11,6 +11,13 @@
         android:layout_height="50dp"
         android:background="@color/color_title_bar"></com.xqlh.heartsmart.widget.TitleBar>
 
+    <Button
+        android:id="@+id/bt_search"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="10dp" />
+
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:id="@+id/smartRefreshLayout"
         android:layout_width="match_parent"

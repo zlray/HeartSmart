@@ -67,26 +67,20 @@ dependencies {
     implementation rootProject.ext.dependencies["fragmentation"]
     //canary
     implementation files('libs/tbs_sdk_thirdapp_v2.2.0.1096_36549_sharewithdownload_withoutGame_obfs_20160830_211645.jar')
-
     implementation 'com.github.vondear:RxTools:v1.7.7.3'
     implementation 'com.github.GrenderG:Toasty:1.2.8'
-
     implementation 'com.yalantis:ucrop:2.2.0'
-
     implementation 'de.hdodenhof:circleimageview:2.2.0'
-
     compile 'com.youth.banner:banner:1.4.10'
-
     compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-4'
     compile 'com.github.hackware1993:MagicIndicator:1.5.0'
-
     compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.30'
     compile 'com.borjabravo:readmoretextview:2.1.0'
     compile 'cn.carbs.android:ExpandableTextView:1.0.3'
     implementation 'com.elyeproj.libraries:loaderviewlibrary:1.4.1'
     compile files('libs/eventbus-3.0.0.jar')
-
     compile 'com.yanzhenjie:recyclerview-swipe:1.1.4'
+    compile 'com.carson_ho:SearchLayout:1.0.1'
 
 
 }

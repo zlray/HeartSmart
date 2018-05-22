@@ -2,11 +2,13 @@ package com.xqlh.heartsmart.ui.appraisal.ui;
 
 
 import android.app.Fragment;
+import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
@@ -38,6 +40,9 @@ public class AppraisalFragment extends BaseLazyFragment {
 
     @BindView(R.id.appraisal_titlebar)
     TitleBar appraisal_titlebar;
+
+    @BindView(R.id.bt_search)
+    Button bt_search;
 
     @BindView(R.id.smartRefreshLayout)
     SmartRefreshLayout smartRefreshLayout;
@@ -78,10 +83,19 @@ public class AppraisalFragment extends BaseLazyFragment {
         appraisal_titlebar.setTitleColor(Color.WHITE);
     }
 
+    @OnClick({R.id.bt_search})
+    public void OnClick(View view) {
+        switch (view.getId()) {
+            case R.id.bt_search:
+                startActivity(new Intent(getActivity(),SearchActivity.class));
+                break;
+        }
+    }
+
     public void initData() {
         //banner数据
         bannerList.clear();
-        
+
         bannerList.add(Uri.parse("android.resource://" + getActivity().getPackageName() + "/" + R.drawable.banner));
         bannerList.add(Uri.parse("android.resource://" + getActivity().getPackageName() + "/" + R.drawable.banner));
 
