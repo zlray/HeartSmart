@@ -34,12 +34,17 @@ public class AdapterCollect extends BaseQuickAdapter<EntityUserCollect.ResultBea
 
 
     @Override
-    protected void convert(BaseViewHolder helper, EntityUserCollect.ResultBean item) {
+    protected void convert(BaseViewHolder helper, final EntityUserCollect.ResultBean item) {
         helper.setText(R.id.tv_article_title, item.getArticleTitle())
                 .setText(R.id.tv_article_type, item.getArticleTypeStr())
                 .setText(R.id.tv_article_reading_times, item.getShowTimes() + "人阅读")
-                .setText(R.id.tv_article_date,item.getPublishDate());
+                .setText(R.id.tv_article_date, item.getPublishDate());
+
+        helper.addOnClickListener(R.id.ll_newest_content).addOnClickListener(R.id.ll_delate);
 
         Glide.with(mContext).load(item.getTitlePic()).into((ImageView) helper.getView(R.id.iv_article_titlepic));
     }
+
+
+
 }

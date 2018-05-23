@@ -162,7 +162,6 @@ public class ArticleDetailActivity extends BaseActivity {
                         }
                     }
                 });
-//
     }
 
     public void getData(String id) {

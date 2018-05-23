@@ -61,7 +61,9 @@ public class AdapterSearchHistory extends BaseMultiItemQuickAdapter<EntitySearch
     protected void convert(final BaseViewHolder baseViewHolder, final EntitySearchHistory channel) {
         switch (baseViewHolder.getItemViewType()) {
             case EntitySearchHistory.TYPE_MY:
+                //我的历史
                 baseViewHolder.setText(R.id.tvTitle, channel.getChannelName());
+                //点击编辑
                 baseViewHolder.getView(R.id.tv_edit).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -74,6 +76,7 @@ public class AdapterSearchHistory extends BaseMultiItemQuickAdapter<EntitySearch
                 });
                 break;
             case EntitySearchHistory.TYPE_MY_CHANNEL:
+                //历史记录和右上角按钮
                 baseViewHolder.setText(R.id.tv_channelname, channel.getChannelName())
                         .setVisible(R.id.img_edit, mIsEdit)
                         .addOnClickListener(R.id.img_edit);
@@ -84,7 +87,7 @@ public class AdapterSearchHistory extends BaseMultiItemQuickAdapter<EntitySearch
                 } else {
                     baseViewHolder.getView(R.id.tv_channelname).setTag(true);
                 }
-
+                //布局整体的点击事件 点击删除
                 baseViewHolder.getView(R.id.rl_channel).setOnLongClickListener(new View.OnLongClickListener() {
                     @Override
                     public boolean onLongClick(View v) {
@@ -95,7 +98,7 @@ public class AdapterSearchHistory extends BaseMultiItemQuickAdapter<EntitySearch
                         return false;
                     }
                 });
-
+                //历史记录中的滑动
                 baseViewHolder.getView(R.id.rl_channel).setOnTouchListener(new View.OnTouchListener() {
                     @Override
                     public boolean onTouch(View v, MotionEvent event) {
@@ -121,15 +124,19 @@ public class AdapterSearchHistory extends BaseMultiItemQuickAdapter<EntitySearch
                 baseViewHolder.getView(R.id.rl_channel).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        //执行删除，移动到推荐频道列表
+                        //执行点击删除使其移动到推荐频道列表
                         if (mIsEdit) {
                             if (channel.getChannelType() == 1) return;
+                            //
                             int otherFirstPosition = getOtherFirstPosition();
+                            //
                             int currentPosition = baseViewHolder.getAdapterPosition();
+
                             //获取到目标View
                             View targetView = mRecyclerView.getLayoutManager().findViewByPosition(otherFirstPosition);
                             //获取当前需要移动的View
                             View currentView = mRecyclerView.getLayoutManager().findViewByPosition(currentPosition);
+
                             // 如果targetView不在屏幕内,则indexOfChild为-1  此时不需要添加动画,因为此时notifyItemMoved自带一个向目标移动的动画
                             // 如果在屏幕内,则添加一个位移动画
                             if (mRecyclerView.indexOfChild(targetView) >= 0 && otherFirstPosition != -1) {
@@ -137,13 +144,16 @@ public class AdapterSearchHistory extends BaseMultiItemQuickAdapter<EntitySearch
                                 int spanCount = ((GridLayoutManager) manager).getSpanCount();
                                 int targetX = targetView.getLeft();
                                 int targetY = targetView.getTop();
+
                                 int myChannelSize = getMyChannelSize();//这里我是为了偷懒 ，算出来我的频道的大小
+
                                 if (myChannelSize % spanCount == 1) {
                                     //我的频道最后一行 之后一个，移动后
                                     targetY -= targetView.getHeight();
                                 }
                                 //我的频道 移动到 推荐频道的第一个
                                 channel.setItemtype(EntitySearchHistory.TYPE_OTHER_CHANNEL);//改为推荐频道类型
+
                                 channel.setChannelSelect(false);
 
                                 if (onChannelListener != null)
@@ -165,8 +175,10 @@ public class AdapterSearchHistory extends BaseMultiItemQuickAdapter<EntitySearch
                 });
                 break;
             case EntitySearchHistory.TYPE_OTHER:
+                //
                 baseViewHolder.setText(R.id.tvTitle, channel.getChannelName())
                         .setVisible(R.id.tv_edit, false);
+
                 break;
             case EntitySearchHistory.TYPE_OTHER_CHANNEL:
                 baseViewHolder.setText(R.id.tv_channelname, channel.getChannelName())
@@ -229,7 +241,6 @@ public class AdapterSearchHistory extends BaseMultiItemQuickAdapter<EntitySearch
             }
         }
         return size;
-
     }
 
     /**
@@ -335,17 +346,22 @@ public class AdapterSearchHistory extends BaseMultiItemQuickAdapter<EntitySearch
 
     private void startEditMode(boolean isEdit) {
         mIsEdit = isEdit;
+
         int visibleChildCount = mRecyclerView.getChildCount();
+
         for (int i = 0; i < visibleChildCount; i++) {
             View view = mRecyclerView.getChildAt(i);
+
             ImageView imgEdit = (ImageView) view.findViewById(R.id.img_edit);
+
             TextView tvName = (TextView) view.findViewById(R.id.tv_channelname);
+
             TextView tvEdit = (TextView) view.findViewById(R.id.tv_edit);
 
             if (imgEdit != null) {
+                //
                 imgEdit.setVisibility(imgEdit.getTag() != null && isEdit ? View.VISIBLE : View.INVISIBLE);
             }
-
             if (tvName != null) {
                 if (tvName.getTag() == null) return;
                 if (isEdit && (Boolean) tvName.getTag()) {
@@ -354,7 +370,6 @@ public class AdapterSearchHistory extends BaseMultiItemQuickAdapter<EntitySearch
                     tvName.setTextColor(Color.BLACK);
                 }
             }
-
             if (tvEdit != null) {
                 if (isEdit) {
                     tvEdit.setText("完成");

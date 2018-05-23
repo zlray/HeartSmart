@@ -94,12 +94,20 @@ public class CollectActivity extends BaseActivity {
                         if (response.getCode() == 1) {
                             adapterCollect = new AdapterCollect(R.layout.item_rv_newest, CollectActivity.this, response.getResult());
                             rv_collect.setAdapter(adapterCollect);
-                            adapterCollect.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+                            adapterCollect.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
                                 @Override
-                                public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                                    Intent intent = new Intent(CollectActivity.this, ArticleDetailActivity.class);
-                                    intent.putExtra("id", response.getResult().get(position).getID());
-                                    startActivity(intent);
+                                public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                                    switch (view.getId()) {
+                                        case R.id.ll_newest_content:
+                                            Intent intent = new Intent(CollectActivity.this, ArticleDetailActivity.class);
+                                            intent.putExtra("id", response.getResult().get(position).getID());
+                                            startActivity(intent);
+                                            break;
+                                        case R.id.ll_delate:
+                                            Toasty.success(ContextUtils.getContext(), "点击删除", Toast.LENGTH_SHORT, true).show();
+
+                                            break;
+                                    }
                                 }
                             });
                         } else {

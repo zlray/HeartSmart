@@ -20,6 +20,7 @@ import butterknife.BindView;
 public class SearchActivity extends BaseActivity implements OnChannelListener {
     @BindView(R.id.rv_search_history)
     RecyclerView rv_search_history;
+
     private List<EntitySearchHistory> listHistory = new ArrayList<>();
 
     private AdapterSearchHistory adapterSearchHistory;
@@ -42,7 +43,6 @@ public class SearchActivity extends BaseActivity implements OnChannelListener {
     @Override
     public void init() {
         initData();
-
     }
 
     public void initData() {
@@ -71,7 +71,6 @@ public class SearchActivity extends BaseActivity implements OnChannelListener {
         morechannel.setChannelName("推荐搜索");
         listHistory.add(morechannel);
 
-
         EntitySearchHistory entitySearchHistory4 = new EntitySearchHistory();
         entitySearchHistory4.setChannelType(EntitySearchHistory.TYPE_OTHER_CHANNEL);
         entitySearchHistory4.setChannelName("哈哈哈");
@@ -85,7 +84,6 @@ public class SearchActivity extends BaseActivity implements OnChannelListener {
         listHistory.add(entitySearchHistory4);
         listHistory.add(entitySearchHistory5);
         listHistory.add(entitySearchHistory6);
-
 
         ItemDragHelperCallBack callback = new ItemDragHelperCallBack(this);
         final ItemTouchHelper helper = new ItemTouchHelper(callback);

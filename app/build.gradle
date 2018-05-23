@@ -81,6 +81,8 @@ dependencies {
     compile files('libs/eventbus-3.0.0.jar')
     compile 'com.yanzhenjie:recyclerview-swipe:1.1.4'
     compile 'com.carson_ho:SearchLayout:1.0.1'
+    compile 'com.github.anzaizai:EasySwipeMenuLayout:1.1.2'
+
 
 
 }
