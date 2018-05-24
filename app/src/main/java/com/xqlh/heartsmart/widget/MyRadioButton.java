@@ -29,6 +29,7 @@ public class MyRadioButton extends RadioButton {
         // TODO Auto-generated constructor stub
         Drawable drawableLeft = null, drawableTop = null, drawableRight = null,
                 drawableBottom = null;
+
         TypedArray a = context.obtainStyledAttributes(attrs,
                 R.styleable.MyRadioButton);
 
@@ -38,7 +39,9 @@ public class MyRadioButton extends RadioButton {
             Log.i("MyRadioButton", "attr:" + attr);
             switch (attr) {
                 case R.styleable.MyRadioButton_drawableSize:
+
                     mDrawableSize = a.getDimensionPixelSize(R.styleable.MyRadioButton_drawableSize, 50);
+
                     Log.i("MyRadioButton", "mDrawableSize:" + mDrawableSize);
                     break;
                 case R.styleable.MyRadioButton_drawableTop:
@@ -58,9 +61,7 @@ public class MyRadioButton extends RadioButton {
             }
         }
         a.recycle();
-
         setCompoundDrawablesWithIntrinsicBounds(drawableLeft, drawableTop, drawableRight, drawableBottom);
-
     }
     public void setCompoundDrawablesWithIntrinsicBounds(Drawable left,
                                                         Drawable top,

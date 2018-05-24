@@ -81,6 +81,8 @@ public class ArticleDetailActivity extends BaseActivity {
         Log.i(TAG, "文章的id" + id);
         sp = new SharedPreferencesHelper(ContextUtils.getContext(), Constants.CHECKINFOR);
         token = sp.getSharedPreference(Constants.LOGIN_TOKEN, "").toString();
+
+        //
         if (!"".equals(sp.getSharedPreference(id, "").toString())) {
             bt_collect.setText(sp.getSharedPreference(id, "").toString());
         }

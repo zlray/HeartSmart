@@ -1,7 +1,6 @@
-
-<RelativeLayout
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/rl_channel"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_marginTop="@dimen/dp_50"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
 
@@ -9,19 +8,10 @@
         android:id="@+id/tv_channelname"
         android:layout_width="match_parent"
         android:layout_height="36dp"
+        android:layout_centerInParent="true"
         android:layout_margin="8dp"
         android:background="#F3F5F4"
-        android:text="推荐"
-        android:textColor="@android:color/black"
-        android:layout_centerInParent="true"
-        android:gravity="center"/>
-
-    <ImageView
-        android:id="@+id/img_edit"
-        android:layout_alignParentRight="true"
-        android:layout_width="16dp"
-        android:layout_height="16dp"
-        android:visibility="gone"
-        android:src="@drawable/ic_news_delete"/>
-
+        android:gravity="center"
+        android:text="自信心"
+        android:textColor="@android:color/black" />
 </RelativeLayout>

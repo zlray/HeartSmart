@@ -17,6 +17,7 @@ import com.xqlh.heartsmart.R;
 import com.xqlh.heartsmart.api.RetrofitHelper;
 import com.xqlh.heartsmart.api.base.BaseObserval;
 import com.xqlh.heartsmart.base.BaseActivity;
+import com.xqlh.heartsmart.bean.EntityCollect;
 import com.xqlh.heartsmart.bean.EntityUserCollect;
 import com.xqlh.heartsmart.ui.home.ui.ArticleDetailActivity;
 import com.xqlh.heartsmart.ui.mine.adapter.AdapterCollect;
@@ -83,7 +84,7 @@ public class CollectActivity extends BaseActivity {
         });
     }
 
-    public void getCollect(String token, int mCurrentPage, int pageSize, String ArticleTypeID) {
+    public void getCollect(final String token, int mCurrentPage, int pageSize, String ArticleTypeID) {
         RetrofitHelper.getApiService()
                 .getCollect(token, mCurrentPage, pageSize, ArticleTypeID)
                 .subscribeOn(Schedulers.io())
@@ -92,7 +93,7 @@ public class CollectActivity extends BaseActivity {
                     @Override
                     public void onSuccess(final EntityUserCollect response) {
                         if (response.getCode() == 1) {
-                            adapterCollect = new AdapterCollect(R.layout.item_rv_newest, CollectActivity.this, response.getResult());
+                            adapterCollect = new AdapterCollect(R.layout.item_rv_collect, CollectActivity.this, response.getResult());
                             rv_collect.setAdapter(adapterCollect);
                             adapterCollect.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
                                 @Override
@@ -104,14 +105,33 @@ public class CollectActivity extends BaseActivity {
                                             startActivity(intent);
                                             break;
                                         case R.id.ll_delate:
-                                            Toasty.success(ContextUtils.getContext(), "点击删除", Toast.LENGTH_SHORT, true).show();
-
+                                            collect(response.getResult().get(position).getID(), 0);
+                                            getCollect(token,1,6,"");
                                             break;
                                     }
                                 }
                             });
                         } else {
                             Toasty.warning(ContextUtils.getContext(), "服务器异常", Toast.LENGTH_SHORT, true).show();
+                        }
+                    }
+                });
+    }
+
+    public void collect(final String id, int collect) {
+        RetrofitHelper.getApiService()
+                .collect(token, id, collect)
+                .subscribeOn(Schedulers.io())
+                .compose(this.<EntityCollect>bindToLifecycle())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseObserval<EntityCollect>() {
+                    @Override
+                    public void onSuccess(EntityCollect response) {
+                        if (response.getCode() == 1) {
+                            Toasty.success(ContextUtils.getContext(), "删除成功", Toast.LENGTH_SHORT, true).show();
+                            sp.put(id,"收藏");
+                        } else {
+                            Toasty.warning(CollectActivity.this, "服务器异常", Toast.LENGTH_SHORT, true).show();
                         }
                     }
                 });

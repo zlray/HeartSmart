@@ -96,7 +96,7 @@ public class ProductFragment extends BaseLazyFragment {
 
     public void initHardData() {
         RetrofitHelper.getApiService()
-                .getProductCategory(0, 3, 10)
+                .getProductCategory(0, 1, 100)
                 .subscribeOn(Schedulers.io())
                 .compose(ProgressUtils.<EntityProductCategory>applyProgressBar(getActivity()))
                 .observeOn(AndroidSchedulers.mainThread())
