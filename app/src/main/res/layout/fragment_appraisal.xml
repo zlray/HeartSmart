@@ -5,24 +5,34 @@
     android:layout_height="match_parent"
     tools:context="com.xqlh.heartsmart.ui.appraisal.ui.AppraisalFragment">
 
-    <com.xqlh.heartsmart.widget.TitleBar
-        android:id="@+id/appraisal_titlebar"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@color/color_title_bar"></com.xqlh.heartsmart.widget.TitleBar>
+    <RelativeLayout
+        android:id="@+id/rl"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
 
-    <Button
-        android:id="@+id/bt_search"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="10dp" />
+        <com.xqlh.heartsmart.widget.TitleBar
+            android:id="@+id/appraisal_titlebar"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/color_title_bar">
+        </com.xqlh.heartsmart.widget.TitleBar>
+
+        <Button
+            android:id="@+id/bt_search"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/search" />
+    </RelativeLayout>
+
 
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:id="@+id/smartRefreshLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/appraisal_titlebar"
+        android:layout_below="@+id/rl"
         app:srlFooterTranslationViewId="@+id/rv_appraisal_home">
 
         <com.scwang.smartrefresh.layout.header.ClassicsHeader

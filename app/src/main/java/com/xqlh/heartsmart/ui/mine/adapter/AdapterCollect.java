@@ -32,10 +32,6 @@ public class AdapterCollect extends BaseQuickAdapter<EntityUserCollect.ResultBea
         notifyItemInserted(position);
     }
 
-    public void updateList(List<EntityUserCollect.ResultBean> list){
-        listNewest = list;
-    }
-
 
     @Override
     protected void convert(BaseViewHolder helper, final EntityUserCollect.ResultBean item) {

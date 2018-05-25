@@ -22,6 +22,7 @@ import com.xqlh.heartsmart.bean.EntityProductCategory;
 import com.xqlh.heartsmart.bean.EntityProductDetail;
 import com.xqlh.heartsmart.bean.EntityReportAnswer;
 import com.xqlh.heartsmart.bean.EntityReportBasics;
+import com.xqlh.heartsmart.bean.EntitySearchHistory;
 import com.xqlh.heartsmart.bean.EntityUndoneAppraisal;
 import com.xqlh.heartsmart.bean.EntityUpdatePassword;
 import com.xqlh.heartsmart.bean.EntityUpdateUserInfor;
@@ -254,5 +255,25 @@ public interface ApiService {
     Observable<EntityUserReport> getUserReport(@Header("Authorization") String Authorization,
                                                @Query("pageIndex") int pageIndex,
                                                @Query("pageSize") int pageSize);
+
+    /**
+     * 根据关键词、分类ID、价格范围等查询测评信息【api/psychtest/list】 GET
+     keywords	string	查询关键词【可以为空】
+     PsychtestTypeID	string	测评分类ID【可以为空】
+     minPrice	int	最低价格【可以为0】
+     maxPrice	int	最高价格【可以为0】
+     pageIndex	int
+     pageSize	int
+     PsychtestType	int	测评分类：0.趣味测评；1.专业测评；2.调查问卷
+     */
+    @GET("api/psychtest/list")
+    Observable<EntitySearchHistory> searchAprraisal(@Header("Authorization") String Authorization,
+                                                    @Query("keywords") String keywords,
+                                                    @Query("PsychtestTypeID") String PsychtestTypeID,
+                                                    @Query("minPrice") int minPrice,
+                                                    @Query("maxPrice") int maxPrice,
+                                                    @Query("pageIndex") int pageIndex,
+                                                    @Query("pageSize") String pageSize,
+                                                    @Query("PsychtestType") String PsychtestType);
 
 }

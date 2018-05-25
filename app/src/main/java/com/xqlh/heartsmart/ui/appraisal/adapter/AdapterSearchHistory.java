@@ -1,47 +1,34 @@
 package com.xqlh.heartsmart.ui.appraisal.adapter;
 
-import android.view.View;
-
-import com.chad.library.adapter.base.BaseMultiItemQuickAdapter;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.xqlh.heartsmart.R;
-import com.xqlh.heartsmart.bean.EntitySearchHistory;
 
 import java.util.List;
 
 
-public class AdapterSearchHistory extends BaseMultiItemQuickAdapter<EntitySearchHistory, BaseViewHolder> {
-    public AdapterSearchHistory(List<EntitySearchHistory> data) {
-        super(data);
-        addItemType(EntitySearchHistory.TYPE_TEXT, R.layout.item_channel_title);
-        addItemType(EntitySearchHistory.TYPE_HISTORY, R.layout.channel_rv_item);
+public class AdapterSearchHistory extends BaseQuickAdapter<String, BaseViewHolder> {
+    List<String> historyList;
+
+    public AdapterSearchHistory(int layoutResId,List<String> data) {
+        super(layoutResId,data);
+        this.historyList = data;
+    }
+
+    public void addHistoryList(List<String> list) {
+        int position = historyList.size();
+        historyList.addAll(position, list);
+        notifyItemInserted(position);
+    }
+
+    public void celarList(){
+        historyList.clear();
     }
 
     @Override
-    protected void convert(final BaseViewHolder baseViewHolder, final EntitySearchHistory channel) {
-        switch (baseViewHolder.getItemViewType()) {
-            case EntitySearchHistory.TYPE_TEXT:
-                //我的历史
-                baseViewHolder.setText(R.id.tvTitle, channel.getChannelName());
-                //点击编辑
-                baseViewHolder.getView(R.id.tv_edit).setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        //清空历史
-
-                    }
-                });
-                break;
-            case EntitySearchHistory.TYPE_HISTORY:
-                //点击搜索
-                baseViewHolder.setText(R.id.tv_channelname, channel.getChannelName());
-                baseViewHolder.getView(R.id.tv_channelname).setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        //
-                    }
-                });
-                break;
-        }
+    protected void convert(final BaseViewHolder baseViewHolder, final String record) {
+        //点击历史中的某一个搜索
+        baseViewHolder.setText(R.id.tv_record,record );
+        baseViewHolder.addOnClickListener(R.id.tv_record);
     }
 }

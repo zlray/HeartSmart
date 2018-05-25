@@ -43,6 +43,18 @@ public class Constants {
 
     public static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
 
+    public static final String DB = "record.db";
+    public static final int DB_VERSION = 1;
+
+    //创建用户信息表
+    public static final String CREATE_RECORD=
+            "create table records ("
+                    + "_id integer PRIMARY KEY AUTOINCREMENT NOT NULL," //
+                    + "record text)"; //记录
+
+
+
+
     public static String getYYD(String time) {
         DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
         Date date = null;
