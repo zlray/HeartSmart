@@ -1,14 +1,12 @@
 package com.xqlh.heartsmart.ui.home.ui;
 
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.http.SslError;
 import android.os.Build;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
@@ -55,6 +53,14 @@ public class ArticleDetailActivity extends BaseActivity {
     @BindView(R.id.bt_collect)
     Button bt_collect;
 
+    @BindView(R.id.rl_error)
+    RelativeLayout rl_error;
+
+    @BindView(R.id.bt_refresh)
+    Button bt_refresh;
+    @BindView(R.id.bt_check_network)
+    Button bt_check_network;
+
 
     SharedPreferencesHelper sp;
 
@@ -88,10 +94,15 @@ public class ArticleDetailActivity extends BaseActivity {
         }
 
         initTtileBar();
-
         setWebView();
+        if (!com.xqlh.heartsmart.utils.NetworkUtils.isConnected()) {
+            rl_error.setVisibility(View.VISIBLE);
+            bt_collect.setVisibility(View.GONE);
+        } else {
 
-        getData(id);
+            getData(id);
+            rl_error.setVisibility(View.GONE);
+        }
     }
 
     public void initTtileBar() {
@@ -105,27 +116,7 @@ public class ArticleDetailActivity extends BaseActivity {
         });
     }
 
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_actions, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.menu_all_down:
-                break;
-            default:
-                break;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-
-    @OnClick(R.id.bt_collect)
+    @OnClick({R.id.bt_collect, R.id.bt_refresh, R.id.bt_check_network})
     public void OnClick(View view) {
         switch (view.getId()) {
             case R.id.bt_collect:
@@ -139,6 +130,22 @@ public class ArticleDetailActivity extends BaseActivity {
                     bt_collect.setText("收藏");
                     sp.put(id, "收藏");
                 }
+                break;
+            case R.id.bt_refresh:
+                getData(id);
+                rl_error.setVisibility(View.GONE);
+                break;
+            case R.id.bt_check_network:
+                Intent intent = null;
+                if (android.os.Build.VERSION.SDK_INT > 10) {
+                    intent = new Intent(android.provider.Settings.ACTION_SETTINGS);
+                } else {
+                    intent = new Intent();
+                    ComponentName component = new ComponentName("com.android.settings", "com.android.settings.WirelessSettings");
+                    intent.setComponent(component);
+                    intent.setAction("android.intent.action.VIEW");
+                }
+                startActivityForResult(intent, 0);
                 break;
         }
     }

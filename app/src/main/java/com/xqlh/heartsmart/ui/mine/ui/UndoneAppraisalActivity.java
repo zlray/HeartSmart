@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -40,6 +41,9 @@ public class UndoneAppraisalActivity extends BaseActivity {
 
     @BindView(R.id.titlebar)
     TitleBar titlebar;
+
+    @BindView(R.id.rl_empty)
+    RelativeLayout rl_empty;
 
     //每页的大小
     private int pageSize = 6;
@@ -91,20 +95,26 @@ public class UndoneAppraisalActivity extends BaseActivity {
                     @Override
                     public void onSuccess(final EntityUndoneAppraisal response) {
                         if (response.getCode() == 1) {
-                            adapterAppraisalUndone = new AdapterAppraisalUndone(
-                                    R.layout.item_rv_appraisal_undone,
-                                    response.getResult());
-                            rv_appraisal_undone.setAdapter(adapterAppraisalUndone);
-                            adapterAppraisalUndone.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-                                @Override
-                                public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                                    Intent intent = new Intent(UndoneAppraisalActivity.this, AppraisalInstructionActivity.class);
-                                    //传递测评id
-                                    intent.putExtra("PsyID", response.getResult().get(position).getPsyID());
-                                    intent.putExtra("TestRecordId", response.getResult().get(position).getID());
-                                    startActivity(intent);
-                                }
-                            });
+                            if (response.getResult().size() > 0) {
+                                adapterAppraisalUndone = new AdapterAppraisalUndone(
+                                        R.layout.item_rv_appraisal_undone,
+                                        response.getResult());
+                                rv_appraisal_undone.setAdapter(adapterAppraisalUndone);
+                                adapterAppraisalUndone.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+                                    @Override
+                                    public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                                        Intent intent = new Intent(UndoneAppraisalActivity.this, AppraisalInstructionActivity.class);
+                                        //传递测评id
+                                        intent.putExtra("PsyID", response.getResult().get(position).getPsyID());
+                                        intent.putExtra("TestRecordId", response.getResult().get(position).getID());
+                                        startActivity(intent);
+                                    }
+                                });
+                            } else {
+                                smartRefreshLayout.setVisibility(View.GONE);
+                                rl_empty.setVisibility(View.VISIBLE);
+                            }
+
                         } else {
                             Toasty.warning(ContextUtils.getContext(), "服务器异常", Toast.LENGTH_SHORT, true).show();
                         }

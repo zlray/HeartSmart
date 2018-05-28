@@ -1,6 +1,7 @@
 package com.xqlh.heartsmart.ui.appraisal.ui;
 
 import android.content.Intent;
+import android.os.Handler;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -48,10 +49,21 @@ public class AppraisalActivity extends BaseActivity {
     @BindView(R.id.iv_topic)
     ImageView iv_topic;
 
+    @BindView(R.id.tv_time1)
+    TextView tv_time1;
+    @BindView(R.id.tv_time2)
+    TextView tv_time2;
+    @BindView(R.id.tv_time3)
+    TextView tv_time3;
+    @BindView(R.id.tv_name)
+    TextView tv_name;
+
+
     private String psyID;
     private String token;
     private String testRecordId;
     private String topicid;
+    private String name;
 
     private List<EntityAppraisalTopic.ResultBean> lisTopic;
     private List<String> listAnswer = new ArrayList<>();
@@ -62,7 +74,7 @@ public class AppraisalActivity extends BaseActivity {
     private int topicIndex = 0;
     SharedPreferencesHelper sp;
     RxDialogSureCancel rxDialogSureCancel;//提示弹窗
-
+    private int time;
 
     @Override
     public int setContent() {
@@ -83,16 +95,67 @@ public class AppraisalActivity extends BaseActivity {
         Log.i(TAG, "测评的id..........." + psyID);
 
         testRecordId = intent.getStringExtra("TestRecordId");
+
         Log.i(TAG, "测评记录的id       " + testRecordId);
+
+        name = intent.getStringExtra("name");
+        tv_name.setText(name);
+
+        time = intent.getIntExtra("time", 0) * 60;
 
         rv_appraisal_answer.setLayoutManager(new LinearLayoutManager(this));
 
         sp = new SharedPreferencesHelper(ContextUtils.getContext(), Constants.CHECKINFOR);
-        
+
         token = sp.getSharedPreference(Constants.LOGIN_TOKEN, "").toString();
 
         initTopic(psyID);
+
+        handler.postDelayed(runnable, 0);
     }
+
+    Handler handler = new Handler();
+    Runnable runnable = new Runnable() {
+        @Override
+        public void run() {
+            time--;
+            String formatLongToTimeStr = formatLongToTimeStr(time);
+            String[] split = formatLongToTimeStr.split("：");
+            for (int i = 0; i < split.length; i++) {
+                if (i == 0) {
+                    tv_time1.setText(split[0] + "时");
+                }
+                if (i == 1) {
+                    tv_time2.setText(split[1] + "分");
+                }
+                if (i == 2) {
+                    tv_time3.setText(split[2] + "秒");
+                }
+
+            }
+            if (time > 0) {
+                handler.postDelayed(this, 1000);
+            }
+        }
+    };
+
+    public String formatLongToTimeStr(int l) {
+        int hour = 0;
+        int minute = 0;
+        int second = 0;
+        second = l;
+        if (second > 60) {
+            minute = second / 60;         //取整
+            second = second % 60;         //取余
+        }
+        if (minute > 60) {
+            hour = minute / 60;
+            minute = minute % 60;
+        }
+        String strtime = hour + "：" + minute + "：" + second;
+        return strtime;
+    }
+
 
     //根据测评id获取题目的信息
     public void initTopic(String id) {

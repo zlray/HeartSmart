@@ -63,6 +63,7 @@ public class AppraisalIntroduceActivity extends BaseActivity {
     Button bt_appraisal;
 
     private String psyID;
+    private int time;
 
     @Override
     public int setContent() {
@@ -104,6 +105,9 @@ public class AppraisalIntroduceActivity extends BaseActivity {
 
                             tv_price2.setText("本次测评为付费测评,测评体验价为" + response.getResult().getPrice() + "元");
                             tv_topic_number2.setText(response.getResult().getTopicNu() + "题");
+
+                            time = response.getResult().getTestTime();
+
                             tv_time.setText(response.getResult().getTestTime() + "分钟");
                         } else {
                             Toasty.warning(ContextUtils.getContext(), "服务器异常", Toast.LENGTH_SHORT, true).show();
@@ -117,8 +121,10 @@ public class AppraisalIntroduceActivity extends BaseActivity {
     public void OnClick(View view) {
         switch (view.getId()) {
             case R.id.bt_appraisal:
-                Intent intent = new Intent(AppraisalIntroduceActivity.this,AppraisalActivity.class);
-                intent.putExtra("PsyID",psyID);
+                Intent intent = new Intent(AppraisalIntroduceActivity.this, AppraisalActivity.class);
+                intent.putExtra("PsyID", psyID);
+                intent.putExtra("time", time);
+                intent.putExtra("name",tv_name.getText().toString());
                 startActivity(intent);
                 break;
         }

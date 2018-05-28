@@ -15,7 +15,7 @@
         android:layout_marginTop="80dp"
         android:background="@null"
         android:scaleType="centerCrop"
-        android:src="@drawable/login_logo" />
+        android:src="@drawable/applogo" />
 
     <ScrollView
         android:id="@+id/scrollView"

@@ -273,7 +273,7 @@ public interface ApiService {
                                                     @Query("minPrice") int minPrice,
                                                     @Query("maxPrice") int maxPrice,
                                                     @Query("pageIndex") int pageIndex,
-                                                    @Query("pageSize") String pageSize,
-                                                    @Query("PsychtestType") String PsychtestType);
+                                                    @Query("pageSize") int pageSize,
+                                                    @Query("PsychtestType") int PsychtestType);
 
 }

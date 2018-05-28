@@ -1,5 +1,6 @@
 package com.xqlh.heartsmart.ui.product.ui;
 
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -15,6 +16,7 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.Button;
 import android.widget.RelativeLayout;
 
 import com.alipay.android.phone.mrpc.core.NetworkUtils;
@@ -28,6 +30,7 @@ import com.xqlh.heartsmart.widget.HProgressBarLoading;
 import com.xqlh.heartsmart.widget.TitleBar;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
@@ -42,14 +45,16 @@ public class ProductDetailActivity extends BaseActivity {
     @BindView(R.id.top_progress)
     HProgressBarLoading top_progress;
 
-    @BindView(R.id.rl_retory)
-    RelativeLayout rl_retory;
+    @BindView(R.id.rl_error)
+    RelativeLayout rl_error;
 
+    @BindView(R.id.bt_refresh)
+    Button bt_refresh;
+    @BindView(R.id.bt_check_network)
+    Button bt_check_network;
 
     String id;
     String name;
-    String pic;
-    String description;
 
     private boolean isContinue = false;
 
@@ -70,7 +75,34 @@ public class ProductDetailActivity extends BaseActivity {
         id = intent.getStringExtra("id");
         initTtileBar();
         setWebView();
-        getData(id);
+        if (!com.xqlh.heartsmart.utils.NetworkUtils.isConnected()) {
+            rl_error.setVisibility(View.VISIBLE);
+        } else {
+            getData(id);
+            rl_error.setVisibility(View.GONE);
+        }
+    }
+
+    @OnClick({R.id.bt_refresh, R.id.bt_check_network})
+    public void OnClick(View view) {
+        switch (view.getId()) {
+            case R.id.bt_refresh:
+                getData(id);
+                rl_error.setVisibility(View.GONE);
+                break;
+            case R.id.bt_check_network:
+                Intent intent = null;
+                if (android.os.Build.VERSION.SDK_INT > 10) {
+                    intent = new Intent(android.provider.Settings.ACTION_SETTINGS);
+                } else {
+                    intent = new Intent();
+                    ComponentName component = new ComponentName("com.android.settings", "com.android.settings.WirelessSettings");
+                    intent.setComponent(component);
+                    intent.setAction("android.intent.action.VIEW");
+                }
+                startActivityForResult(intent, 0);
+                break;
+        }
 
     }
 
@@ -206,15 +238,13 @@ public class ProductDetailActivity extends BaseActivity {
         //最后加载设置100进度
         top_progress.setNormalProgress(100);
         //显示网络异常布局
-        rl_retory.setVisibility(flag ? View.INVISIBLE : View.VISIBLE);
+        rl_error.setVisibility(flag ? View.INVISIBLE : View.VISIBLE);
         //点击重新连接网络
-        rl_retory.setOnClickListener(new View.OnClickListener() {
+        rl_error.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                rl_retory.setVisibility(View.INVISIBLE);
+                rl_error.setVisibility(View.INVISIBLE);
                 product_detail_wb.setVisibility(View.VISIBLE);
-                //重新加载网页
-                Log.i(TAG, "重新加载");
                 getData(id);
             }
         });

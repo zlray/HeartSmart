@@ -10,7 +10,9 @@
         android:layout_height="36dp"
         android:layout_centerInParent="true"
         android:layout_margin="8dp"
-        android:background="#F3F5F4"
+        android:background="?android:attr/selectableItemBackground"
+        android:clickable="true"
+        android:focusable="true"
         android:gravity="center"
         android:text="自信心"
         android:textColor="@android:color/black" />

@@ -62,7 +62,7 @@ public class EquipmentFragment extends BaseLazyFragment {
         adapterEquipment.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                Intent intent = new Intent(getActivity(), EquipmentReportActivity.class);
+                Intent intent = new Intent(getActivity(), EquipmentReportCategoryActivity.class);
                 intent.putExtra("id", equipmentList.get(position).getArticleTypeID());
                 intent.putExtra("title", equipmentList.get(position).getTitle());
                 startActivity(intent);

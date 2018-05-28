@@ -29,14 +29,13 @@
         android:layout_below="@+id/top_progress"></WebView>
 
     <RelativeLayout
-        android:id="@+id/rl_retory"
+        android:id="@+id/rl_error"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/product_detail_titleBar"
         android:background="#E6E6E6"
         android:clickable="true"
-        android:gravity="center"
-        android:visibility="gone">
+        android:gravity="center">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -45,23 +44,57 @@
             android:orientation="vertical">
 
             <ImageView
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:src="@drawable/wifi" />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/error404" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="数据获取失败"
+                android:layout_marginTop="@dimen/dp_10"
+                android:text="糟糕!好像出错了"
+                android:textColor="@color/black"
+                android:textSize="25sp"
+                android:textStyle="bold"></TextView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_10"
+                android:text="网络错误或者页面不存在"
                 android:textSize="18dp"></TextView>
 
-            <TextView
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="请检查网络后，点击重新加载"
-                android:textSize="15dp" />
+                android:layout_marginTop="@dimen/dp_30"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/bt_refresh"
+                    android:layout_width="100dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/shape1"
+                    android:text="刷新界面"
+                    android:textColor="@color/white"
+                    android:textSize="15dp" />
+
+                <View
+                    android:layout_width="@dimen/dp_10"
+                    android:layout_height="@dimen/dp_10" />
+
+                <Button
+                    android:id="@+id/bt_check_network"
+                    android:layout_width="100dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/shape"
+                    android:text="设置网络"
+                    android:textColor="@color/white"
+                    android:textSize="15dp" />
+            </LinearLayout>
+
         </LinearLayout>
     </RelativeLayout>
-
-
 </RelativeLayout>

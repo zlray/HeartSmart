@@ -58,6 +58,7 @@ public class AppraisalInstructionActivity extends BaseActivity {
 
     private String psyID;//测评id
     private String testRecordId;//测试记录id
+    private int time;//测试耗时
 
     @Override
     public int setContent() {
@@ -115,6 +116,8 @@ public class AppraisalInstructionActivity extends BaseActivity {
                 Intent intent = new Intent(AppraisalInstructionActivity.this, AppraisalUndoneActivity.class);
                 intent.putExtra("PsyID", psyID);
                 intent.putExtra("TestRecordId", testRecordId);
+                intent.putExtra("time", time);
+                intent.putExtra("name",tv_name.getText().toString());
                 startActivity(intent);
                 break;
         }

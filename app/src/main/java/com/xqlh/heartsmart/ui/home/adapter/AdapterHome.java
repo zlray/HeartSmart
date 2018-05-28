@@ -21,7 +21,7 @@ import com.xqlh.heartsmart.bean.EntityArticleBeautiful;
 import com.xqlh.heartsmart.bean.EntityArticleNewest;
 import com.xqlh.heartsmart.bean.EntityUserReport;
 import com.xqlh.heartsmart.ui.appraisal.adapter.AdapterUserReportSimple;
-import com.xqlh.heartsmart.ui.equipment.ui.EquipmentReportActivity;
+import com.xqlh.heartsmart.ui.equipment.ui.EquipmentReportCategoryActivity;
 import com.xqlh.heartsmart.ui.home.model.IconTitleModel;
 import com.xqlh.heartsmart.ui.home.ui.ArticleDetailActivity;
 import com.xqlh.heartsmart.ui.home.ui.ArticleHomeActivity;
@@ -228,7 +228,7 @@ public class AdapterHome extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 if (listEight.get(position).getTitle().equals("心理文章") || listEight.get(position).getTitle().equals("测评系统")) {
                     intent = new Intent(context, ArticleHomeActivity.class);
                 } else {
-                    intent = new Intent(context, EquipmentReportActivity.class);
+                    intent = new Intent(context, EquipmentReportCategoryActivity.class);
                     intent.putExtra("id", listEight.get(position).getArticleTypeID());
                     intent.putExtra("title", listEight.get(position).getTitle());
                 }

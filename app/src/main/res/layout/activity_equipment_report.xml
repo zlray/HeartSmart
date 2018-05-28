@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.xqlh.heartsmart.ui.equipment.ui.EquipmentReportActivity">
+    tools:context="com.xqlh.heartsmart.ui.equipment.ui.EquipmentReportCategoryActivity">
 
     <com.xqlh.heartsmart.widget.TitleBar
         android:id="@+id/equipment_report_titlebar"

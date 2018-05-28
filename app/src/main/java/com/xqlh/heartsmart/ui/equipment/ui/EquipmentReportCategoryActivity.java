@@ -31,7 +31,7 @@ import es.dmoral.toasty.Toasty;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
-public class EquipmentReportActivity extends BaseActivity {
+public class EquipmentReportCategoryActivity extends BaseActivity {
     private String id;
     private String title;
     @BindView(R.id.rv_equipment_report)
@@ -120,7 +120,7 @@ public class EquipmentReportActivity extends BaseActivity {
                                 adapterEquipmentReport.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
                                     @Override
                                     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                                        Intent intent = new Intent(EquipmentReportActivity.this, EquipmentReportDetailActivity.class);
+                                        Intent intent = new Intent(EquipmentReportCategoryActivity.this, EquipmentReportDetailActivity.class);
                                         intent.putExtra("name", response.getResult().get(position).getName());
                                         intent.putExtra("id", response.getResult().get(position).getID());
                                         startActivity(intent);

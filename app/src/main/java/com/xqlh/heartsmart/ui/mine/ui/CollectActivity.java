@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -47,6 +48,9 @@ public class CollectActivity extends BaseActivity {
     private String token;
     SharedPreferencesHelper sp;
     AdapterCollect adapterCollect;
+
+    @BindView(R.id.rl_empty)
+    RelativeLayout rl_empty;
 
 
     @Override
@@ -93,24 +97,29 @@ public class CollectActivity extends BaseActivity {
                     @Override
                     public void onSuccess(final EntityUserCollect response) {
                         if (response.getCode() == 1) {
-                            adapterCollect = new AdapterCollect(R.layout.item_rv_collect, CollectActivity.this, response.getResult());
-                            rv_collect.setAdapter(adapterCollect);
-                            adapterCollect.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
-                                @Override
-                                public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-                                    switch (view.getId()) {
-                                        case R.id.ll_newest_content:
-                                            Intent intent = new Intent(CollectActivity.this, ArticleDetailActivity.class);
-                                            intent.putExtra("id", response.getResult().get(position).getID());
-                                            startActivity(intent);
-                                            break;
-                                        case R.id.ll_delate:
-                                            collect(response.getResult().get(position).getID(), 0);
-                                            getCollect(token,1,6,"");
-                                            break;
+                            if (response.getResult().size() > 0) {
+                                adapterCollect = new AdapterCollect(R.layout.item_rv_collect, CollectActivity.this, response.getResult());
+                                rv_collect.setAdapter(adapterCollect);
+                                adapterCollect.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+                                    @Override
+                                    public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                                        switch (view.getId()) {
+                                            case R.id.ll_newest_content:
+                                                Intent intent = new Intent(CollectActivity.this, ArticleDetailActivity.class);
+                                                intent.putExtra("id", response.getResult().get(position).getID());
+                                                startActivity(intent);
+                                                break;
+                                            case R.id.ll_delate:
+                                                collect(response.getResult().get(position).getID(), 0);
+
+                                                break;
+                                        }
                                     }
-                                }
-                            });
+                                });
+                            } else {
+                                rl_empty.setVisibility(View.VISIBLE);
+                                smartRefreshLayout.setVisibility(View.GONE);
+                            }
                         } else {
                             Toasty.warning(ContextUtils.getContext(), "服务器异常", Toast.LENGTH_SHORT, true).show();
                         }
@@ -129,7 +138,8 @@ public class CollectActivity extends BaseActivity {
                     public void onSuccess(EntityCollect response) {
                         if (response.getCode() == 1) {
                             Toasty.success(ContextUtils.getContext(), "删除成功", Toast.LENGTH_SHORT, true).show();
-                            sp.put(id,"收藏");
+                            getCollect(token, 1, 6, "");
+                            sp.put(id, "收藏");
                         } else {
                             Toasty.warning(CollectActivity.this, "服务器异常", Toast.LENGTH_SHORT, true).show();
                         }

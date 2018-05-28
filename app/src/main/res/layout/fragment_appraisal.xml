@@ -14,17 +14,20 @@
             android:id="@+id/appraisal_titlebar"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:background="@color/color_title_bar">
-        </com.xqlh.heartsmart.widget.TitleBar>
+            android:background="@color/color_title_bar"></com.xqlh.heartsmart.widget.TitleBar>
 
         <Button
             android:id="@+id/bt_search"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="10dp"
-            android:background="@drawable/search" />
+            android:background="@null"
+            android:gravity="center"
+            android:text="搜索"
+            android:textColor="@color/white"
+            android:textSize="14sp" />
     </RelativeLayout>
 
 
