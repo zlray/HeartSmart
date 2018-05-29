@@ -13,6 +13,7 @@ import com.xqlh.heartsmart.bean.EntityBindPhone;
 import com.xqlh.heartsmart.bean.EntityCheckAccount;
 import com.xqlh.heartsmart.bean.EntityCheckMessage;
 import com.xqlh.heartsmart.bean.EntityCheckPhone;
+import com.xqlh.heartsmart.bean.EntityCheckUserInfor;
 import com.xqlh.heartsmart.bean.EntityCollect;
 import com.xqlh.heartsmart.bean.EntityEquipmentReport;
 import com.xqlh.heartsmart.bean.EntityGetMessage;
@@ -147,6 +148,10 @@ public interface ApiService {
     @GET("api/account/userinfo")
     Observable<EntityUserInfor> getUserInfor(@Header("Authorization") String Authorization);
 
+    //查询用户的信息是否完善
+    @GET("api/account/isperfect")
+    Observable<EntityCheckUserInfor> checkUserInfor(@Header("Authorization") String Authorization);
+
     //通过查询文章接口 来获取最新的文章,浏览次数最多等
     @FormUrlEncoded
     @POST("api/article/aritclelist")
@@ -258,13 +263,13 @@ public interface ApiService {
 
     /**
      * 根据关键词、分类ID、价格范围等查询测评信息【api/psychtest/list】 GET
-     keywords	string	查询关键词【可以为空】
-     PsychtestTypeID	string	测评分类ID【可以为空】
-     minPrice	int	最低价格【可以为0】
-     maxPrice	int	最高价格【可以为0】
-     pageIndex	int
-     pageSize	int
-     PsychtestType	int	测评分类：0.趣味测评；1.专业测评；2.调查问卷
+     * keywords	string	查询关键词【可以为空】
+     * PsychtestTypeID	string	测评分类ID【可以为空】
+     * minPrice	int	最低价格【可以为0】
+     * maxPrice	int	最高价格【可以为0】
+     * pageIndex	int
+     * pageSize	int
+     * PsychtestType	int	测评分类：0.趣味测评；1.专业测评；2.调查问卷
      */
     @GET("api/psychtest/list")
     Observable<EntitySearchHistory> searchAprraisal(@Header("Authorization") String Authorization,

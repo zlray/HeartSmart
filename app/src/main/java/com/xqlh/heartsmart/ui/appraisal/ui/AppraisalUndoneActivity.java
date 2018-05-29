@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -57,6 +58,12 @@ public class AppraisalUndoneActivity extends BaseActivity {
     TextView tv_time3;
     @BindView(R.id.tv_name)
     TextView tv_name;
+    @BindView(R.id.pb_bar)
+    ProgressBar pb_bar;
+    @BindView(R.id.tv_number1)
+    TextView tv_number1;
+    @BindView(R.id.tv_number2)
+    TextView tv_number2;
 
     private String psyID;
     private String token;
@@ -107,6 +114,9 @@ public class AppraisalUndoneActivity extends BaseActivity {
         sp = new SharedPreferencesHelper(ContextUtils.getContext(), Constants.CHECKINFOR);
 
         topicIndex = (int) sp.getSharedPreference(testRecordId, 0);
+
+        //设置进度
+        pb_bar.setProgress(topicIndex + 1);
 
         token = sp.getSharedPreference(Constants.LOGIN_TOKEN, "").toString();
 
@@ -175,7 +185,14 @@ public class AppraisalUndoneActivity extends BaseActivity {
 
                             Log.i(TAG, "集合大小" + lisTopic.size() + "........");
 
+                            pb_bar.setMax(lisTopic.size());
+                            tv_number2.setText("/" + lisTopic.size() + "题");
+
                             if (topicIndex < lisTopic.size()) {
+
+
+                                tv_number1.setText((Integer) sp.getSharedPreference(testRecordId, 0) + 1 + "");
+
 
                                 Log.i(TAG, "题目id: " + lisTopic.get(topicIndex).getID());
 
@@ -257,13 +274,13 @@ public class AppraisalUndoneActivity extends BaseActivity {
                                 adapterAnswerApprisalOne.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
                                     @Override
                                     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-
                                         topicIndex++;
-                                        sp.put(testRecordId, topicIndex);
 
+                                        pb_bar.incrementProgressBy(1);
+
+                                        sp.put(testRecordId, topicIndex);
                                         //提交答案
                                         reportAnswer(testRecordId, response.getResult().get(position).getOptionNumber(), topicid);
-
                                         listAnswer.add(response.getResult().get(position).getOptionNumber() + "");
                                     }
                                 });
@@ -281,10 +298,11 @@ public class AppraisalUndoneActivity extends BaseActivity {
                                 adapterAnswerApprisal.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
                                     @Override
                                     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-
                                         topicIndex++;
-                                        sp.put(testRecordId, topicIndex);
 
+                                        pb_bar.incrementProgressBy(1);
+
+                                        sp.put(testRecordId, topicIndex);
                                         //提交答案
                                         reportAnswer(testRecordId, response.getResult().get(position).getOptionNumber(), topicid);
 

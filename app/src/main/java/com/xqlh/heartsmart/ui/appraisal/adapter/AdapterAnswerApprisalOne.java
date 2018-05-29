@@ -26,7 +26,7 @@ public class AdapterAnswerApprisalOne extends BaseQuickAdapter<EntityAppraisalAn
 
     @Override
     protected void convert(BaseViewHolder helper, EntityAppraisalAnswer.ResultBean item) {
-        helper.setText(R.id.tv_answer_number, item.getOptionNumber() + ".");
+        helper.setText(R.id.tv_answer_number, item.getOptionNumber() + ".  ");
 
         Glide.with(mContext).load(item.getContent())
                 .into((ImageView) helper.getView(R.id.iv_answer));

@@ -14,7 +14,10 @@ import com.xqlh.heartsmart.api.RetrofitHelper;
 import com.xqlh.heartsmart.api.base.BaseObserval;
 import com.xqlh.heartsmart.base.BaseActivity;
 import com.xqlh.heartsmart.bean.EntityAppraisalIntroduce;
+import com.xqlh.heartsmart.bean.EntityCheckUserInfor;
+import com.xqlh.heartsmart.utils.Constants;
 import com.xqlh.heartsmart.utils.ContextUtils;
+import com.xqlh.heartsmart.utils.SharedPreferencesHelper;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -65,6 +68,9 @@ public class AppraisalIntroduceActivity extends BaseActivity {
     private String psyID;
     private int time;
 
+    SharedPreferencesHelper sp;
+    private String token;
+
     @Override
     public int setContent() {
         return R.layout.activity_appraisal_introduce;
@@ -80,6 +86,8 @@ public class AppraisalIntroduceActivity extends BaseActivity {
         Intent intent = getIntent();
         psyID = intent.getStringExtra("PsyID");//
         Log.i(TAG, "测评的id" + psyID);
+        sp = new SharedPreferencesHelper(ContextUtils.getContext(), Constants.CHECKINFOR);
+        token = sp.getSharedPreference(Constants.LOGIN_TOKEN, "").toString();
         initData(psyID);
     }
 
@@ -121,11 +129,31 @@ public class AppraisalIntroduceActivity extends BaseActivity {
     public void OnClick(View view) {
         switch (view.getId()) {
             case R.id.bt_appraisal:
-                Intent intent = new Intent(AppraisalIntroduceActivity.this, AppraisalActivity.class);
-                intent.putExtra("PsyID", psyID);
-                intent.putExtra("time", time);
-                intent.putExtra("name",tv_name.getText().toString());
-                startActivity(intent);
+                RetrofitHelper.getApiService()
+                        .checkUserInfor(token)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new BaseObserval<EntityCheckUserInfor>() {
+                            @Override
+                            public void onSuccess(final EntityCheckUserInfor response) {
+                                if (response.getCode() == 1) {
+                                    if (response.isResult()) {
+                                        //用户的信息完善
+                                        Intent intent = new Intent(AppraisalIntroduceActivity.this, AppraisalActivity.class);
+                                        intent.putExtra("PsyID", psyID);
+                                        intent.putExtra("time", time);
+                                        intent.putExtra("name", tv_name.getText().toString());
+                                        startActivity(intent);
+                                    } else {
+                                        //完善用户的信息
+                                        startActivity(new Intent(AppraisalIntroduceActivity.this, CompleteUserInforActivity.class));
+                                    }
+                                } else {
+                                    Toasty.warning(ContextUtils.getContext(), "服务器异常", Toast.LENGTH_SHORT, true).show();
+                                }
+                                return;
+                            }
+                        });
                 break;
         }
     }

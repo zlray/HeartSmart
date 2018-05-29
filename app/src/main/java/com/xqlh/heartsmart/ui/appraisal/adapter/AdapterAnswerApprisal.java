@@ -25,7 +25,7 @@ public class AdapterAnswerApprisal extends BaseQuickAdapter<EntityAppraisalAnswe
     @Override
     protected void convert(BaseViewHolder helper, EntityAppraisalAnswer.ResultBean item) {
 
-        helper.setText(R.id.tv_answer_number, item.getOptionNumber() + ".");
+        helper.setText(R.id.tv_answer_number, item.getOptionNumber() + ".  ");
 
         helper.setText(R.id.tv_answer, item.getContent());
     }

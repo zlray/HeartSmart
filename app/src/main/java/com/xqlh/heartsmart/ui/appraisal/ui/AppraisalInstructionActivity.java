@@ -14,7 +14,10 @@ import com.xqlh.heartsmart.api.RetrofitHelper;
 import com.xqlh.heartsmart.api.base.BaseObserval;
 import com.xqlh.heartsmart.base.BaseActivity;
 import com.xqlh.heartsmart.bean.EntityAppraisalIntroduce;
+import com.xqlh.heartsmart.bean.EntityCheckUserInfor;
+import com.xqlh.heartsmart.utils.Constants;
 import com.xqlh.heartsmart.utils.ContextUtils;
+import com.xqlh.heartsmart.utils.SharedPreferencesHelper;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -59,6 +62,8 @@ public class AppraisalInstructionActivity extends BaseActivity {
     private String psyID;//测评id
     private String testRecordId;//测试记录id
     private int time;//测试耗时
+    SharedPreferencesHelper sp;
+    private String token;
 
     @Override
     public int setContent() {
@@ -77,6 +82,8 @@ public class AppraisalInstructionActivity extends BaseActivity {
         testRecordId = intent.getStringExtra("TestRecordId");
 
         Log.i(TAG, "测评的psyID" + psyID);
+        sp = new SharedPreferencesHelper(ContextUtils.getContext(), Constants.CHECKINFOR);
+        token = sp.getSharedPreference(Constants.LOGIN_TOKEN, "").toString();
         initData(psyID);
     }
 
@@ -100,6 +107,7 @@ public class AppraisalInstructionActivity extends BaseActivity {
                             tv_introduce.setText(response.getResult().getTestAbstract());
 
                             tv_topic_number2.setText(response.getResult().getTopicNu() + "题");
+                            time = response.getResult().getTestTime();
                             tv_time.setText(response.getResult().getTestTime() + "分钟");
                         } else {
                             Toasty.warning(ContextUtils.getContext(), "服务器异常", Toast.LENGTH_SHORT, true).show();
@@ -113,12 +121,35 @@ public class AppraisalInstructionActivity extends BaseActivity {
     public void OnClick(View view) {
         switch (view.getId()) {
             case R.id.bt_appraisal:
-                Intent intent = new Intent(AppraisalInstructionActivity.this, AppraisalUndoneActivity.class);
-                intent.putExtra("PsyID", psyID);
-                intent.putExtra("TestRecordId", testRecordId);
-                intent.putExtra("time", time);
-                intent.putExtra("name",tv_name.getText().toString());
-                startActivity(intent);
+                RetrofitHelper.getApiService()
+                        .checkUserInfor(token)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new BaseObserval<EntityCheckUserInfor>() {
+                            @Override
+                            public void onSuccess(final EntityCheckUserInfor response) {
+                                if (response.getCode() == 1) {
+                                    if (response.isResult()) {
+                                        //用户的信息完善
+                                        Intent intent = new Intent(AppraisalInstructionActivity.this, AppraisalUndoneActivity.class);
+                                        intent.putExtra("PsyID", psyID);
+                                        intent.putExtra("TestRecordId", testRecordId);
+                                        intent.putExtra("time", time);
+                                        intent.putExtra("name", tv_name.getText().toString());
+                                        startActivity(intent);
+                                    } else {
+                                        //完善用户的信息
+                                        startActivity(new Intent(AppraisalInstructionActivity.this, CompleteUserInforActivity.class));
+                                    }
+
+                                } else {
+                                    Toasty.warning(ContextUtils.getContext(), "服务器异常", Toast.LENGTH_SHORT, true).show();
+                                }
+                                return;
+                            }
+                        });
+
+
                 break;
         }
     }

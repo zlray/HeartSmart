@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll_answer_one"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginTop="20dp"
+    android:layout_height="100dp"
     android:background="?android:attr/selectableItemBackground"
     android:clickable="true"
     android:focusable="true"
@@ -10,17 +10,17 @@
 
     <TextView
         android:id="@+id/tv_answer_number"
-        android:layout_width="50dp"
+        android:layout_width="wrap_content"
         android:layout_height="20dp"
         android:layout_gravity="center"
         android:gravity="center"
-        android:text="A."
-        android:textSize="14sp" />
+        android:text="A.  "
+        android:textSize="15sp" />
 
     <ImageView
         android:id="@+id/iv_answer"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:layout_gravity="center"
         android:scaleType="centerCrop" />
 </LinearLayout>

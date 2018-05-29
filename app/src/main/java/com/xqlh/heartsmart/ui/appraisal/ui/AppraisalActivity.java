@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -57,6 +58,12 @@ public class AppraisalActivity extends BaseActivity {
     TextView tv_time3;
     @BindView(R.id.tv_name)
     TextView tv_name;
+    @BindView(R.id.pb_bar)
+    ProgressBar pb_bar;
+    @BindView(R.id.tv_number1)
+    TextView tv_number1;
+    @BindView(R.id.tv_number2)
+    TextView tv_number2;
 
 
     private String psyID;
@@ -109,9 +116,12 @@ public class AppraisalActivity extends BaseActivity {
 
         token = sp.getSharedPreference(Constants.LOGIN_TOKEN, "").toString();
 
+        pb_bar.setProgress(1);
+
         initTopic(psyID);
 
         handler.postDelayed(runnable, 0);
+
     }
 
     Handler handler = new Handler();
@@ -170,8 +180,12 @@ public class AppraisalActivity extends BaseActivity {
                         if (response.getCode() == 1) {
 
                             lisTopic = response.getResult();
+                            //设置bar的最大值
+                            pb_bar.setMax(lisTopic.size());
+                            tv_number2.setText("/" + lisTopic.size() + "题");
 
                             if (topicIndex < lisTopic.size()) {
+                                tv_number1.setText(topicIndex + 1 + "");
 
                                 Log.i(TAG, "题目id: " + lisTopic.get(topicIndex).getID());
 
@@ -184,7 +198,6 @@ public class AppraisalActivity extends BaseActivity {
                                 Log.i(TAG, "str" + topic);
 
                                 if (topic.contains("|".toString())) {
-
                                     tv_topic.setText(topic.substring(0, topic.indexOf("|")));
                                     Log.i(TAG, "之前的" + topic.substring(0, topic.indexOf("|")));
 
@@ -196,7 +209,6 @@ public class AppraisalActivity extends BaseActivity {
                                     //题目为图片
                                     if (topic.startsWith("http")) {
                                         tv_topic.setVisibility(View.GONE);
-
                                         iv_topic.setVisibility(View.VISIBLE);
                                         Glide.with(mContext).load(topic).into(iv_topic);
                                     } else {
@@ -205,11 +217,8 @@ public class AppraisalActivity extends BaseActivity {
                                         tv_topic.setText(topic);
                                     }
                                 }
-
                                 topicid = lisTopic.get(topicIndex).getID();//获取题目的id
-
                                 initAnswer(topicid);
-
                             } else {
                                 runOnUiThread(new Runnable() {
                                     @Override
@@ -253,12 +262,10 @@ public class AppraisalActivity extends BaseActivity {
                                 adapterAnswerApprisalOne.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
                                     @Override
                                     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-
                                         topicIndex++;
-
+                                        pb_bar.incrementProgressBy(1);
                                         //提交答案
                                         reportAnswer(testRecordId, response.getResult().get(position).getOptionNumber(), topicid);
-
                                         listAnswer.add(response.getResult().get(position).getOptionNumber() + "");
                                     }
                                 });
@@ -277,9 +284,8 @@ public class AppraisalActivity extends BaseActivity {
                                 adapterAnswerApprisal.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
                                     @Override
                                     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-
                                         topicIndex++;
-
+                                        pb_bar.incrementProgressBy(1);
                                         //提交答案
                                         reportAnswer(testRecordId, response.getResult().get(position).getOptionNumber(), topicid);
 
