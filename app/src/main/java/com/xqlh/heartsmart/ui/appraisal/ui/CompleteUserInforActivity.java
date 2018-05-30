@@ -21,7 +21,6 @@ import com.xqlh.heartsmart.api.RetrofitHelper;
 import com.xqlh.heartsmart.api.base.BaseObserval;
 import com.xqlh.heartsmart.base.BaseActivity;
 import com.xqlh.heartsmart.bean.EntityUpdateUserInfor;
-import com.xqlh.heartsmart.ui.mine.ui.MineActivity;
 import com.xqlh.heartsmart.utils.Constants;
 import com.xqlh.heartsmart.utils.ContextUtils;
 import com.xqlh.heartsmart.utils.ProgressUtils;
@@ -139,7 +138,7 @@ public class CompleteUserInforActivity extends BaseActivity {
                                 //发送eventbus
                                 EventBus.getDefault().post(new EventUpdateUserInfor("updateUserInfor"));
                                 finish();
-                                Intent intent = new Intent(CompleteUserInforActivity.this, MineActivity.class);
+                                Intent intent = new Intent(CompleteUserInforActivity.this, AppraisalActivity.class);
                                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                 startActivity(intent);
                             }
@@ -163,6 +162,7 @@ public class CompleteUserInforActivity extends BaseActivity {
 
         @Override
         public void afterTextChanged(Editable s) {
+            //
             String name = et_name.getText().toString().trim();
             String gender = tv_gender.getText().toString().trim();
             String birth = tv_birth.getText().toString().trim();

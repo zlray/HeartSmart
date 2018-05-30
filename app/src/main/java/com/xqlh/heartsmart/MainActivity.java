@@ -3,8 +3,10 @@ package com.xqlh.heartsmart;
 import android.Manifest;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.view.KeyEvent;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Toast;
 
 import com.vondear.rxtools.RxPermissionsTool;
 import com.xqlh.heartsmart.adapter.FragmentVpAdapter;
@@ -14,10 +16,12 @@ import com.xqlh.heartsmart.ui.equipment.ui.EquipmentFragment;
 import com.xqlh.heartsmart.ui.home.ui.HomeFragment;
 import com.xqlh.heartsmart.ui.mine.ui.MineFragment;
 import com.xqlh.heartsmart.ui.product.ui.ProductFragment;
+import com.xqlh.heartsmart.utils.ContextUtils;
 
 import java.util.ArrayList;
 
 import butterknife.BindView;
+import es.dmoral.toasty.Toasty;
 
 public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedChangeListener {
 
@@ -140,6 +144,39 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 
         //ViewPager的页面改变监听
         mViewPager.addOnPageChangeListener(new MyOnPageChangeListener());
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        //双击退出
+        doubleColickExit(keyCode, event);
+
+        return true;
+    }
+
+    /**
+     * @description 双击退出函数
+     */
+    private void doubleColickExit(int keyCode, KeyEvent event) {
+        //当用户第一次点击返回钮时
+        if (keyCode == KeyEvent.KEYCODE_BACK && is_exit == false) {
+            is_exit = true;//设置记录标志为true
+            l_firstClickTime = System.currentTimeMillis();//获得第一次点击的时间戳
+            //显示再次点击退出提示
+            Toasty.custom(ContextUtils.getContext(), "双击退出",getResources().getDrawable(R.drawable.beat), Toast.LENGTH_SHORT, false).show();
+        }
+        //用户第二次点击返回钮
+        else if (keyCode == KeyEvent.KEYCODE_BACK && is_exit == true) {
+            l_secondClickTime = System.currentTimeMillis();//记录下第二次点击退出的时间
+            //时间差在两秒之内，退出程序
+            if (l_secondClickTime - l_firstClickTime < 2000) {
+                finish();
+            } else {
+                is_exit = false;//重置记录退出时间标志
+                doubleColickExit(keyCode, event);//超出2000毫秒时，重新开始本函数逻辑
+            }
+        }
+
     }
 
 

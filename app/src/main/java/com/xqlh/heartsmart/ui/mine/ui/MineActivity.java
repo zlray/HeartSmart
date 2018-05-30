@@ -120,6 +120,7 @@ public class MineActivity extends BaseActivity {
         }
     }
 
+    //获取用户信息
     public void getUserInfor() {
         RetrofitHelper.getApiService()
                 .getUserInfor(sp_login_token.getSharedPreference(Constants.LOGIN_TOKEN, "").toString().trim())
@@ -133,7 +134,7 @@ public class MineActivity extends BaseActivity {
                         if (response.getCode() == 1) {
                             if (!TextUtils.isEmpty(response.getResult().getName())) {
                                 mine_tv_nickname.setText(response.getResult().getName());
-                            }else {
+                            } else {
                                 mine_tv_nickname.setText("未设置");
                             }
                             if (!TextUtils.isEmpty(response.getResult().getHeadimgurl())) {
@@ -151,12 +152,12 @@ public class MineActivity extends BaseActivity {
                             }
                             if (!TextUtils.isEmpty(response.getResult().getBirthDate())) {
                                 mine_tv_birthday.setText(response.getResult().getBirthDate());
-                            }else{
+                            } else {
                                 mine_tv_birthday.setText("未设置");
                             }
                             if (!TextUtils.isEmpty(response.getResult().getTelephone())) {
                                 mine_tv_phone.setText(CommonUtil.hidePhone(response.getResult().getTelephone()));
-                            }else {
+                            } else {
                                 mine_tv_phone.setText("未绑定手机号");
                             }
 

@@ -19,6 +19,7 @@
 
         <com.elyeproj.loaderviewlibrary.LoaderImageView
             android:id="@+id/iv_article_titlepic"
+            android:scaleType="centerInside"
             android:layout_width="100dp"
             android:layout_height="100dp" />
     </LinearLayout>

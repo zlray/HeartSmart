@@ -262,6 +262,7 @@ public class AdapterHome extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private void setNewest(NewestHolder newestHolder, final int position) {
         newestHolder.tv_article_title.setText(listNewest.get(position - 4).getTitle());
         newestHolder.tv_article_type.setText(listNewest.get(position - 4).getArticleTypeStr());
+        newestHolder.tv_article_introduction.setText(listNewest.get(position-4).getIntroduction());
         newestHolder.tv_article_reading_times.setText(listNewest.get(position - 4).getShowTimes() + "人阅读");
         newestHolder.tv_article_date.setText(Constants.getYYD(listNewest.get(position - 4).getCreateTime()));
 
@@ -382,8 +383,9 @@ public class AdapterHome extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
      * 最新的
      */
     public static class NewestHolder extends RecyclerView.ViewHolder {
-        TextView tv_article_title;
-        TextView tv_article_type;
+        TextView tv_article_title;//标题
+        TextView tv_article_introduction;
+        TextView tv_article_type; //类型
         TextView tv_article_reading_times;
         TextView tv_article_date;
         ImageView iv_article_titlepic;
@@ -395,7 +397,7 @@ public class AdapterHome extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             tv_article_type = (TextView) itemView.findViewById(R.id.tv_article_type);
             tv_article_reading_times = (TextView) itemView.findViewById(R.id.tv_article_reading_times);
             tv_article_date = (TextView) itemView.findViewById(R.id.tv_article_date);
-
+            tv_article_introduction = itemView.findViewById(R.id.tv_article_introduction);
             iv_article_titlepic = (ImageView) itemView.findViewById(R.id.iv_article_titlepic);
             ll_newest_content = (LinearLayout) itemView.findViewById(R.id.ll_newest_content);
 

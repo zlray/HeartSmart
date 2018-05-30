@@ -3,6 +3,9 @@ package com.xqlh.heartsmart.utils;
 import android.app.Activity;
 import android.support.annotation.NonNull;
 
+import com.xqlh.heartsmart.R;
+import com.xqlh.heartsmart.widget.LoadingDialog;
+
 import java.lang.ref.WeakReference;
 
 import io.reactivex.Observable;
@@ -19,10 +22,10 @@ import io.reactivex.functions.Consumer;
 public class ProgressUtils {
     public static <T> ObservableTransformer<T, T> applyProgressBar(
             @NonNull final Activity activity, String msg) {
-        final WeakReference<Activity> activityWeakReference = new WeakReference<>(activity);
-        final DialogUtils dialogUtils = new DialogUtils();
 
-        dialogUtils.showProgress(activityWeakReference.get(),"加载中...");
+        final WeakReference<Activity> activityWeakReference = new WeakReference<>(activity);
+        final LoadingDialog loadingDialog = new LoadingDialog(activityWeakReference.get(), R.layout.view_loading);
+        loadingDialog.show();
 
         return new ObservableTransformer<T, T>() {
             @Override
@@ -38,7 +41,7 @@ public class ProgressUtils {
                         Activity context;
                         if ((context = activityWeakReference.get()) != null
                                 && !context.isFinishing()) {
-                            dialogUtils.dismissProgress();
+                            loadingDialog.dismiss();
                         }
                     }
                 }).doOnSubscribe(new Consumer<Disposable>() {

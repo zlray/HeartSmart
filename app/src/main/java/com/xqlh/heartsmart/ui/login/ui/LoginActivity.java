@@ -260,7 +260,6 @@ public class LoginActivity extends BaseActivity {
                                 Log.i(TAG, "存储登录的Token" + response.getResult());
                                 sp_login_token.put(Constants.LOGIN_TOKEN, response.getResult());
                                 sp_login_token.put(Constants.IS_LOGIN,true);
-                                finish();
                                 startActivity(new Intent(LoginActivity.this, MainActivity.class));
                             }
                         } else {

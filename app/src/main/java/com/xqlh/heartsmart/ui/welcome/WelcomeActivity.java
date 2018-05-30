@@ -1,5 +1,9 @@
 package com.xqlh.heartsmart.ui.welcome;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
 import android.content.Intent;
 import android.text.TextUtils;
 import android.widget.ImageView;
@@ -38,6 +42,7 @@ public class WelcomeActivity extends BaseActivity {
     private boolean isFirst;
     private boolean isLogin;
     SharedPreferencesHelper sp;
+    ValueAnimator alpha;
 
     @Override
     public int setContent() {
@@ -97,20 +102,41 @@ public class WelcomeActivity extends BaseActivity {
                         if (mCompositeDisposable != null) {
                             mCompositeDisposable.dispose();
                         }
-                        //如果登录过了
-                        if (isLogin && !TextUtils.isEmpty(sp.getSharedPreference(Constants.LOGIN_TOKEN, "").toString().trim())) {
-                            Intent intent = new Intent(WelcomeActivity.this, MainActivity.class);
-                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                            startActivity(intent);
-
-                        } else {
-                            Intent intent1 = new Intent(WelcomeActivity.this, LoginActivity.class);
-                            intent1.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                            startActivity(intent1);
-                        }
+                        initAnima();
                     }
                 })
         );
+    }
+
+    protected void initAnima() {
+        //淡入动画的设置
+        //Fade animation sets
+        alpha = ObjectAnimator.ofFloat(welcome_iv, "alpha", 1.0f, 0.5f,0.1f);
+        //设置动画的持续时间
+        //Set the Duration of the Animation
+        alpha.setDuration(2000);
+        //动画设置监听
+        //Animation set upListener
+        alpha.addListener(new AnimatorListenerAdapter() {
+            //跳转到主页面
+            //jump to main page
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                //如果登录过了
+                if (isLogin && !TextUtils.isEmpty(sp.getSharedPreference(Constants.LOGIN_TOKEN, "").toString().trim())) {
+                    Intent intent = new Intent(WelcomeActivity.this, MainActivity.class);
+                    startActivity(intent);
+
+                } else {
+                    Intent intent1 = new Intent(WelcomeActivity.this, LoginActivity.class);
+                    startActivity(intent1);
+                }
+                finish();
+            }
+        });
+        //启动动画
+        //Start Animation
+        alpha.start();
     }
 
     public void getWelcome() {

@@ -66,8 +66,6 @@ public class CollectActivity extends BaseActivity {
     @Override
     public void init() {
         rv_collect.setLayoutManager(new LinearLayoutManager(this));
-
-
         initTtileBar();
         sp = new SharedPreferencesHelper(ContextUtils.getContext(), Constants.CHECKINFOR);
         token = sp.getSharedPreference(Constants.LOGIN_TOKEN, "").toString();
