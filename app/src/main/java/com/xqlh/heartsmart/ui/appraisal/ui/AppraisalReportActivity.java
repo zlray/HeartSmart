@@ -13,11 +13,13 @@ import com.xqlh.heartsmart.api.base.BaseObserval;
 import com.xqlh.heartsmart.base.BaseActivity;
 import com.xqlh.heartsmart.bean.EntityAppraisalReportID;
 import com.xqlh.heartsmart.bean.EntityReportBasics;
+import com.xqlh.heartsmart.bean.EntityReportDimension;
 import com.xqlh.heartsmart.utils.Constants;
 import com.xqlh.heartsmart.utils.ContextUtils;
 import com.xqlh.heartsmart.utils.ProgressUtils;
 import com.xqlh.heartsmart.utils.SharedPreferencesHelper;
 import com.xqlh.heartsmart.widget.TitleBar;
+import com.xqlh.heartsmart.widget.netView;
 
 import butterknife.BindView;
 import es.dmoral.toasty.Toasty;
@@ -59,6 +61,9 @@ public class AppraisalReportActivity extends BaseActivity {
 
     @BindView(R.id.titlebar)
     TitleBar titlebar;
+
+    @BindView(R.id.nv_dimension)
+    netView nv_dimension;
 
     private String testRecordId;
     private SharedPreferencesHelper sp;
@@ -129,11 +134,10 @@ public class AppraisalReportActivity extends BaseActivity {
                     public void onSuccess(final EntityAppraisalReportID response) {
                         if (response.getCode() == 1) {
                             reportId = response.getResultMsg();
-
                             Log.i(TAG, "测评报告ID: " + reportId);
 
-                            initData(reportId);
-
+                            initReportBase(reportId);
+                            initReportDimension(reportId);
                         } else {
                             Toasty.warning(ContextUtils.getContext(), "服务器异常", Toast.LENGTH_SHORT, true).show();
                         }
@@ -142,9 +146,9 @@ public class AppraisalReportActivity extends BaseActivity {
     }
 
     //获得报告的信息
-    public void initData(String id) {
+    public void initReportBase(String reportId) {
         RetrofitHelper.getApiService()
-                .getReportBasic(token, id)
+                .getReportBasic(token, reportId)
                 .compose(ProgressUtils.<EntityReportBasics>applyProgressBar(this))
                 .compose(this.<EntityReportBasics>bindToLifecycle())
                 .subscribeOn(Schedulers.io())
@@ -161,19 +165,59 @@ public class AppraisalReportActivity extends BaseActivity {
                                 tv_time.setText(response.getResult().getPsyReportDate());
                                 tv_total_score.setText(response.getResult().getTotalScore() + "");
                                 tv_level.setText(response.getResult().getTotalLevelName());
+                                if (response.getResult().getAnalys().size() > 0) {
+                                    for (int i = 0; i < response.getResult().getAnalys().size(); i++) {
+                                        analys = response.getResult().getAnalys() + "";
+                                    }
+                                    tv_analys.setText(analys);
+                                } else {
+                                    tv_analys.setVisibility(View.GONE);
+                                }
+                                if (response.getResult().getAdvice().size() > 0) {
+                                    for (int j = 0; j < response.getResult().getAdvice().size(); j++) {
+                                        advice = response.getResult().getAdvice() + "";
+                                    }
+                                    tv_advice.setText(advice);
+                                } else {
+                                    tv_advice.setVisibility(View.GONE);
+                                }
+                                if (response.getResult().getAdvice().size() > 0) {
+                                    for (int j = 0; j < response.getResult().getComment().size(); j++) {
+                                        comment = response.getResult().getComment() + "";
+                                    }
+                                    tv_comment.setText(comment);
+                                } else {
+                                    tv_comment.setVisibility(View.GONE);
+                                }
+                            }
+                        } else {
+                            Toasty.warning(ContextUtils.getContext(), "服务器异常", Toast.LENGTH_SHORT, true).show();
+                        }
+                    }
+                });
+    }
 
-                                for (int i = 0; i < response.getResult().getAnalys().size(); i++) {
-                                    analys = response.getResult().getAnalys() + "";
+    //报告维度信息
+    public void initReportDimension(final String reportId) {
+        RetrofitHelper.getApiService()
+                .getReportDimension(token, reportId)
+                .compose(ProgressUtils.<EntityReportDimension>applyProgressBar(this))
+                .compose(this.<EntityReportDimension>bindToLifecycle())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseObserval<EntityReportDimension>() {
+                    @Override
+                    public void onSuccess(final EntityReportDimension response) {
+                        if (response.getCode() == 1) {
+                            if (response.getResult() != null) {
+                                String[] titles = new String[response.getResult().size()];
+                                double[] percent = new double[response.getResult().size()];
+                                for (int i = 0; i < response.getResult().size(); i++) {
+                                    titles[i] = response.getResult().get(i).getDimensionName();
+                                    percent[i] = response.getResult().get(i).getScore();
                                 }
-                                tv_analys.setText(analys);
-                                for (int j = 0; j < response.getResult().getAdvice().size(); j++) {
-                                    advice = response.getResult().getAdvice() + "";
-                                }
-                                tv_advice.setText(advice);
-                                for (int j = 0; j < response.getResult().getComment().size(); j++) {
-                                    comment = response.getResult().getComment() + "";
-                                }
-                                tv_comment.setText(comment);
+                                nv_dimension.setTitles(titles);
+                                nv_dimension.setPercent(percent);
                             }
                         } else {
                             Toasty.warning(ContextUtils.getContext(), "服务器异常", Toast.LENGTH_SHORT, true).show();

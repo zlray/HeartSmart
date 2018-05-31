@@ -82,6 +82,7 @@ public class AppraisalActivity extends BaseActivity {
     SharedPreferencesHelper sp;
     RxDialogSureCancel rxDialogSureCancel;//提示弹窗
     private int time;
+    int a = 0;
 
     @Override
     public int setContent() {
@@ -184,7 +185,7 @@ public class AppraisalActivity extends BaseActivity {
                             pb_bar.setMax(lisTopic.size());
                             tv_number2.setText("/" + lisTopic.size() + "题");
 
-                            if (topicIndex < lisTopic.size()) {
+                            if (topicIndex <= lisTopic.size()) {
                                 tv_number1.setText(topicIndex + 1 + "");
 
                                 Log.i(TAG, "题目id: " + lisTopic.get(topicIndex).getID());
@@ -314,6 +315,8 @@ public class AppraisalActivity extends BaseActivity {
 //    topicID	string	题目ID
 
     public void reportAnswer(String ptestUserid, String optionNumber, String topicID) {
+        a++;
+        Log.i(TAG, "reportAnswer:答案数" + a);
         RetrofitHelper.getApiService()
                 .reportAnswer(token, ptestUserid, optionNumber, topicID)
                 .subscribeOn(Schedulers.io())

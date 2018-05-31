@@ -91,11 +91,11 @@ public class EntityReportBasics {
         private Object GroupName;
         private Object PsyTime;
         private String PsyReportDate;
-        private int TotalScore;
-        private int OriginalScore;
-        private int AverageScore;
-        private int StandardScore;
-        private int StandardDeviation;
+        private double TotalScore;
+        private double OriginalScore;
+        private double AverageScore;
+        private double StandardScore;
+        private double StandardDeviation;
         private String TotalLevelName;
         private String PsychtestPic;
         private List<?> Analys;
@@ -198,39 +198,39 @@ public class EntityReportBasics {
             this.PsyReportDate = PsyReportDate;
         }
 
-        public int getTotalScore() {
+        public double getTotalScore() {
             return TotalScore;
         }
 
-        public void setTotalScore(int TotalScore) {
+        public void setTotalScore(double TotalScore) {
             this.TotalScore = TotalScore;
         }
 
-        public int getOriginalScore() {
+        public double getOriginalScore() {
             return OriginalScore;
         }
 
-        public void setOriginalScore(int OriginalScore) {
+        public void setOriginalScore(double OriginalScore) {
             this.OriginalScore = OriginalScore;
         }
 
-        public int getAverageScore() {
+        public double getAverageScore() {
             return AverageScore;
         }
 
-        public void setAverageScore(int AverageScore) {
+        public void setAverageScore(double AverageScore) {
             this.AverageScore = AverageScore;
         }
 
-        public int getStandardScore() {
+        public double getStandardScore() {
             return StandardScore;
         }
 
-        public void setStandardScore(int StandardScore) {
+        public void setStandardScore(double StandardScore) {
             this.StandardScore = StandardScore;
         }
 
-        public int getStandardDeviation() {
+        public double getStandardDeviation() {
             return StandardDeviation;
         }
 

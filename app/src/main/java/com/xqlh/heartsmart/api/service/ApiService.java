@@ -23,6 +23,7 @@ import com.xqlh.heartsmart.bean.EntityProductCategory;
 import com.xqlh.heartsmart.bean.EntityProductDetail;
 import com.xqlh.heartsmart.bean.EntityReportAnswer;
 import com.xqlh.heartsmart.bean.EntityReportBasics;
+import com.xqlh.heartsmart.bean.EntityReportDimension;
 import com.xqlh.heartsmart.bean.EntitySearchHistory;
 import com.xqlh.heartsmart.bean.EntityUndoneAppraisal;
 import com.xqlh.heartsmart.bean.EntityUpdatePassword;
@@ -202,6 +203,12 @@ public interface ApiService {
     @GET("api/psychtest/basereport")
     Observable<EntityReportBasics> getReportBasic(@Header("Authorization") String Authorization,
                                                   @Query("id") String id);
+
+    //获得报告的维度信息
+    @GET("api/psychtest/dresultlist")
+    Observable<EntityReportDimension> getReportDimension(@Header("Authorization") String Authorization,
+                                                         @Query("id") String id);
+
 
     //获得推荐测评
     @GET("api/psychtest/hotpsy")

@@ -26,7 +26,6 @@ public class ProgressUtils {
         final WeakReference<Activity> activityWeakReference = new WeakReference<>(activity);
         final LoadingDialog loadingDialog = new LoadingDialog(activityWeakReference.get(), R.layout.view_loading);
         loadingDialog.show();
-
         return new ObservableTransformer<T, T>() {
             @Override
             public ObservableSource<T> apply(Observable<T> upstream) {
