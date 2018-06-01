@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.util.Log;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,6 +21,8 @@ import com.xqlh.heartsmart.utils.ProgressUtils;
 import com.xqlh.heartsmart.utils.SharedPreferencesHelper;
 import com.xqlh.heartsmart.widget.TitleBar;
 import com.xqlh.heartsmart.widget.netView;
+
+import java.util.Arrays;
 
 import butterknife.BindView;
 import es.dmoral.toasty.Toasty;
@@ -62,6 +65,21 @@ public class AppraisalReportActivity extends BaseActivity {
     @BindView(R.id.titlebar)
     TitleBar titlebar;
 
+    @BindView(R.id.ll_score)
+    LinearLayout ll_score;
+
+    @BindView(R.id.ll_level)
+    LinearLayout ll_level;
+
+    @BindView(R.id.ll_analys)
+    LinearLayout ll_analys;
+
+    @BindView(R.id.ll_advice)
+    LinearLayout ll_advice;
+
+    @BindView(R.id.ll_comment)
+    LinearLayout ll_comment;
+
     @BindView(R.id.nv_dimension)
     netView nv_dimension;
 
@@ -69,7 +87,8 @@ public class AppraisalReportActivity extends BaseActivity {
     private SharedPreferencesHelper sp;
     private String token;
     private String reportId;
-
+    private String[] titles = new String[0];
+    private double[] percent = new double[0];
 
     @Override
     public int setContent() {
@@ -86,12 +105,16 @@ public class AppraisalReportActivity extends BaseActivity {
         Intent intent = getIntent();
 
         testRecordId = intent.getStringExtra("TestRecordId");
+        Log.i(TAG, "报告界面的 testRecordId    " + testRecordId);
 
         sp = new SharedPreferencesHelper(ContextUtils.getContext(), Constants.CHECKINFOR);
 
         token = sp.getSharedPreference(Constants.LOGIN_TOKEN, "").toString();
+        Log.i(TAG, "报告界面的 token    " + token);
+
 
         getReportID(token, testRecordId);
+
 
         initTtileBar();
 
@@ -134,7 +157,7 @@ public class AppraisalReportActivity extends BaseActivity {
                     public void onSuccess(final EntityAppraisalReportID response) {
                         if (response.getCode() == 1) {
                             reportId = response.getResultMsg();
-                            Log.i(TAG, "测评报告ID: " + reportId);
+                            Log.i(TAG, "测评报告ID:    " + reportId);
 
                             initReportBase(reportId);
                             initReportDimension(reportId);
@@ -163,31 +186,39 @@ public class AppraisalReportActivity extends BaseActivity {
                             if (response.getResult() != null) {
                                 tv_name.setText(response.getResult().getUserName());
                                 tv_time.setText(response.getResult().getPsyReportDate());
-                                tv_total_score.setText(response.getResult().getTotalScore() + "");
-                                tv_level.setText(response.getResult().getTotalLevelName());
-                                if (response.getResult().getAnalys().size() > 0) {
+                                if (response.getResult().getTotalScore() > 0.0) {
+                                    tv_total_score.setText(response.getResult().getTotalScore() + "");
+                                } else {
+                                    ll_score.setVisibility(View.GONE);
+                                }
+                                if (response.getResult().getTotalLevelName() != null) {
+                                    tv_level.setText(response.getResult().getTotalLevelName());
+                                } else {
+                                    ll_level.setVisibility(View.GONE);
+                                }
+                                if (response.getResult().getAnalys() != null) {
                                     for (int i = 0; i < response.getResult().getAnalys().size(); i++) {
                                         analys = response.getResult().getAnalys() + "";
                                     }
                                     tv_analys.setText(analys);
                                 } else {
-                                    tv_analys.setVisibility(View.GONE);
+                                    ll_analys.setVisibility(View.GONE);
                                 }
-                                if (response.getResult().getAdvice().size() > 0) {
+                                if (response.getResult().getAdvice() != null) {
                                     for (int j = 0; j < response.getResult().getAdvice().size(); j++) {
                                         advice = response.getResult().getAdvice() + "";
                                     }
                                     tv_advice.setText(advice);
                                 } else {
-                                    tv_advice.setVisibility(View.GONE);
+                                    ll_advice.setVisibility(View.GONE);
                                 }
-                                if (response.getResult().getAdvice().size() > 0) {
+                                if (response.getResult().getComment() != null) {
                                     for (int j = 0; j < response.getResult().getComment().size(); j++) {
                                         comment = response.getResult().getComment() + "";
                                     }
                                     tv_comment.setText(comment);
                                 } else {
-                                    tv_comment.setVisibility(View.GONE);
+                                    ll_comment.setVisibility(View.GONE);
                                 }
                             }
                         } else {
@@ -209,15 +240,21 @@ public class AppraisalReportActivity extends BaseActivity {
                     @Override
                     public void onSuccess(final EntityReportDimension response) {
                         if (response.getCode() == 1) {
-                            if (response.getResult() != null) {
-                                String[] titles = new String[response.getResult().size()];
-                                double[] percent = new double[response.getResult().size()];
+                            if (response.getResult().size() > 0) {
+                                titles = new String[response.getResult().size()];
+                                percent = new double[response.getResult().size()];
                                 for (int i = 0; i < response.getResult().size(); i++) {
                                     titles[i] = response.getResult().get(i).getDimensionName();
                                     percent[i] = response.getResult().get(i).getScore();
                                 }
+                                Log.i(TAG, "蜘蛛网" + titles[0].toString());
+                                Log.i(TAG, "onSuccess: "+ Arrays.toString(titles));
+                                Log.i(TAG, "onSuccess: "+ Arrays.toString(percent));
+
                                 nv_dimension.setTitles(titles);
                                 nv_dimension.setPercent(percent);
+                            } else {
+                                nv_dimension.setVisibility(View.GONE);
                             }
                         } else {
                             Toasty.warning(ContextUtils.getContext(), "服务器异常", Toast.LENGTH_SHORT, true).show();

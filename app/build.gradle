@@ -82,4 +82,5 @@ dependencies {
     compile 'com.yanzhenjie:recyclerview-swipe:1.1.4'
     compile 'com.carson_ho:SearchLayout:1.0.1'
     compile 'com.github.anzaizai:EasySwipeMenuLayout:1.1.2'
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.0.3'
 }

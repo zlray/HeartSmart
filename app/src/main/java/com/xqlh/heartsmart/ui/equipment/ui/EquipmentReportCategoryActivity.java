@@ -66,6 +66,7 @@ public class EquipmentReportCategoryActivity extends BaseActivity {
 
     @Override
     public void init() {
+
         Intent intent = getIntent();
         id = intent.getStringExtra("id");
         title = intent.getStringExtra("title");
@@ -81,7 +82,7 @@ public class EquipmentReportCategoryActivity extends BaseActivity {
         initTtileBar();
         initRv();
 
-         initData(token, id, page, pageSize);
+        initData(token, id, page, pageSize);
 
         initRefresh(id);
     }
@@ -155,6 +156,7 @@ public class EquipmentReportCategoryActivity extends BaseActivity {
         });
     }
 
+
     public void getRefereshNewest(String token, final String id, final int page, final int pageSize) {
         RetrofitHelper.getApiService()
                 .getReport(token, id, page, pageSize)
@@ -164,8 +166,12 @@ public class EquipmentReportCategoryActivity extends BaseActivity {
                     @Override
                     public void onSuccess(final EntityEquipmentReport response) {
                         if (response.getCode() == 1) {
-                            adapterEquipmentReport.addEquipmentReportList(response.getResult());
-                            adapterEquipmentReport.notifyDataSetChanged();
+                            if (response.getResult().size() > 0) {
+                                if (adapterEquipmentReport != null) {
+                                    adapterEquipmentReport.addEquipmentReportList(response.getResult());
+                                    adapterEquipmentReport.notifyDataSetChanged();
+                                }
+                            }
                         } else {
                             Toasty.warning(ContextUtils.getContext(), "服务器异常", Toast.LENGTH_SHORT, true).show();
                         }

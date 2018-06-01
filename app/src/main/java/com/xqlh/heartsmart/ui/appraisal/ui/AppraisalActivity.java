@@ -83,6 +83,8 @@ public class AppraisalActivity extends BaseActivity {
     RxDialogSureCancel rxDialogSureCancel;//提示弹窗
     private int time;
     int a = 0;
+    int click;
+    boolean onClick = true;
 
     @Override
     public int setContent() {
@@ -185,7 +187,7 @@ public class AppraisalActivity extends BaseActivity {
                             pb_bar.setMax(lisTopic.size());
                             tv_number2.setText("/" + lisTopic.size() + "题");
 
-                            if (topicIndex <= lisTopic.size()) {
+                            if (topicIndex < lisTopic.size()) {
                                 tv_number1.setText(topicIndex + 1 + "");
 
                                 Log.i(TAG, "题目id: " + lisTopic.get(topicIndex).getID());
@@ -218,8 +220,11 @@ public class AppraisalActivity extends BaseActivity {
                                         tv_topic.setText(topic);
                                     }
                                 }
+
                                 topicid = lisTopic.get(topicIndex).getID();//获取题目的id
+
                                 initAnswer(topicid);
+
                             } else {
                                 runOnUiThread(new Runnable() {
                                     @Override
@@ -251,6 +256,7 @@ public class AppraisalActivity extends BaseActivity {
                         if (response.getCode() == 1) {
                             //获得答案，判断答案的
                             String answer = response.getResult().get(0).getContent();
+                            Log.i(TAG, "答案" + answer);
 
                             if (answer.startsWith("http")) {
                                 adapterAnswerApprisalOne
@@ -260,16 +266,22 @@ public class AppraisalActivity extends BaseActivity {
                                         response.getResult());
 
                                 rv_appraisal_answer.setAdapter(adapterAnswerApprisalOne);
-                                adapterAnswerApprisalOne.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-                                    @Override
-                                    public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                                        topicIndex++;
-                                        pb_bar.incrementProgressBy(1);
-                                        //提交答案
-                                        reportAnswer(testRecordId, response.getResult().get(position).getOptionNumber(), topicid);
-                                        listAnswer.add(response.getResult().get(position).getOptionNumber() + "");
-                                    }
-                                });
+                                if (onClick) {
+                                    adapterAnswerApprisalOne.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+                                        @Override
+                                        public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                                            onClick = false;
+                                            click++;
+                                            Log.i(TAG, "onItemClick:点击" + click);
+                                            topicIndex++;
+                                            pb_bar.incrementProgressBy(1);
+                                            //提交答案
+                                            reportAnswer(testRecordId, response.getResult().get(position).getOptionNumber(), topicid);
+                                            listAnswer.add(response.getResult().get(position).getOptionNumber() + "");
+                                        }
+                                    });
+                                }
+
                                 adapterAnswerApprisalOne.openLoadAnimation();
 
                             } else {
@@ -281,20 +293,25 @@ public class AppraisalActivity extends BaseActivity {
                                 adapterAnswerApprisal.openLoadAnimation();
 
                                 rv_appraisal_answer.setAdapter(adapterAnswerApprisal);
+                                if (onClick) {
+                                    adapterAnswerApprisal.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+                                        @Override
+                                        public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                                            onClick = false;
+                                            click++;
+                                            Log.i(TAG, "onItemClick:点击" + click);
 
-                                adapterAnswerApprisal.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-                                    @Override
-                                    public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                                        topicIndex++;
-                                        pb_bar.incrementProgressBy(1);
-                                        //提交答案
-                                        reportAnswer(testRecordId, response.getResult().get(position).getOptionNumber(), topicid);
+                                            topicIndex++;
+                                            //进度条加一
+                                            pb_bar.incrementProgressBy(1);
+                                            //提交答案
+                                            reportAnswer(testRecordId, response.getResult().get(position).getOptionNumber(), topicid);
 
-                                        listAnswer.add(response.getResult().get(position).getOptionNumber() + "");
-                                    }
-                                });
+                                            listAnswer.add(response.getResult().get(position).getOptionNumber() + "");
+                                        }
+                                    });
+                                }
                                 adapterAnswerApprisal.openLoadAnimation();
-
                             }
 
                         } else {
@@ -326,6 +343,7 @@ public class AppraisalActivity extends BaseActivity {
                     public void onSuccess(final EntityReportAnswer response) {
                         if (response.getCode() == 1) {
                             //提交成功刷新下一题
+                            onClick = true;
                             initTopic(psyID);//刷新下一题
                         } else {
                             Toasty.warning(ContextUtils.getContext(), "服务器异常", Toast.LENGTH_SHORT, true).show();

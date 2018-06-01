@@ -96,6 +96,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/ll_level"
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
@@ -199,8 +200,10 @@
 
             <com.xqlh.heartsmart.widget.netView
                 android:id="@+id/nv_dimension"
-                android:layout_width="match_parent"
-                android:layout_height="200dp"
+                app:tagsize="30"
+                app:textColor="@color/color_title_bar"
+                android:layout_width="400dp"
+                android:layout_height="400dp"
                 android:layout_below="@+id/ll_comment" />
         </RelativeLayout>
 

@@ -83,6 +83,10 @@ public class AppraisalUndoneActivity extends BaseActivity {
     RxDialogSureCancel rxDialogSureCancel;
 
     private int time;
+    private int a;
+
+    int click;
+    boolean onClick = true;
 
     @Override
     public int setContent() {
@@ -235,6 +239,7 @@ public class AppraisalUndoneActivity extends BaseActivity {
                                 runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
+                                        finish();
                                         //跳转到测试报告界面
                                         Intent intent = new Intent(AppraisalUndoneActivity.this, AppraisalReportActivity.class);
                                         intent.putExtra("TestRecordId", testRecordId);
@@ -271,19 +276,25 @@ public class AppraisalUndoneActivity extends BaseActivity {
                                         response.getResult());
 
                                 rv_appraisal_answer.setAdapter(adapterAnswerApprisalOne);
-                                adapterAnswerApprisalOne.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-                                    @Override
-                                    public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                                        topicIndex++;
+                                if (onClick) {
+                                    adapterAnswerApprisalOne.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+                                        @Override
+                                        public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                                            onClick = false;
 
-                                        pb_bar.incrementProgressBy(1);
+                                            click++;
+                                            Log.i(TAG, "onItemClick:点击" + click);
 
-                                        sp.put(testRecordId, topicIndex);
-                                        //提交答案
-                                        reportAnswer(testRecordId, response.getResult().get(position).getOptionNumber(), topicid);
-                                        listAnswer.add(response.getResult().get(position).getOptionNumber() + "");
-                                    }
-                                });
+                                            pb_bar.incrementProgressBy(1);
+
+                                            topicIndex++;
+                                            sp.put(testRecordId, topicIndex);
+                                            //提交答案
+                                            reportAnswer(testRecordId, response.getResult().get(position).getOptionNumber(), topicid);
+                                            listAnswer.add(response.getResult().get(position).getOptionNumber() + "");
+                                        }
+                                    });
+                                }
 
                             } else {
                                 adapterAnswerApprisal
@@ -295,23 +306,26 @@ public class AppraisalUndoneActivity extends BaseActivity {
 
                                 rv_appraisal_answer.setAdapter(adapterAnswerApprisal);
 
-                                adapterAnswerApprisal.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-                                    @Override
-                                    public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                                        topicIndex++;
+                                if (onClick) {
+                                    adapterAnswerApprisal.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+                                        @Override
+                                        public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                                            onClick = false;
+                                            click++;
+                                            Log.i(TAG, "onItemClick:点击" + click);
 
-                                        pb_bar.incrementProgressBy(1);
+                                            pb_bar.incrementProgressBy(1);
 
-                                        sp.put(testRecordId, topicIndex);
-                                        //提交答案
-                                        reportAnswer(testRecordId, response.getResult().get(position).getOptionNumber(), topicid);
+                                            topicIndex++;
+                                            sp.put(testRecordId, topicIndex);
+                                            //提交答案
+                                            reportAnswer(testRecordId, response.getResult().get(position).getOptionNumber(), topicid);
 
-                                        listAnswer.add(response.getResult().get(position).getOptionNumber() + "");
-                                    }
-                                });
-
+                                            listAnswer.add(response.getResult().get(position).getOptionNumber() + "");
+                                        }
+                                    });
+                                }
                             }
-
                         } else {
                             Toasty.warning(ContextUtils.getContext(), "服务器异常", Toast.LENGTH_SHORT, true).show();
                         }
@@ -330,6 +344,8 @@ public class AppraisalUndoneActivity extends BaseActivity {
 //    topicID	string	题目ID
 
     public void reportAnswer(String ptestUserid, String optionNumber, String topicID) {
+        a++;
+        Log.i(TAG, "reportAnswer:答案数" + a);
         RetrofitHelper.getApiService()
                 .reportAnswer(token, ptestUserid, optionNumber, topicID)
                 .subscribeOn(Schedulers.io())
@@ -340,6 +356,7 @@ public class AppraisalUndoneActivity extends BaseActivity {
                         if (response.getCode() == 1) {
                             //提交成功刷新下一题
                             initTopic(psyID);//刷新下一题
+                            onClick = true;//答案提交成功
                         } else {
                             Toasty.warning(ContextUtils.getContext(), "服务器异常", Toast.LENGTH_SHORT, true).show();
                         }

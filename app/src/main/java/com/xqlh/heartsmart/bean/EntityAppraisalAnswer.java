@@ -66,7 +66,7 @@ public class EntityAppraisalAnswer {
         private String PsychtestID;
         private String OptionNumber;
         private String Content;
-        private int Score;
+        private double Score;
 
         public String getID() {
             return ID;
@@ -108,11 +108,11 @@ public class EntityAppraisalAnswer {
             this.Content = Content;
         }
 
-        public int getScore() {
+        public double getScore() {
             return Score;
         }
 
-        public void setScore(int Score) {
+        public void setScore(double Score) {
             this.Score = Score;
         }
     }
