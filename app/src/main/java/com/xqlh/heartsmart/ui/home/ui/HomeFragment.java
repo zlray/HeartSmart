@@ -37,8 +37,6 @@ import io.reactivex.schedulers.Schedulers;
  */
 public class HomeFragment extends BaseLazyFragment {
 
-    private List<Uri> mList = new ArrayList<>();
-
     @BindView(R.id.rv_home)
     RecyclerView rv_home;
 
@@ -54,7 +52,6 @@ public class HomeFragment extends BaseLazyFragment {
 
     private List<Uri> bannerList = new ArrayList<>();
     private List<IconTitleModel> eightList = new ArrayList<>();
-    private List<EntityUserReport> reportList = new ArrayList<>();
     SharedPreferencesHelper sp;
     private String token;
 

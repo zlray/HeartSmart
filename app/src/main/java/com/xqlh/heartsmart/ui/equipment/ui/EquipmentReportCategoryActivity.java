@@ -123,7 +123,7 @@ public class EquipmentReportCategoryActivity extends BaseActivity {
                                     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                                         Intent intent = new Intent(EquipmentReportCategoryActivity.this, EquipmentReportDetailActivity.class);
                                         intent.putExtra("name", response.getResult().get(position).getName());
-                                        intent.putExtra("id", response.getResult().get(position).getID());
+                                        intent.putExtra("reportId", response.getResult().get(position).getID());
                                         startActivity(intent);
                                     }
                                 });

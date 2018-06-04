@@ -2,25 +2,32 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:background="?android:attr/selectableItemBackground"
+    android:background="@color/white"
     android:clickable="true"
     android:focusable="true"
-    android:padding="10dp">
+    android:padding="5dp">
 
-    <ImageView
-        android:id="@+id/iv_article_selection"
-        android:layout_width="120dp"
-        android:layout_height="100dp" />
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="?android:attr/selectableItemBackground">
 
-    <TextView
-        android:id="@+id/tv_title"
-        android:layout_width="120dp"
-        android:layout_height="20dp"
-        android:layout_below="@+id/iv_article_selection"
-        android:ellipsize="end"
-        android:singleLine="true"
-        android:text="人阅读人阅读人阅读人阅读人阅读人阅读人阅读人阅读"
-        android:textColor="@color/black"
-        android:textSize="14sp" />
+        <ImageView
+            android:id="@+id/iv_article_selection"
+            android:layout_width="120dp"
+            android:layout_height="100dp" />
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="120dp"
+            android:layout_height="20dp"
+            android:layout_below="@+id/iv_article_selection"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:text="人阅读人阅读人阅读人阅读人阅读人阅读人阅读人阅读"
+            android:textColor="@color/black"
+            android:textSize="14sp" />
+    </RelativeLayout>
+
 
 </RelativeLayout>

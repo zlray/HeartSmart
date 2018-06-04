@@ -72,24 +72,6 @@ public class AdapterAppraisalHome extends RecyclerView.Adapter<RecyclerView.View
         this.listRecommend = list;
     }
 
-    public void addRecommendList(List<EntityAppraisalRecommend.ResultBean> list) {
-        //增加数据
-        int position = listRecommend.size();
-        listRecommend.addAll(position, list);
-        notifyItemInserted(position);
-    }
-
-    public void clearRecommend() {
-        listRecommend.clear();
-    }
-
-//    public void refresh(List<ItemBean> newList) {
-//        //刷新数据
-//        mList.removeAll(mList);
-//        mList.addAll(newList);
-//        notifyDataSetChanged();
-//    }
-
 
     public void setBannerList(List<Uri> list) {
         this.listBanner = list;

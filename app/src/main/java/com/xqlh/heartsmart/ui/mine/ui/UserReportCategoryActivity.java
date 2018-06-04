@@ -18,7 +18,6 @@ import com.xqlh.heartsmart.api.RetrofitHelper;
 import com.xqlh.heartsmart.api.base.BaseObserval;
 import com.xqlh.heartsmart.base.BaseActivity;
 import com.xqlh.heartsmart.bean.EntityUserReport;
-import com.xqlh.heartsmart.ui.appraisal.ui.AppraisalReportActivity;
 import com.xqlh.heartsmart.ui.mine.adapter.AdapterUserReport;
 import com.xqlh.heartsmart.utils.Constants;
 import com.xqlh.heartsmart.utils.ContextUtils;
@@ -104,8 +103,8 @@ public class UserReportCategoryActivity extends BaseActivity {
                             adapterUserReport.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
                                 @Override
                                 public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                                    Intent intent = new Intent(UserReportCategoryActivity.this, AppraisalReportActivity.class);
-                                    intent.putExtra("","");
+                                    Intent intent = new Intent(UserReportCategoryActivity.this, AppraisalUserReportActivity.class);
+                                    intent.putExtra("reportId",response.getResult().get(position).getID());
                                     startActivity(intent);
                                 }
                             });

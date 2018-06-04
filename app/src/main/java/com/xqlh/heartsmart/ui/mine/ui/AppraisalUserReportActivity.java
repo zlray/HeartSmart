@@ -1,4 +1,4 @@
-package com.xqlh.heartsmart.ui.equipment.ui;
+package com.xqlh.heartsmart.ui.mine.ui;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -28,7 +28,7 @@ import es.dmoral.toasty.Toasty;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
-public class EquipmentReportDetailActivity extends BaseActivity {
+public class AppraisalUserReportActivity extends BaseActivity {
     @BindView(R.id.tv_name)
     TextView tv_name;
 
@@ -82,7 +82,7 @@ public class EquipmentReportDetailActivity extends BaseActivity {
     @BindView(R.id.nv_dimension)
     netView nv_dimension;
 
-
+    private String testRecordId;
     private SharedPreferencesHelper sp;
     private String token;
     private String[] titles = new String[0];

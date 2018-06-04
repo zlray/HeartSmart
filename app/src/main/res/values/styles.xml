@@ -22,7 +22,6 @@
     </style>
 
 
-
     <!--自定义dialog背景全透明无边框theme -->
     <style name="SrcbDialog" parent="android:style/Theme.Dialog">
         <!--背景颜色及和透明程度-->
@@ -36,4 +35,5 @@
         <!--是否模糊-->
         <item name="android:backgroundDimEnabled">false</item>
     </style>
+
 </resources>

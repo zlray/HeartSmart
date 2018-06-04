@@ -42,8 +42,8 @@ public class AdapterUserReport extends BaseQuickAdapter<EntityUserReport.ResultB
                 .setText(R.id.tv_report_date, Constants.getYYD(item.getCreateTime()));
 
         Glide.with(mContext).load(item.getPsychtestPic())
-                .error(R.drawable.head_default)//错误图片显示
-                .fallback(R.drawable.head_default)//url为空的显示的 图片
+                .error(R.drawable.empty)//错误图片显示
+                .fallback(R.drawable.empty)//url为空的显示的 图片
                 .into((ImageView) helper.getView(R.id.iv_report));
     }
 }

@@ -78,6 +78,7 @@
         <activity android:name=".ui.mine.ui.CollectActivity" />
         <activity android:name=".ui.appraisal.ui.SearchActivity"></activity>
         <activity android:name=".ui.appraisal.ui.CompleteUserInforActivity" />
+        <activity android:name=".ui.mine.ui.AppraisalUserReportActivity"/>
     </application>
 
 </manifest>

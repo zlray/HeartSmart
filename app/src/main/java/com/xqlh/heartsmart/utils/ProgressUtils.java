@@ -24,8 +24,11 @@ public class ProgressUtils {
             @NonNull final Activity activity, String msg) {
 
         final WeakReference<Activity> activityWeakReference = new WeakReference<>(activity);
+
         final LoadingDialog loadingDialog = new LoadingDialog(activityWeakReference.get(), R.layout.view_loading);
+        loadingDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         loadingDialog.show();
+
         return new ObservableTransformer<T, T>() {
             @Override
             public ObservableSource<T> apply(Observable<T> upstream) {
