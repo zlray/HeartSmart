@@ -102,7 +102,18 @@ public class WelcomeActivity extends BaseActivity {
                         if (mCompositeDisposable != null) {
                             mCompositeDisposable.dispose();
                         }
-                        initAnima();
+                        //如果登录过了
+                        if (isLogin && !TextUtils.isEmpty(sp.getSharedPreference(Constants.LOGIN_TOKEN, "").toString().trim())) {
+                            Intent intent = new Intent(WelcomeActivity.this, MainActivity.class);
+                            startActivity(intent);
+
+                        } else {
+                            Intent intent1 = new Intent(WelcomeActivity.this, LoginActivity.class);
+                            startActivity(intent1);
+                        }
+                        finish();
+
+//                        initAnima();
                     }
                 })
         );
@@ -122,16 +133,7 @@ public class WelcomeActivity extends BaseActivity {
             //jump to main page
             @Override
             public void onAnimationEnd(Animator animation) {
-                //如果登录过了
-                if (isLogin && !TextUtils.isEmpty(sp.getSharedPreference(Constants.LOGIN_TOKEN, "").toString().trim())) {
-                    Intent intent = new Intent(WelcomeActivity.this, MainActivity.class);
-                    startActivity(intent);
 
-                } else {
-                    Intent intent1 = new Intent(WelcomeActivity.this, LoginActivity.class);
-                    startActivity(intent1);
-                }
-                finish();
             }
         });
         //启动动画

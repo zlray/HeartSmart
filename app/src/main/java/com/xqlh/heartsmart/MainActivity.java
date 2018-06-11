@@ -103,6 +103,7 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
                 addPermission(Manifest.permission.CAMERA).
                 addPermission(Manifest.permission.CALL_PHONE).
                 addPermission(Manifest.permission.READ_PHONE_STATE).
+                addPermission(Manifest.permission.BLUETOOTH).
                 initPermission();
 /**
  * 加载单选组，使用单选组不必给单选组内的每个RadioButton 设置监听
@@ -163,7 +164,7 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
             is_exit = true;//设置记录标志为true
             l_firstClickTime = System.currentTimeMillis();//获得第一次点击的时间戳
             //显示再次点击退出提示
-            Toasty.custom(ContextUtils.getContext(), "双击退出",getResources().getDrawable(R.drawable.beat), Toast.LENGTH_SHORT, false).show();
+            Toasty.custom(ContextUtils.getContext(), "双击退出", getResources().getDrawable(R.drawable.beat), Toast.LENGTH_SHORT, false).show();
         }
         //用户第二次点击返回钮
         else if (keyCode == KeyEvent.KEYCODE_BACK && is_exit == true) {

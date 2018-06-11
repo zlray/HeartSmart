@@ -24,6 +24,10 @@
     <!-- 许可调用相机自动对焦 -->
     <uses-feature android:name="android.hardware.camera.autofocus" />
 
+    <!--蓝牙权限-->
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+
     <application
         android:name=".app.App"
         android:allowBackup="true"
@@ -76,9 +80,10 @@
         <activity android:name=".ui.appraisal.ui.AppraisalUndoneActivity" />
         <activity android:name=".ui.mine.ui.UserReportCategoryActivity" />
         <activity android:name=".ui.mine.ui.CollectActivity" />
-        <activity android:name=".ui.appraisal.ui.SearchActivity"></activity>
+        <activity android:name=".ui.appraisal.ui.SearchActivity" />
         <activity android:name=".ui.appraisal.ui.CompleteUserInforActivity" />
-        <activity android:name=".ui.mine.ui.AppraisalUserReportActivity"/>
+        <activity android:name=".ui.mine.ui.AppraisalUserReportActivity" />
+        <activity android:name=".ui.mine.ui.HairBandActivity"></activity>
     </application>
 
 </manifest>

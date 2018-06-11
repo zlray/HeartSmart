@@ -48,7 +48,6 @@ dependencies {
     implementation rootProject.ext.dependencies["rxpermissions"]
     implementation rootProject.ext.dependencies["rxlifecycle2"]
     implementation rootProject.ext.dependencies["rxlifecomponents"]
-
     //network
     implementation rootProject.ext.dependencies["gson"]
     implementation rootProject.ext.dependencies["retrofit"]
@@ -83,4 +82,7 @@ dependencies {
     compile 'com.carson_ho:SearchLayout:1.0.1'
     compile 'com.github.anzaizai:EasySwipeMenuLayout:1.1.2'
     implementation 'com.github.PhilJay:MPAndroidChart:v3.0.3'
+    compile 'com.github.lecho:hellocharts-android:v1.5.8'
+    implementation files('libs/ThinkGearBase.jar')
+    implementation files('libs/ThinkGearPackX.jar')
 }
