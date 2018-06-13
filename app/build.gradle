@@ -85,4 +85,5 @@ dependencies {
     compile 'com.github.lecho:hellocharts-android:v1.5.8'
     implementation files('libs/ThinkGearBase.jar')
     implementation files('libs/ThinkGearPackX.jar')
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.0.3'
 }

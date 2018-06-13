@@ -2,6 +2,7 @@ package com.xqlh.heartsmart.ui.mine.ui;
 
 import android.bluetooth.BluetoothAdapter;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
@@ -10,12 +11,13 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.github.mikephil.charting.charts.LineChart;
 import com.neurosky.thinkgear.TGDevice;
 import com.neurosky.thinkgear.TGEegPower;
 import com.xqlh.heartsmart.R;
 import com.xqlh.heartsmart.base.BaseActivity;
-import com.xqlh.heartsmart.bean.BrainWaveBean;
 import com.xqlh.heartsmart.utils.ContextUtils;
+import com.xqlh.heartsmart.utils.DynamicLineChartManager;
 import com.xqlh.heartsmart.utils.InstrumentView;
 
 import java.util.ArrayList;
@@ -23,16 +25,12 @@ import java.util.List;
 
 import butterknife.BindView;
 import es.dmoral.toasty.Toasty;
-import lecho.lib.hellocharts.model.AxisValue;
-import lecho.lib.hellocharts.model.LineChartData;
-import lecho.lib.hellocharts.model.ValueShape;
-import lecho.lib.hellocharts.view.LineChartView;
 
 
 public class HairBandActivity extends BaseActivity {
 
     @BindView(R.id.line_chart)
-    LineChartView line_chart;
+    LineChart line_chart;
 
     BluetoothAdapter mBluetoothAdapter;
 
@@ -48,23 +46,10 @@ public class HairBandActivity extends BaseActivity {
     @BindView(R.id.instrumentView_relaxation)
     InstrumentView instrumentView_relaxation;
 
-
-    private String projectId;
-    private List<Integer> colors = new ArrayList<>();
-    private List<BrainWaveBean> listTemp = new ArrayList<BrainWaveBean>();//数据
-    private List<AxisValue> mAxisXValues = new ArrayList<AxisValue>();   //x轴方向的坐标数据
-    private List<AxisValue> mAxisYValues = new ArrayList<AxisValue>();            //y轴方向的坐标数据
-    private List<Float> distanceList = new ArrayList<Float>();
-    private boolean hasAxes = true;       //是否有轴，x和y轴
-    private boolean hasAxesNames = true;   //是否有轴的名字
-    private boolean hasLines = true;       //是否有线（点和点连接的线，选择false只会出现点）
-    private boolean hasPoints = true;       //是否有点（每个值的点）
-    private ValueShape shape = ValueShape.CIRCLE;    //点显示的形式，圆形，正方向，菱形
-    private boolean isFilled = false;                //是否是填充
-    private boolean hasLabels = true;               //每个点是否有名字
-    private boolean isCubic = false;                 //是否是立方的，线条是直线还是弧线
-    private boolean hasLabelForSelected = false;       //每个点是否可以选择（点击效果）
-    private LineChartData data;          // 折线图封装的数据类
+    private DynamicLineChartManager dynamicLineChartManager;
+    private List<Integer> list = new ArrayList<>(); //数据集合
+    private List<String> names = new ArrayList<>(); //折线名字集合
+    private List<Integer> colour = new ArrayList<>();//折线颜色集合
 
 
     TGDevice tgDevice;
@@ -85,11 +70,34 @@ public class HairBandActivity extends BaseActivity {
     public void init() {
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         checkBleDevice();
-
         subjectContactQuality_last = -1; /* start with impossible value */
         subjectContactQuality_cnt = 200; /* start over the limit, so it gets reported the 1st time */
+        initLinerChartData();
+    }
 
+    public void initLinerChartData() {
+        names.add("delta");
+        names.add("theta");
+        names.add("高alpha");
+        names.add("低alpha");
+        names.add("高Beta");
+        names.add("低Beta");
+        names.add("中Gamma");
+        names.add("低Gamma");
 
+        colour.add(Color.GREEN);
+        colour.add(Color.BLACK);
+        colour.add(Color.RED);
+        colour.add(Color.BLUE);
+        colour.add(Color.YELLOW);
+        colour.add(Color.GRAY);
+        colour.add(Color.LTGRAY);
+        colour.add(Color.DKGRAY);
+
+        dynamicLineChartManager = new DynamicLineChartManager(line_chart, names, colour);
+        //设置y轴
+        dynamicLineChartManager.setYAxis(10, 0, 10);
+        dynamicLineChartManager.setDescription("");
     }
 
     public void checkBleDevice() {
@@ -125,7 +133,6 @@ public class HairBandActivity extends BaseActivity {
                      * now there is something connected,
             		 * time to set the configurations we need
             		 */
-                    tv_infor.append("Model Identified\n");
                     tgDevice.setBlinkDetectionEnabled(true);
                     tgDevice.setTaskDifficultyRunContinuous(true);
                     tgDevice.setTaskDifficultyEnable(true);
@@ -139,24 +146,26 @@ public class HairBandActivity extends BaseActivity {
                         case TGDevice.STATE_IDLE:
                             break;
                         case TGDevice.STATE_CONNECTING:
-                            tv_infor.append("正在连接\n");
+                            tv_infor.setText("正在连接");
                             break;
                         case TGDevice.STATE_CONNECTED:
-                            tv_infor.append("连接成功\n");
+                            tv_infor.setText("连接成功");
                             tgDevice.start();
                             break;
                         case TGDevice.STATE_NOT_FOUND:
-                            tv_infor.append("脑波发带未扫描到.\n");
+                            tv_infor.setText("脑波发带未扫描到");
                             break;
                         case TGDevice.STATE_ERR_NO_DEVICE:
-                            tv_infor.append("请打开脑波发带进行蓝牙匹配\n");
+                            tv_infor.setText("请打开脑波发带进行蓝牙匹配");
                             break;
                         case TGDevice.STATE_ERR_BT_OFF:
-                            tv_infor.append("手机蓝牙没打开或者不可用\n");
+                            tv_infor.setText("手机蓝牙没打开或者不可用");
                             break;
                         case TGDevice.STATE_DISCONNECTED:
-                            tv_infor.append("断开连接.\n");
-                    } /* end switch on msg.arg1 */
+                            tv_infor.setText("断开连接");
+                            instrumentView_attention.setProgress(0);
+                            instrumentView_relaxation.setProgress(0);
+                    } /* end switch on msg.ar0g1 */
                     break;
                 case TGDevice.MSG_RAW_DATA:      //raw样本数值
                     /* Handle raw EEG/EKG data here */
@@ -171,13 +180,31 @@ public class HairBandActivity extends BaseActivity {
                     break;
                 case TGDevice.MSG_EEG_POWER:
                     TGEegPower e = (TGEegPower) msg.obj;
-                    Log.i(TAG, "脑电波 ; " + "delta: " + e.delta
-                            + " theta: " + e.theta
-                            + " 低的alpha: " + e.lowAlpha
-                            + " 高的alpha: " + e.highAlpha);
+
+                    list.add((int) Math.log10(e.delta));
+                    list.add((int) Math.log10(e.theta));
+                    list.add((int) Math.log10(e.highAlpha));
+                    list.add((int) Math.log10(e.lowAlpha));
+                    list.add((int) Math.log10(e.highBeta));
+                    list.add((int) Math.log10(e.lowBeta));
+                    list.add((int) Math.log10(e.midGamma));
+                    list.add((int) Math.log10(e.lowGamma));
+                    dynamicLineChartManager.addEntry(list);
+                    list.clear();
+
+                    Log.i(TAG, "脑波");
+                    Log.i(TAG, "delta" + (int) Math.log10(e.delta));
+                    Log.i(TAG, "theta" + (int) Math.log10(e.theta));
+                    Log.i(TAG, "highAlpha" + (int) Math.log10(e.highAlpha));
+                    Log.i(TAG, "lowAlpha" + (int) Math.log10(e.lowAlpha));
+                    Log.i(TAG, "highBeta" + (int) Math.log10(e.highBeta));
+                    Log.i(TAG, "lowBeta" + (int) Math.log10(e.lowBeta));
+                    Log.i(TAG, "midGamma" + (int) Math.log10(e.midGamma));
+                    Log.i(TAG, "lowGamma" + (int) Math.log10(e.lowGamma));
+                    Log.i(TAG, "脑波");
                     break;
                 case TGDevice.MSG_BLINK:
-                    tv_infor.append("眨眼: " + msg.arg1 + "\n");
+                    tv_infor.setText("眨眼: " + msg.arg1 + "\n");
                     Log.i(TAG, "眨眼: " + msg.arg1);
                     break;
                 case TGDevice.MSG_RELAXATION:
@@ -195,27 +222,27 @@ public class HairBandActivity extends BaseActivity {
                 case TGDevice.MSG_ERR_CFG_OVERRIDE: //用户配置已经被重写
                     switch (msg.arg1) {
                         case TGDevice.ERR_MSG_BLINK_DETECT:
-                            tv_infor.append("Override: blinkDetect" + "\n");
+                            tv_infor.setText("Override: blinkDetect" + "\n");
                             Toast.makeText(getApplicationContext(), "Override: blinkDetect", Toast.LENGTH_SHORT).show();
                             break;
                         case TGDevice.ERR_MSG_TASKFAMILIARITY:
-                            tv_infor.append("Override: Familiarity" + "\n");
+                            tv_infor.setText("Override: Familiarity" + "\n");
                             Toast.makeText(getApplicationContext(), "Override: Familiarity", Toast.LENGTH_SHORT).show();
                             break;
                         case TGDevice.ERR_MSG_TASKDIFFICULTY:
-                            tv_infor.append("Override: Difficulty" + "\n");
+                            tv_infor.setText("Override: Difficulty" + "\n");
                             Toast.makeText(getApplicationContext(), "Override: Difficulty", Toast.LENGTH_SHORT).show();
                             break;
                         case TGDevice.ERR_MSG_POSITIVITY:
-                            tv_infor.append("Override: Positivity" + "\n");
+                            tv_infor.setText("Override: Positivity" + "\n");
                             Toast.makeText(getApplicationContext(), "Override: Positivity", Toast.LENGTH_SHORT).show();
                             break;
                         case TGDevice.ERR_MSG_RESPIRATIONRATE:
-                            tv_infor.append("Override: Resp Rate" + "\n");
+                            tv_infor.setText("Override: Resp Rate" + "\n");
                             Toast.makeText(getApplicationContext(), "Override: Resp Rate", Toast.LENGTH_SHORT).show();
                             break;
                         default:
-                            tv_infor.append("Override: code: " + msg.arg1 + "\n");
+                            tv_infor.setText("Override: code: " + msg.arg1 + "\n");
                             Toast.makeText(getApplicationContext(), "Override: code: " + msg.arg1 + "", Toast.LENGTH_SHORT).show();
                             break;
                     }
@@ -223,27 +250,27 @@ public class HairBandActivity extends BaseActivity {
                 case TGDevice.MSG_ERR_NOT_PROVISIONED:
                     switch (msg.arg1) {
                         case TGDevice.ERR_MSG_BLINK_DETECT:
-                            tv_infor.append("No Support: blinkDetect" + "\n");
+                            tv_infor.setText("No Support: blinkDetect" + "\n");
                             Toast.makeText(getApplicationContext(), "No Support: blinkDetect", Toast.LENGTH_SHORT).show();
                             break;
                         case TGDevice.ERR_MSG_TASKFAMILIARITY:
-                            tv_infor.append("No Support: Familiarity" + "\n");
+                            tv_infor.setText("No Support: Familiarity" + "\n");
                             Toast.makeText(getApplicationContext(), "No Support: Familiarity", Toast.LENGTH_SHORT).show();
                             break;
                         case TGDevice.ERR_MSG_TASKDIFFICULTY:
-                            tv_infor.append("No Support: Difficulty" + "\n");
+                            tv_infor.setText("No Support: Difficulty" + "\n");
                             Toast.makeText(getApplicationContext(), "No Support: Difficulty", Toast.LENGTH_SHORT).show();
                             break;
                         case TGDevice.ERR_MSG_POSITIVITY:
-                            tv_infor.append("No Support: Positivity" + "\n");
+                            tv_infor.setText("No Support: Positivity" + "\n");
                             Toast.makeText(getApplicationContext(), "No Support: Positivity", Toast.LENGTH_SHORT).show();
                             break;
                         case TGDevice.ERR_MSG_RESPIRATIONRATE:
-                            tv_infor.append("No Support: Resp Rate" + "\n");
+                            tv_infor.setText("No Support: Resp Rate" + "\n");
                             Toast.makeText(getApplicationContext(), "No Support: Resp Rate", Toast.LENGTH_SHORT).show();
                             break;
                         default:
-                            tv_infor.append("No Support: code: " + msg.arg1 + "\n");
+                            tv_infor.setText("No Support: code: " + msg.arg1 + "\n");
                             Toast.makeText(getApplicationContext(), "No Support: code: " + msg.arg1 + "", Toast.LENGTH_SHORT).show();
                             break;
                     }
