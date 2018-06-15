@@ -238,6 +238,7 @@ public class HairBandActivity extends BaseActivity {
                             Toast.makeText(getApplicationContext(), "Override: Positivity", Toast.LENGTH_SHORT).show();
                             break;
                         case TGDevice.ERR_MSG_RESPIRATIONRATE:
+                            //响应率
                             tv_infor.setText("Override: Resp Rate" + "\n");
                             Toast.makeText(getApplicationContext(), "Override: Resp Rate", Toast.LENGTH_SHORT).show();
                             break;
