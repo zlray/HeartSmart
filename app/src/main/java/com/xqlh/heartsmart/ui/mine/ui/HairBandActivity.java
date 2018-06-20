@@ -180,7 +180,6 @@ public class HairBandActivity extends BaseActivity {
                     break;
                 case TGDevice.MSG_EEG_POWER:
                     TGEegPower e = (TGEegPower) msg.obj;
-
                     list.add((int) Math.log10(e.delta));
                     list.add((int) Math.log10(e.theta));
                     list.add((int) Math.log10(e.highAlpha));
@@ -208,7 +207,6 @@ public class HairBandActivity extends BaseActivity {
                     Log.i(TAG, "眨眼: " + msg.arg1);
                     break;
                 case TGDevice.MSG_RELAXATION:
-
                     break;
                 case TGDevice.MSG_HEART_RATE:
                     Log.i(TAG, "心率: " + msg.arg1);
