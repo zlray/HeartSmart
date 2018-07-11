@@ -21,6 +21,10 @@
     <dimen name="vtex_author_image_size">20dp</dimen>
     <dimen name="vtex_node_image_size">60dp</dimen>
     <dimen name="padding_common">10dp</dimen>
+    <dimen name="item_height">100dp</dimen>
+    <dimen name="item_icon_imgSize">60dp</dimen>
+    <dimen name="item_imgSize">70dp</dimen>
+    <dimen name="item_text_Size">30dp</dimen>
 
     <dimen name="common_navigator_height">45dp</dimen>
     <!--边距-->

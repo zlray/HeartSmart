@@ -213,7 +213,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="15dp"
                 android:layout_toRightOf="@+id/mine_wallet_iv"
-                android:text="我的钱包"
+                android:text="音乐放松"
                 android:textSize="14sp" />
 
             <ImageView
@@ -252,7 +252,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="15dp"
                 android:layout_toRightOf="@+id/mine_hair_band"
-                android:text="发带测试"
+                android:text="实时监测"
                 android:textSize="14sp" />
 
             <ImageView

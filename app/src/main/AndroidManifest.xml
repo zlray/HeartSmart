@@ -9,9 +9,14 @@
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+
+    <uses-permission android:name="android.permission.WRITE_SECURE_SETTINGS"/>
+
     <!-- 外部存储 -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <!-- 在sdcard中创建/删除文件的权限 -->
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
 
     <!-- 许可振动 -->
     <uses-permission android:name="android.permission.VIBRATE" />
@@ -24,9 +29,10 @@
     <!-- 许可调用相机自动对焦 -->
     <uses-feature android:name="android.hardware.camera.autofocus" />
 
-    <!--蓝牙权限-->
+    <!-- 蓝牙权限 -->
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+
 
     <application
         android:name=".app.App"
@@ -57,11 +63,23 @@
         <activity android:name=".ui.product.ui.ProductDetailActivity" />
         <activity android:name=".ui.mine.ui.MineActivity" />
 
+        <service
+            android:name=".service.MusicPlayerService"
+            android:enabled="true"
+            android:exported="true" />
+
+        <receiver
+            android:name=".receiver.PlayerManagerReceiver"
+            android:enabled="true"
+            android:exported="true" />
+
+
         <!-- 头像上传功能 -->
         <activity
             android:name="com.yalantis.ucrop.UCropActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+
         <activity android:name=".ui.mine.ui.SettingActivity" />
         <activity android:name=".ui.mine.ui.UpdateUserInforActivity" />
         <activity android:name=".ui.login.ui.UpdatePasswordActivity" />
@@ -83,7 +101,12 @@
         <activity android:name=".ui.appraisal.ui.SearchActivity" />
         <activity android:name=".ui.appraisal.ui.CompleteUserInforActivity" />
         <activity android:name=".ui.mine.ui.AppraisalUserReportActivity" />
-        <activity android:name=".ui.mine.ui.HairBandActivity"></activity>
+        <activity android:name=".ui.mine.ui.HairBandActivity" />
+        <activity android:name=".ui.home.ui.FeedBackTrainActivity" />
+        <activity android:name=".ui.mine.ui.MusicRelaxActivity" />
+        <activity android:name=".ui.mine.ui.LocalMusicActivity" />
+        <activity android:name=".ui.mine.ui.LastMyloveActivity"></activity>
+        <activity android:name=".ui.mine.ui.PlaylistActivity"/>
     </application>
 
 </manifest>

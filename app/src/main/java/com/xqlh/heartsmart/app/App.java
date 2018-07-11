@@ -49,7 +49,8 @@ public class App extends Application {
         Realm.init(getApplicationContext());
 
     }
-    public  Context getContext(){
+
+    public Context getContext() {
         return getApplicationContext();
     }
 

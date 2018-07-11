@@ -88,7 +88,7 @@ public class HomeFragment extends BaseLazyFragment {
         eightList.clear();
 
         eightList.add(new IconTitleModel(R.drawable.psychological_test, "心理检测", "153dd1e6ebab4279931875d654ddc001"));
-        eightList.add(new IconTitleModel(R.drawable.evaluation_archives, "测评系统", "2e8d670d44b9440282aa816b51a6a779"));
+        eightList.add(new IconTitleModel(R.drawable.evaluation_archives, "音乐放松", "2e8d670d44b9440282aa816b51a6a779"));
         eightList.add(new IconTitleModel(R.drawable.music, "体感音乐", "b60f031fecd9422f92faacc4f649994b"));
         eightList.add(new IconTitleModel(R.drawable.hug, "认知拥抱", "1"));
         eightList.add(new IconTitleModel(R.drawable.article, "心理文章", "850e7186768347daa7380627ca4fbc58"));

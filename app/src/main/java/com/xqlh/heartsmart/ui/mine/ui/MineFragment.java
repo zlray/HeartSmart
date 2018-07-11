@@ -129,7 +129,7 @@ public class MineFragment extends BaseLazyFragment {
 
     }
 
-    @OnClick({R.id.rv_head, R.id.rv_appraisal, R.id.rv_report, R.id.rv_collection, R.id.rv_hair_band})
+    @OnClick({R.id.rv_head, R.id.rv_appraisal, R.id.rv_report, R.id.rv_collection, R.id.rv_hair_band, R.id.rv_wallet})
     public void OnClick(View view) {
         switch (view.getId()) {
             case R.id.rv_head:
@@ -146,6 +146,8 @@ public class MineFragment extends BaseLazyFragment {
                 break;
             case R.id.rv_hair_band:
                 startActivity(new Intent(getActivity(), HairBandActivity.class));
+                break;
+            case R.id.rv_wallet:
                 break;
         }
     }

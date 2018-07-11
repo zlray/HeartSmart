@@ -1,25 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    
+
     <declare-styleable name="MyRadioButton">
-        
-        <attr name="drawableSize" format="dimension"/>
-        <attr name="drawableTop" format="reference"/>
-        <attr name="drawableLeft" format="reference"/>
-        <attr name="drawableRight" format="reference"/>
-        <attr name="drawableBottom" format="reference"/>
+        <attr name="drawableSize" format="dimension" />
+        <attr name="drawableTop" format="reference" />
+        <attr name="drawableLeft" format="reference" />
+        <attr name="drawableRight" format="reference" />
+        <attr name="drawableBottom" format="reference" />
     </declare-styleable>
 
     <declare-styleable name="SwipeLayout">
         <attr name="drag_edge" format="enum">
-            <enum name="left" value="0"/>
-            <enum name="right" value="1"/>
-            <enum name="top" value="2"/>
-            <enum name="bottom" value="3"/>
+            <enum name="left" value="0" />
+            <enum name="right" value="1" />
+            <enum name="top" value="2" />
+            <enum name="bottom" value="3" />
         </attr>
         <attr name="show_mode" format="enum">
-            <enum name="lay_down" value="0"/>
-            <enum name="pull_out" value="1"/>
+            <enum name="lay_down" value="0" />
+            <enum name="pull_out" value="1" />
         </attr>
     </declare-styleable>
 
@@ -31,21 +30,30 @@
     </declare-styleable>
 
     <declare-styleable name="hprogress">
-        <attr name="progress" format="integer"/>
-        <attr name="max" format="integer"/>
-        <attr name="progressHeight" format="integer"/>
-        <attr name="progressColor" format="color"/>
+        <attr name="progress" format="integer" />
+        <attr name="max" format="integer" />
+        <attr name="progressHeight" format="integer" />
+        <attr name="progressColor" format="color" />
     </declare-styleable>
-
 
     <declare-styleable name="netView">
-        <attr name="netColor" format="color"/>
-        <attr name="overlayColor" format="color"/>
-        <attr name="textColor" format="color"/>
-        <attr name="overlayAlpha" format="integer"/>
-        <attr name="tagsize" format="integer"/>
+        <attr name="netColor" format="color" />
+        <attr name="overlayColor" format="color" />
+        <attr name="textColor" format="color" />
+        <attr name="overlayAlpha" format="integer" />
+        <attr name="tagsize" format="integer" />
     </declare-styleable>
 
+    <declare-styleable name="theme">
+        <attr name="appbg" format="reference"/>
+        <attr name="press_color" format="reference"/>
+        <attr name="play_bar_color" format="reference"/>
+        <attr name="accent_color" format="reference"/>
+        <attr name="divider" format="reference"/>
+        <attr name="image_tint" format="reference"/>
+        <attr name="my_selector_layout" format="reference"/>
+        <attr name="text_color" format="color"/>
+    </declare-styleable>
 
 
 </resources>

@@ -25,6 +25,7 @@ import com.xqlh.heartsmart.ui.home.model.IconTitleModel;
 import com.xqlh.heartsmart.ui.home.ui.ArticleDetailActivity;
 import com.xqlh.heartsmart.ui.home.ui.ArticleHomeActivity;
 import com.xqlh.heartsmart.ui.mine.ui.AppraisalUserReportActivity;
+import com.xqlh.heartsmart.ui.mine.ui.MusicRelaxActivity;
 import com.xqlh.heartsmart.utils.Constants;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
@@ -210,9 +211,11 @@ public class AdapterHome extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         adapterEightButton.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                Intent intent;
-                if (listEight.get(position).getTitle().equals("心理文章") || listEight.get(position).getTitle().equals("测评系统")) {
+                Intent intent = null;
+                if (listEight.get(position).getTitle().equals("心理文章")) {
                     intent = new Intent(context, ArticleHomeActivity.class);
+                } else if (listEight.get(position).getTitle().equals("音乐放松")) {
+                    intent = new Intent(context, MusicRelaxActivity.class);
                 } else {
                     intent = new Intent(context, EquipmentReportCategoryActivity.class);
                     intent.putExtra("id", listEight.get(position).getArticleTypeID());

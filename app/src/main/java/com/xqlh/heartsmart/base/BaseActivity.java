@@ -3,6 +3,7 @@ package com.xqlh.heartsmart.base;
 import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.Window;
 import android.view.WindowManager;
 
@@ -15,7 +16,6 @@ import butterknife.ButterKnife;
  */
 
 public abstract class BaseActivity extends SupportActivity {
-
     /**
      * 定义一个成员变量
      * Define a  member arivable that is isFullScreen.
@@ -82,6 +82,14 @@ public abstract class BaseActivity extends SupportActivity {
      * Loading Controls of current Activity
      */
     public abstract void init();
+
+
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        return super.dispatchTouchEvent(ev);
+    }
+
 
     @Override
     protected void onDestroy() {

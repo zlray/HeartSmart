@@ -1,10 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <!--酷安绿-->
+    <color name="kuanGreen">#4BAF4F</color>
+    <color name="kuanGreen50">#B04BAF4F</color>
+    <!--知乎蓝-->
+    <color name="zhihuBlue">#1F96F2</color>
+    <color name="zhihuBlue50">#B01F96F2</color>
+    <!--哔哩粉-->
+    <color name="biliPink">#FA7298</color>
+    <color name="biliPink50">#B0FA7298</color>
+    <!--网易红-->
+    <color name="cloudRed">#D33B30</color>
+    <color name="cloudRed50">#B0D33B30</color>
+    <!--藤萝紫-->
+    <color name="tengluoPurple">#B47DB4</color>
+    <color name="tengluoPurple50">#B0B47DB4</color>
+    <!--碧海蓝-->
+    <color name="seaBlue">#59b7c3</color>
+    <color name="seaBlue50">#B059b7c3</color>
+    <!--樱草绿-->
+    <color name="grassGreen">#89c348</color>
+    <color name="grassGreen50">#B089c348</color>
+    <!--咖啡棕-->
+    <color name="coffeeBrown">#75655a</color>
+    <color name="coffeeBrown50">#B075655a</color>
+    <!--柠檬橙-->
+    <color name="lemonOrange">#D88100</color>
+    <color name="lemonOrange50">#B0D88100</color>
+    <!--星空灰-->
+    <color name="startSkyGray">#374f59</color>
+    <color name="startSkyGray50">#B0374f59</color>
+    <!--夜间模式-->
+    <color name="nightActionbar">#3b3b3b</color>
+    <color name="nightBg">#2c2c2c</color>
+    <color name="grey50">#fffafafa</color>
+    <color name="grey200">#ffeeeeee</color>
+    <color name="grey500">#ff9e9e9e</color>
+    <color name="grey700">#515151</color>
+    <color name="grey800">#ff424242</color>
+    <color name="grey900">#ff282828</color>
+    <color name="bg_album">#ECECEC</color>
+
     <color name="colorPrimary">#64B6D1</color>
     <color name="colorPrimaryDark">#F68E54</color>
     <color name="colorAccent">#FF4081</color>
     <color name="windowBackground">@android:color/white</color>
-
+    <color name="common_touch_bg">#ffeeeeee</color>
+    <color name="common_bg">#FFFFFF</color>
+    <color name="colorDividerGray">#50CACACA</color>
+    <color name="colorLightGray">#D3D3D3</color>
     <color name="tab_unselect">#a3a3a3</color>
     <color name="news_tv_source_color">#a3a3a3</color>
     <color name="color_login_hint">#cccccc</color>
@@ -14,8 +59,9 @@
     <color name="main_text_rb_default">#1e1d1d</color>
     <color name="gray666">#666666</color>
     <color name="line">#EEEEEE</color>
-
-
+    <color name="theme_color_primary">#d20000</color>
+    <color name="listTextColor">#ff333333</color>
+    <color name="listSubTextColor">#ff888888</color>
     <color name="BD">#BDBDBD</color>
     <color name="ERROR_COLOR">#FD4C5B</color>
     <color name="INFO_COLOR">#3F51B5</color>

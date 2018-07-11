@@ -86,4 +86,8 @@ dependencies {
     implementation files('libs/ThinkGearBase.jar')
     implementation files('libs/ThinkGearPackX.jar')
     implementation 'com.github.PhilJay:MPAndroidChart:v3.0.3'
+    implementation 'com.github.zhangliangming:HPAudio:v2.4'
+    compile 'com.belerweb:pinyin4j:2.5.0'
+    compile 'com.github.mcxtzhang:SwipeDelMenuLayout:V1.2.5'
+
 }
