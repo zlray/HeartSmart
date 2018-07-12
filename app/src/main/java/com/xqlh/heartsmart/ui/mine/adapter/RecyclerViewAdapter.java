@@ -108,26 +108,14 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public void onBindViewHolder(final ViewHolder holder,final int position) {
-//        Log.d(TAG, "onBindViewHolder: position = "+position);
         final MusicInfo musicInfo = musicInfoList.get(position);
         holder.musicName.setText(musicInfo.getName());
         holder.musicIndex.setText("" + (position + 1));
         holder.musicSinger.setText(musicInfo.getSinger());
 
-        //获取主题颜色
-//        int defaultColor = 0xFFFA7298;
-//        int[] attrsArray = {R.attr.colorAccent};
-//        TypedArray typedArray = context.obtainStyledAttributes(attrsArray);
-//        int appbg = typedArray.getColor(0, defaultColor);
-//        typedArray.recycle();
-
         int appbg = CustomAttrValueUtil.getAttrColorValue(R.attr.colorAccent,0xFFFA7298,context);
         int defaultTvColor = CustomAttrValueUtil.getAttrColorValue(R.attr.text_color,R.color.grey700,context);
 
-//        int[] attrs = {R.attr.text_color};
-//        TypedArray typed = context.obtainStyledAttributes(attrs);
-//        int defaultTvColor = typed.getColor(0, context.getResources().getColor(R.color.grey700));
-//        typedArray.recycle();
 
         if (musicInfo.getId() == MyMusicUtil.getIntShared(Constants.KEY_ID)){
             holder.musicName.setTextColor(appbg);

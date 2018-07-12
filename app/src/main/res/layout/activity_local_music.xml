@@ -1,9 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.xqlh.heartsmart.ui.mine.ui.LocalMusicActivity">
 
-</android.support.constraint.ConstraintLayout>
+    <com.xqlh.heartsmart.widget.TitleBar
+        android:id="@+id/titlebar"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/color_title_bar"></com.xqlh.heartsmart.widget.TitleBar>
+
+    <android.support.design.widget.TabLayout
+        android:id="@+id/local_tab"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@color/color_title_bar"
+        android:layout_below="@+id/titlebar"
+        app:tabIndicatorColor="@color/white"
+        app:tabSelectedTextColor="@color/white"
+        app:tabTextColor="#CCCCCC" />
+
+    <com.xqlh.heartsmart.widget.MyViewPager
+        android:id="@+id/local_viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/fragment_playbar"
+        android:layout_below="@+id/local_tab"/>
+
+    <FrameLayout
+        android:id="@+id/fragment_playbar"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true" />
+</RelativeLayout>

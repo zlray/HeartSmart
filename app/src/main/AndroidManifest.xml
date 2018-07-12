@@ -9,8 +9,10 @@
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.WRITE_SECURE_SETTINGS" />
 
-    <uses-permission android:name="android.permission.WRITE_SECURE_SETTINGS"/>
+    <uses-permission-sdk-23 android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
 
     <!-- 外部存储 -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -33,6 +35,7 @@
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
 
+    <uses-permission-sdk-23 android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:name=".app.App"
@@ -73,13 +76,11 @@
             android:enabled="true"
             android:exported="true" />
 
-
         <!-- 头像上传功能 -->
         <activity
             android:name="com.yalantis.ucrop.UCropActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-
         <activity android:name=".ui.mine.ui.SettingActivity" />
         <activity android:name=".ui.mine.ui.UpdateUserInforActivity" />
         <activity android:name=".ui.login.ui.UpdatePasswordActivity" />
@@ -105,8 +106,9 @@
         <activity android:name=".ui.home.ui.FeedBackTrainActivity" />
         <activity android:name=".ui.mine.ui.MusicRelaxActivity" />
         <activity android:name=".ui.mine.ui.LocalMusicActivity" />
-        <activity android:name=".ui.mine.ui.LastMyloveActivity"></activity>
-        <activity android:name=".ui.mine.ui.PlaylistActivity"/>
+        <activity android:name=".ui.mine.ui.LastMyloveActivity" />
+        <activity android:name=".ui.mine.ui.PlaylistActivity" />
+        <activity android:name=".ui.mine.ui.ModelActivity"></activity>
     </application>
 
 </manifest>

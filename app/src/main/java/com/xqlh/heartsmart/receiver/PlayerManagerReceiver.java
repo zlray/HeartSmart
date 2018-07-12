@@ -139,24 +139,7 @@ public class PlayerManagerReceiver extends BroadcastReceiver {
 
     private void onComplete() {
         MyMusicUtil.playNextMusic(context);
-//        int musicId = MyMusicUtil.getIntShared(Constant.KEY_ID);
-//        int playMode = MyMusicUtil.getIntShared(Constant.KEY_MODE);
-//        int list = MyMusicUtil.getIntShared(Constant.KEY_LIST);
-//
-//        ArrayList<Integer> musicList = dbManager.getMusicList(list);
-//        if (musicId == -1) {
-//            return;
-//        }
-//        if (musicList.isEmpty()) {
-//            return;
-//        }
-//
-//        musicId = dbManager.getNextMusic(musicList, musicId,playMode);
-//        String path = dbManager.getMusicPath(musicId);
-//        playMusic(path);
-//
-//        MyMusicUtil.setShared(Constant.KEY_ID,musicId);
-//        UpdateUI();
+
     }
 
     private void UpdateUI() {

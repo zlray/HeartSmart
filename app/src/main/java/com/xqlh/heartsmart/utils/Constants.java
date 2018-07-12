@@ -111,6 +111,12 @@ public class Constants {
     public static final int COMMAND_PROGRESS = 5; //改变进度命令
     public static final int COMMAND_RELEASE = 6; //退出程序时释放
 
+    //handle常量
+    public static final int SCAN_ERROR = 0;
+    public static final int SCAN_COMPLETE = 1;
+    public static final int SCAN_UPDATE = 2;
+    public static final int SCAN_NO_MUSIC = 3;
+
 
     //主题
     public static final String THEME="theme";
