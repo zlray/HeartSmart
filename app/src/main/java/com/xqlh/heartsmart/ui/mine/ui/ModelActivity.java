@@ -37,8 +37,11 @@ import com.xqlh.heartsmart.widget.MusicPopMenuWindow;
 import com.xqlh.heartsmart.widget.SideBar;
 import com.xqlh.heartsmart.widget.TitleBar;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import butterknife.BindView;
 
 public class ModelActivity extends PlayBarBaseActivity {
     private static final String TAG = "ModelActivity";
@@ -48,7 +51,8 @@ public class ModelActivity extends PlayBarBaseActivity {
     public static final String SINGER_TYPE = "singer_type";
     public static final String ALBUM_TYPE = "album_type";
     public static final String FOLDER_TYPE = "folder_type";
-    private TitleBar titleBar;
+    @BindView(R.id.titlebar)
+    TitleBar titlebar;
     private String type;
     private String title;
     private RecyclerView recyclerView;
@@ -57,7 +61,6 @@ public class ModelActivity extends PlayBarBaseActivity {
     private RelativeLayout playModeRl;
     private ImageView playModeIv;
     private TextView playModeTv;
-    //    private Context context;
     private DBManager dbManager;
     private List<MusicInfo> musicInfoList;
     private UpdateReceiver mReceiver;
@@ -66,6 +69,13 @@ public class ModelActivity extends PlayBarBaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_model);
+        dbManager = DBManager.getInstance(this);
+        title = getIntent().getStringExtra(KEY_TITLE);
+        type = getIntent().getStringExtra(KEY_TYPE);
+        musicInfoList = new ArrayList<>();
+        init();
+        updateView();
+        register();
     }
 
     @Override
@@ -73,6 +83,7 @@ public class ModelActivity extends PlayBarBaseActivity {
         super.onResume();
         initDefaultPlayModeView();
     }
+
     private void init() {
         recyclerView = (RecyclerView) findViewById(R.id.model_recycler_view);
         adapter = new ModelAdapter();
@@ -168,6 +179,7 @@ public class ModelActivity extends PlayBarBaseActivity {
             }
         });
     }
+
     private void initDefaultPlayModeView() {
         int playMode = MyMusicUtil.getIntShared(Constants.KEY_MODE);
         switch (playMode) {
@@ -216,7 +228,7 @@ public class ModelActivity extends PlayBarBaseActivity {
 
 
     public void showPopFormBottom(MusicInfo musicInfo) {
-        MusicPopMenuWindow menuPopupWindow = new MusicPopMenuWindow(ModelActivity.this, musicInfo, findViewById(R.id.activity_model),Constants.ACTIVITY_LOCAL);
+        MusicPopMenuWindow menuPopupWindow = new MusicPopMenuWindow(ModelActivity.this, musicInfo, findViewById(R.id.activity_model), Constants.ACTIVITY_LOCAL);
 //      设置Popupwindow显示位置（从底部弹出）
         menuPopupWindow.showAtLocation(findViewById(R.id.activity_model), Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
         WindowManager.LayoutParams params = ModelActivity.this.getWindow().getAttributes();
@@ -266,7 +278,7 @@ public class ModelActivity extends PlayBarBaseActivity {
             IntentFilter intentFilter = new IntentFilter();
             intentFilter.addAction(PlayerManagerReceiver.ACTION_UPDATE_UI_ADAPTER);
             this.registerReceiver(mReceiver, intentFilter);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -276,7 +288,7 @@ public class ModelActivity extends PlayBarBaseActivity {
             if (mReceiver != null) {
                 this.unregisterReceiver(mReceiver);
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -385,11 +397,11 @@ public class ModelActivity extends PlayBarBaseActivity {
             int defaultTvColor = typed.getColor(0, getResources().getColor(R.color.grey700));
             typedArray.recycle();
 
-            if (musicInfo.getId() == MyMusicUtil.getIntShared(Constants.KEY_ID)){
+            if (musicInfo.getId() == MyMusicUtil.getIntShared(Constants.KEY_ID)) {
                 holder.musicName.setTextColor(appbg);
                 holder.musicIndex.setTextColor(appbg);
                 holder.musicSinger.setTextColor(appbg);
-            }else {
+            } else {
                 holder.musicName.setTextColor(defaultTvColor);
                 holder.musicIndex.setTextColor(getResources().getColor(R.color.grey700));
                 holder.musicSinger.setTextColor(getResources().getColor(R.color.grey700));
@@ -404,7 +416,6 @@ public class ModelActivity extends PlayBarBaseActivity {
             } else {
                 holder.letterIndex.setVisibility(View.GONE);
             }
-
             holder.contentLl.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

@@ -105,10 +105,19 @@
         <activity android:name=".ui.mine.ui.HairBandActivity" />
         <activity android:name=".ui.home.ui.FeedBackTrainActivity" />
         <activity android:name=".ui.mine.ui.MusicRelaxActivity" />
-        <activity android:name=".ui.mine.ui.LocalMusicActivity" />
-        <activity android:name=".ui.mine.ui.LastMyloveActivity" />
+        <activity
+            android:name=".ui.mine.ui.LocalMusicActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"></activity>
+
+        <activity
+            android:name=".ui.mine.ui.LastMyloveActivity"
+            android:screenOrientation="portrait" />
         <activity android:name=".ui.mine.ui.PlaylistActivity" />
-        <activity android:name=".ui.mine.ui.ModelActivity"></activity>
+        <activity
+            android:name=".ui.mine.ui.ModelActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>

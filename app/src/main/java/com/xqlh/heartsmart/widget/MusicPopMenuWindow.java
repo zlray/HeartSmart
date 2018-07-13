@@ -106,23 +106,13 @@ public class MusicPopMenuWindow extends PopupWindow {
 
 
         nameTv = (TextView)view.findViewById(R.id.popwin_name_tv);
-//        playLl = (LinearLayout) view.findViewById(R.id.popwin_play_ll);
         addLl = (LinearLayout) view.findViewById(R.id.popwin_add_rl);
         loveLl = (LinearLayout) view.findViewById(R.id.popwin_love_ll);
-//        ringLl = (LinearLayout) view.findViewById(R.id.popwin_ring_ll);
         deleteLl = (LinearLayout) view.findViewById(R.id.popwin_delete_ll);
         cancelLl = (LinearLayout) view.findViewById(R.id.popwin_cancel_ll);
 
         nameTv.setText("歌曲： " + musicInfo.getName());
 
-//        playLl.setOnClickListener(new View.OnClickListener() {
-//
-//            public void onClick(View v) {
-//                MyMusicUtil.playNextMusic(activity);
-//
-//                dismiss();
-//            }
-//        });
 
         addLl.setOnClickListener(new View.OnClickListener() {
 
@@ -149,6 +139,7 @@ public class MusicPopMenuWindow extends PopupWindow {
         loveLl.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
+                Log.i("lz", "添加到我喜欢的id" + musicInfo.getId());
                 MyMusicUtil.setMusicMylove(activity,musicInfo.getId());
                 dismiss();
                 View view = LayoutInflater.from(activity).inflate(R.layout.my_love_toast,null);
@@ -159,17 +150,7 @@ public class MusicPopMenuWindow extends PopupWindow {
                 toast.show();
             }
         });
-
-//        ringLl.setOnClickListener(new View.OnClickListener() {
-//
-//            public void onClick(View v) {
-//                MyMusicUtil.setMyRingtone(activity);
-//                dismiss();
-//            }
-//        });
-
         deleteLl.setOnClickListener(new View.OnClickListener() {
-
             public void onClick(View v) {
                 deleteOperate(musicInfo,activity);
                 dismiss();
@@ -182,9 +163,6 @@ public class MusicPopMenuWindow extends PopupWindow {
                 dismiss();
             }
         });
-
-
-
     }
 
     public void deleteOperate(MusicInfo musicInfo,final Context context){

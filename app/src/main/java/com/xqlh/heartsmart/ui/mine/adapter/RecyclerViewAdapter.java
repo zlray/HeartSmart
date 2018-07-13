@@ -34,9 +34,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     private List<MusicInfo> musicInfoList;
     private Context context;
     private DBManager dbManager;
-    private OnItemClickListener onItemClickListener ;
+    private OnItemClickListener onItemClickListener;
 
-    static class ViewHolder extends RecyclerView.ViewHolder{
+    static class ViewHolder extends RecyclerView.ViewHolder {
         View swipeContent;
         LinearLayout contentLl;
         TextView musicIndex;
@@ -76,7 +76,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
      * 根据分类的首字母的Char ascii值获取其第一次出现该首字母的item的位置
      */
     public int getPositionForSection(int section) {
-        Log.i(TAG, "getPositionForSection: section = "+section);
+        Log.i(TAG, "getPositionForSection: section = " + section);
         for (int i = 0; i < getItemCount(); i++) {
             char firstChar = musicInfoList.get(i).getFirstLetter().charAt(0);
             if (firstChar == section) {
@@ -101,51 +101,52 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.local_music_item,parent,false);
+        View view = LayoutInflater.from(context).inflate(R.layout.local_music_item, parent, false);
         ViewHolder viewHolder = new ViewHolder(view);
         return viewHolder;
     }
 
     @Override
-    public void onBindViewHolder(final ViewHolder holder,final int position) {
+    public void onBindViewHolder(final ViewHolder holder, final int position) {
         final MusicInfo musicInfo = musicInfoList.get(position);
         holder.musicName.setText(musicInfo.getName());
         holder.musicIndex.setText("" + (position + 1));
         holder.musicSinger.setText(musicInfo.getSinger());
 
-        int appbg = CustomAttrValueUtil.getAttrColorValue(R.attr.colorAccent,0xFFFA7298,context);
-        int defaultTvColor = CustomAttrValueUtil.getAttrColorValue(R.attr.text_color,R.color.grey700,context);
+        int appbg = CustomAttrValueUtil.getAttrColorValue(R.attr.colorAccent, 0xFFFA7298, context);
+        int defaultTvColor = CustomAttrValueUtil.getAttrColorValue(R.attr.text_color, R.color.grey700, context);
 
 
-        if (musicInfo.getId() == MyMusicUtil.getIntShared(Constants.KEY_ID)){
+        if (musicInfo.getId() == MyMusicUtil.getIntShared(Constants.KEY_ID)) {
             holder.musicName.setTextColor(appbg);
             holder.musicIndex.setTextColor(appbg);
             holder.musicSinger.setTextColor(appbg);
-        }else {
+        } else {
             holder.musicName.setTextColor(defaultTvColor);
             holder.musicIndex.setTextColor(context.getResources().getColor(R.color.grey700));
             holder.musicSinger.setTextColor(context.getResources().getColor(R.color.grey700));
         }
         int section = getSectionForPosition(position);
         int firstPosition = getPositionForSection(section);
-//        Log.i(TAG, "onBindViewHolder: section = "+section + "  firstPosition = "+firstPosition);
-        if (firstPosition == position){
+        if (firstPosition == position) {
             holder.letterIndex.setVisibility(View.VISIBLE);
-            holder.letterIndex.setText(""+musicInfo.getFirstLetter());
-        }else{
+            holder.letterIndex.setText("" + musicInfo.getFirstLetter());
+        } else {
             holder.letterIndex.setVisibility(View.GONE);
         }
 
         holder.contentLl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.i(TAG, "onClick: 播放 "+musicInfo.getName());
+                Log.i(TAG, "onClick: 播放 " + musicInfo.getName());
                 String path = dbManager.getMusicPath(musicInfo.getId());
                 Intent intent = new Intent(MusicPlayerService.PLAYER_MANAGER_ACTION);
+
                 intent.putExtra(Constants.COMMAND, Constants.COMMAND_PLAY);
                 intent.putExtra(Constants.KEY_PATH, path);
                 context.sendBroadcast(intent);
-                MyMusicUtil.setShared(Constants.KEY_ID,musicInfo.getId());
+
+                MyMusicUtil.setShared(Constants.KEY_ID, musicInfo.getId());
                 notifyDataSetChanged();
                 if (onItemClickListener != null)
                     onItemClickListener.onContentClick(position);
@@ -156,7 +157,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             @Override
             public void onClick(View v) {
                 if (onItemClickListener != null)
-                onItemClickListener.onOpenMenuClick(position);
+                    onItemClickListener.onOpenMenuClick(position);
             }
         });
 
@@ -164,7 +165,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             @Override
             public void onClick(View v) {
                 if (onItemClickListener != null)
-                onItemClickListener.onDeleteMenuClick(holder.swipeContent,holder.getAdapterPosition());
+                    onItemClickListener.onDeleteMenuClick(holder.swipeContent, holder.getAdapterPosition());
             }
         });
     }
@@ -175,14 +176,16 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         notifyDataSetChanged();
     }
 
-    public interface OnItemClickListener{
+    public interface OnItemClickListener {
         void onOpenMenuClick(int position);
+
         void onDeleteMenuClick(View content, int position);
+
         void onContentClick(int position);
     }
 
-    public void setOnItemClickListener(OnItemClickListener onItemClickListener){
-        this.onItemClickListener = onItemClickListener ;
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
+        this.onItemClickListener = onItemClickListener;
     }
 
 

@@ -2,7 +2,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="?attr/appbg"
     android:orientation="vertical">
 
     <TextView
@@ -17,47 +16,6 @@
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
         android:background="@color/colorDividerGray"></View>
-
-    <!--<LinearLayout-->
-        <!--android:id="@+id/popwin_play_ll"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="50dp"-->
-        <!--android:layout_alignParentLeft="true"-->
-        <!--android:layout_alignParentStart="true"-->
-        <!--android:layout_alignParentTop="true"-->
-        <!--android:background="@drawable/selector_layout"-->
-        <!--android:clickable="true"-->
-        <!--android:gravity="center_vertical"-->
-        <!--android:orientation="horizontal">-->
-
-        <!--<ImageView-->
-            <!--android:layout_width="25dp"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:layout_gravity="center_vertical"-->
-            <!--android:layout_margin="10dp"-->
-            <!--android:src="@drawable/phone" />-->
-
-        <!--<LinearLayout-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:orientation="vertical">-->
-
-            <!--<TextView-->
-                <!--android:id="@+id/popwin_next_tv"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="match_parent"-->
-                <!--android:layout_weight="1"-->
-                <!--android:gravity="center_vertical"-->
-                <!--android:text="播放下一首" />-->
-
-            <!--<View-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="0.5dp"-->
-                <!--android:layout_alignParentBottom="true"-->
-                <!--android:layout_alignParentRight="true"-->
-                <!--android:background="@color/grey200"></View>-->
-        <!--</LinearLayout>-->
-    <!--</LinearLayout>-->
 
     <LinearLayout
         android:id="@+id/popwin_add_rl"
@@ -77,8 +35,8 @@
             android:layout_height="match_parent"
             android:layout_gravity="center_vertical"
             android:layout_margin="10dp"
-            android:tint="?attr/image_tint"
             android:src="@drawable/phone" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -94,8 +52,7 @@
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:background="?attr/divider"></View>
+                android:layout_height="0.5dp"></View>
         </LinearLayout>
     </LinearLayout>
 
@@ -117,7 +74,6 @@
             android:layout_height="match_parent"
             android:layout_gravity="center_vertical"
             android:layout_margin="10dp"
-            android:tint="?attr/image_tint"
             android:src="@drawable/love" />
 
         <LinearLayout
@@ -135,8 +91,7 @@
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:background="?attr/divider"></View>
+                android:layout_height="0.5dp"></View>
         </LinearLayout>
     </LinearLayout>
 
@@ -147,11 +102,11 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-         android:background="@drawable/selector_layout"
+        android:background="@drawable/selector_layout"
         android:clickable="true"
-        android:visibility="gone"
         android:gravity="center_vertical"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:visibility="gone">
 
         <ImageView
             android:id="@+id/popwin_ring_iv"
@@ -176,8 +131,7 @@
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:background="?attr/divider"></View>
+                android:layout_height="0.5dp"></View>
         </LinearLayout>
     </LinearLayout>
 
@@ -199,7 +153,6 @@
             android:layout_height="match_parent"
             android:layout_gravity="center_vertical"
             android:layout_margin="10dp"
-            android:tint="?attr/image_tint"
             android:src="@drawable/delete" />
 
         <LinearLayout
@@ -217,8 +170,7 @@
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:background="?attr/divider"></View>
+                android:layout_height="0.5dp"></View>
         </LinearLayout>
     </LinearLayout>
 
@@ -241,7 +193,6 @@
             android:layout_height="match_parent"
             android:layout_gravity="center_vertical"
             android:layout_margin="10dp"
-            android:tint="?attr/image_tint"
             android:src="@drawable/cancel" />
 
         <LinearLayout
@@ -259,8 +210,7 @@
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:background="?attr/divider"></View>
+                android:layout_height="0.5dp"></View>
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

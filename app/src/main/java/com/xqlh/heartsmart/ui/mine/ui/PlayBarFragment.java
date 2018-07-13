@@ -33,10 +33,6 @@ import com.xqlh.heartsmart.widget.PlayingPopWindow;
 import static com.xqlh.heartsmart.receiver.PlayerManagerReceiver.status;
 
 
-/**
- * Created by lijunyan on 2017/3/12.
- */
-
 public class PlayBarFragment extends Fragment {
 
     private static final String TAG = "PlayBarFragment";
@@ -52,7 +48,6 @@ public class PlayBarFragment extends Fragment {
     private DBManager dbManager;
     private View view;
     private Context context;
-
 
     public static synchronized PlayBarFragment newInstance() {
         return new PlayBarFragment();
@@ -89,18 +84,13 @@ public class PlayBarFragment extends Fragment {
         setFragmentBb();
 
 
-//        playBarLl.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(getActivity(), PlayActivity.class);
-//                startActivity(intent);
-//            }
-//        });
-
         playIv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 int musicId = MyMusicUtil.getIntShared(Constants.KEY_ID);
+                Log.i("lz", "音乐的id" + musicId);
+
                 if (musicId == -1 || musicId == 0) {
                     Intent intent = new Intent(Constants.MP_FILTER);
                     intent.putExtra(Constants.COMMAND, Constants.COMMAND_STOP);
@@ -218,7 +208,7 @@ public class PlayBarFragment extends Fragment {
     private void setMusicName() {
         int musicId = MyMusicUtil.getIntShared(Constants.KEY_ID);
         if (musicId == -1) {
-            musicNameTv.setText("听听音乐");
+            musicNameTv.setText("心企放松");
             singerNameTv.setText("好音质");
         } else {
             musicNameTv.setText(dbManager.getMusicInfo(musicId).get(1));
@@ -253,6 +243,7 @@ public class PlayBarFragment extends Fragment {
         @Override
         public void onReceive(Context context, Intent intent) {
             Log.d(TAG, "onReceive: ");
+            Log.d(TAG, "接受播放的服务: ");
             setMusicName();
             status = intent.getIntExtra(Constants.STATUS, 0);
             current = intent.getIntExtra(Constants.KEY_CURRENT, 0);

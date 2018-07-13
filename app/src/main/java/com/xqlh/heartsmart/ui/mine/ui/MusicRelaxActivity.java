@@ -76,6 +76,22 @@ public class MusicRelaxActivity extends PlayBarBaseActivity {
 
         //搜索本地歌曲
         startScanLocalMusic();
+
+        count = dbManager.getMusicCount(Constants.LIST_ALLMUSIC);
+        Log.i("lz", ".....................: " + count);
+        localMusicCountTv.setText(count + "");
+
+        count = dbManager.getMusicCount(Constants.LIST_LASTPLAY);
+        lastPlayCountTv.setText(count + "");
+
+        count = dbManager.getMusicCount(Constants.LIST_MYLOVE);
+        myLoveCountTv.setText(count + "");
+
+        count = dbManager.getMusicCount(Constants.LIST_MYPLAY);
+        myPLCountTv.setText("(" + count + ")");
+
+        adapter.updateDataList();
+
         //
         initCurPlaying();
     }
@@ -153,20 +169,9 @@ public class MusicRelaxActivity extends PlayBarBaseActivity {
                 }
             }
         }.start();
-        count = dbManager.getMusicCount(Constants.LIST_ALLMUSIC);
-        Log.i("lz", ".....................: " + count);
-        localMusicCountTv.setText(count + "");
 
-        count = dbManager.getMusicCount(Constants.LIST_LASTPLAY);
-        lastPlayCountTv.setText(count + "");
 
-        count = dbManager.getMusicCount(Constants.LIST_MYLOVE);
-        myLoveCountTv.setText(count + "");
 
-        count = dbManager.getMusicCount(Constants.LIST_MYPLAY);
-        myPLCountTv.setText("(" + count + ")");
-
-        adapter.updateDataList();
     }
 
 

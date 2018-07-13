@@ -3,7 +3,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="500dp"
-    android:background="?attr/appbg">
+    >
     <TextView
         android:layout_width="match_parent"
         android:layout_height="50dp"
