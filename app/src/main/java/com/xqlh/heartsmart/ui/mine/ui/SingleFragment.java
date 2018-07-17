@@ -236,7 +236,6 @@ public class SingleFragment extends Fragment {
                 updateView();
             }
         });
-
     }
 
     public void deleteOperate(final View swipeView, final int position, final Context context){

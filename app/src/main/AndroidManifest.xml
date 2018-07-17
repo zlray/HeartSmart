@@ -13,7 +13,6 @@
 
     <uses-permission-sdk-23 android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
-
     <!-- 外部存储 -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -108,8 +107,7 @@
         <activity
             android:name=".ui.mine.ui.LocalMusicActivity"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait"></activity>
-
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.mine.ui.LastMyloveActivity"
             android:screenOrientation="portrait" />
@@ -117,7 +115,8 @@
         <activity
             android:name=".ui.mine.ui.ModelActivity"
             android:launchMode="singleTop"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
+        <activity android:name=".ui.mine.ui.DetectionReportActivity"></activity>
     </application>
 
 </manifest>

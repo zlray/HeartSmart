@@ -83,7 +83,6 @@ public class PlayBarFragment extends Fragment {
         initPlayIv();
         setFragmentBb();
 
-
         playIv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -100,14 +99,17 @@ public class PlayBarFragment extends Fragment {
                 }
                 //如果当前媒体在播放音乐状态，则图片显示暂停图片，按下播放键，则发送暂停媒体命令，图片显示播放图片。以此类推。
                 if (status == Constants.STATUS_PAUSE) {
+
                     Intent intent = new Intent(MusicPlayerService.PLAYER_MANAGER_ACTION);
                     intent.putExtra(Constants.COMMAND, Constants.COMMAND_PLAY);
                     getActivity().sendBroadcast(intent);
                 } else if (status == Constants.STATUS_PLAY) {
+
                     Intent intent = new Intent(MusicPlayerService.PLAYER_MANAGER_ACTION);
                     intent.putExtra(Constants.COMMAND, Constants.COMMAND_PAUSE);
                     getActivity().sendBroadcast(intent);
                 } else {
+
                     //为停止状态时发送播放命令，并发送将要播放歌曲的路径
                     String path = dbManager.getMusicPath(musicId);
                     Intent intent = new Intent(MusicPlayerService.PLAYER_MANAGER_ACTION);

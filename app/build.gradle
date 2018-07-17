@@ -65,7 +65,7 @@ dependencies {
     //other
     implementation rootProject.ext.dependencies["fragmentation"]
     //canary
-    implementation files('libs/tbs_sdk_thirdapp_v2.2.0.1096_36549_sharewithdownload_withoutGame_obfs_20160830_211645.jar')
+    //    implementation files('libs/tbs_sdk_thirdapp_v2.2.0.1096_36549_sharewithdownload_withoutGame_obfs_20160830_211645.jar')
     implementation 'com.github.vondear:RxTools:v1.7.7.3'
     implementation 'com.github.GrenderG:Toasty:1.2.8'
     implementation 'com.yalantis:ucrop:2.2.0'
@@ -83,11 +83,12 @@ dependencies {
     compile 'com.github.anzaizai:EasySwipeMenuLayout:1.1.2'
     implementation 'com.github.PhilJay:MPAndroidChart:v3.0.3'
     compile 'com.github.lecho:hellocharts-android:v1.5.8'
-    implementation files('libs/ThinkGearBase.jar')
-    implementation files('libs/ThinkGearPackX.jar')
+    //    implementation files('libs/ThinkGearBase.jar')
+    //    implementation files('libs/ThinkGearPackX.jar')
     implementation 'com.github.PhilJay:MPAndroidChart:v3.0.3'
     implementation 'com.github.zhangliangming:HPAudio:v2.4'
     compile 'com.belerweb:pinyin4j:2.5.0'
     compile 'com.github.mcxtzhang:SwipeDelMenuLayout:V1.2.5'
-
+    implementation files('libs/ThinkGearBase.jar')
+    implementation files('libs/ThinkGearPackX.jar')
 }

@@ -134,12 +134,13 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         } else {
             holder.letterIndex.setVisibility(View.GONE);
         }
-
+        //点击播放列表播放歌曲
         holder.contentLl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.i(TAG, "onClick: 播放 " + musicInfo.getName());
+                Log.i("lz", "onClick: 播放 " + musicInfo.getName());
                 String path = dbManager.getMusicPath(musicInfo.getId());
+                Log.i("lz", "播放的路径" + path);
                 Intent intent = new Intent(MusicPlayerService.PLAYER_MANAGER_ACTION);
 
                 intent.putExtra(Constants.COMMAND, Constants.COMMAND_PLAY);

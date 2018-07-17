@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 import es.dmoral.toasty.Toasty;
 
 
@@ -47,14 +48,18 @@ public class HairBandActivity extends BaseActivity {
     InstrumentView instrumentView_relaxation;
 
     private DynamicLineChartManager dynamicLineChartManager;
+
     private List<Integer> list = new ArrayList<>(); //数据集合
     private List<String> names = new ArrayList<>(); //折线名字集合
     private List<Integer> colour = new ArrayList<>();//折线颜色集合
 
+    private ArrayList<Integer> attention = new ArrayList<>();//专注度
+    private ArrayList<Integer> relaxation = new ArrayList<>();//放松度
 
     TGDevice tgDevice;
     int subjectContactQuality_last;
     int subjectContactQuality_cnt;
+    private boolean onClick;
 
     @Override
     public int setContent() {
@@ -104,13 +109,6 @@ public class HairBandActivity extends BaseActivity {
         if (mBluetoothAdapter != null) {
             // create the TGDevice
             tgDevice = new TGDevice(mBluetoothAdapter, handler);
-            bt_connect.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    tgDevice.connect(true);
-                }
-            });
-
             if (!mBluetoothAdapter.isEnabled()) {
                 Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
                 enableBtIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -118,6 +116,27 @@ public class HairBandActivity extends BaseActivity {
             }
         } else {
             Toasty.warning(ContextUtils.getContext(), "该手机不支持蓝牙", Toast.LENGTH_SHORT, true).show();
+        }
+    }
+
+    @OnClick(R.id.bt_connect)
+    public void OnClick(View view) {
+        switch (view.getId()) {
+            case R.id.bt_connect:
+                //如果连接成功
+                if (onClick) {
+                    tgDevice.close();
+                    //跳转到报告页面
+                    finish();
+                    Intent intent = new Intent(HairBandActivity.this, DetectionReportActivity.class);
+                    intent.putIntegerArrayListExtra("attention", attention);
+                    intent.putIntegerArrayListExtra("relaxation", relaxation);
+                    startActivity(intent);
+
+                } else {
+                    tgDevice.connect(true);
+                }
+                break;
         }
     }
 
@@ -151,6 +170,10 @@ public class HairBandActivity extends BaseActivity {
                         case TGDevice.STATE_CONNECTED:
                             tv_infor.setText("连接成功");
                             tgDevice.start();
+                            //设置问true
+                            onClick = true;
+                            bt_connect.setText("断开连接");
+
                             break;
                         case TGDevice.STATE_NOT_FOUND:
                             tv_infor.setText("脑波发带未扫描到");
@@ -165,19 +188,25 @@ public class HairBandActivity extends BaseActivity {
                             tv_infor.setText("断开连接");
                             instrumentView_attention.setProgress(0);
                             instrumentView_relaxation.setProgress(0);
+
                     } /* end switch on msg.ar0g1 */
                     break;
-                case TGDevice.MSG_RAW_DATA:      //raw样本数值
-                    /* Handle raw EEG/EKG data here */
-                    break;
+
                 case TGDevice.MSG_ATTENTION: //专注度等级
                     instrumentView_attention.setProgress(msg.arg1);
+                    Log.i(TAG, "专注度" + msg.arg1);
+                    attention.add(msg.arg1);
                     instrumentView_attention.setText("专注度");
                     break;
                 case TGDevice.MSG_MEDITATION:
                     instrumentView_relaxation.setProgress(msg.arg1);
+                    relaxation.add(msg.arg1);
                     instrumentView_relaxation.setText("冥想度");
+                    Log.i(TAG, "冥想度" + msg.arg1);
                     break;
+                case TGDevice.MSG_LOW_BATTERY:
+                    tv_infor.setText("发带电量低，请及时更换电池");
+
                 case TGDevice.MSG_EEG_POWER:
                     TGEegPower e = (TGEegPower) msg.obj;
                     list.add((int) Math.log10(e.delta));
@@ -188,7 +217,9 @@ public class HairBandActivity extends BaseActivity {
                     list.add((int) Math.log10(e.lowBeta));
                     list.add((int) Math.log10(e.midGamma));
                     list.add((int) Math.log10(e.lowGamma));
+
                     dynamicLineChartManager.addEntry(list);
+
                     list.clear();
 
                     Log.i(TAG, "脑波");
@@ -203,10 +234,13 @@ public class HairBandActivity extends BaseActivity {
                     Log.i(TAG, "脑波");
                     break;
                 case TGDevice.MSG_BLINK:
-                    tv_infor.setText("眨眼: " + msg.arg1 + "\n");
-                    Log.i(TAG, "眨眼: " + msg.arg1);
+//                    tv_infor.setText("眨眼: " + msg.arg1 + "\n");
+//                    Log.i(TAG, "眨眼: " + msg.arg1);
                     break;
                 case TGDevice.MSG_RELAXATION:
+//                    instrumentView_relaxation.setProgress(msg.arg1);
+//                    relaxation.add(msg.arg1);
+//                    instrumentView_relaxation.setText("放松度");
                     break;
                 case TGDevice.MSG_HEART_RATE:
                     Log.i(TAG, "心率: " + msg.arg1);
@@ -217,63 +251,63 @@ public class HairBandActivity extends BaseActivity {
                 case TGDevice.MSG_HEART_AGE:
                     Log.i(TAG, "呼吸率: " + msg.arg1);
                     break;
-                case TGDevice.MSG_ERR_CFG_OVERRIDE: //用户配置已经被重写
-                    switch (msg.arg1) {
-                        case TGDevice.ERR_MSG_BLINK_DETECT:
-                            tv_infor.setText("Override: blinkDetect" + "\n");
-                            Toast.makeText(getApplicationContext(), "Override: blinkDetect", Toast.LENGTH_SHORT).show();
-                            break;
-                        case TGDevice.ERR_MSG_TASKFAMILIARITY:
-                            tv_infor.setText("Override: Familiarity" + "\n");
-                            Toast.makeText(getApplicationContext(), "Override: Familiarity", Toast.LENGTH_SHORT).show();
-                            break;
-                        case TGDevice.ERR_MSG_TASKDIFFICULTY:
-                            tv_infor.setText("Override: Difficulty" + "\n");
-                            Toast.makeText(getApplicationContext(), "Override: Difficulty", Toast.LENGTH_SHORT).show();
-                            break;
-                        case TGDevice.ERR_MSG_POSITIVITY:
-                            tv_infor.setText("Override: Positivity" + "\n");
-                            Toast.makeText(getApplicationContext(), "Override: Positivity", Toast.LENGTH_SHORT).show();
-                            break;
-                        case TGDevice.ERR_MSG_RESPIRATIONRATE:
-                            //响应率
-                            tv_infor.setText("Override: Resp Rate" + "\n");
-                            Toast.makeText(getApplicationContext(), "Override: Resp Rate", Toast.LENGTH_SHORT).show();
-                            break;
-                        default:
-                            tv_infor.setText("Override: code: " + msg.arg1 + "\n");
-                            Toast.makeText(getApplicationContext(), "Override: code: " + msg.arg1 + "", Toast.LENGTH_SHORT).show();
-                            break;
-                    }
-                    break;
-                case TGDevice.MSG_ERR_NOT_PROVISIONED:
-                    switch (msg.arg1) {
-                        case TGDevice.ERR_MSG_BLINK_DETECT:
-                            tv_infor.setText("No Support: blinkDetect" + "\n");
-                            Toast.makeText(getApplicationContext(), "No Support: blinkDetect", Toast.LENGTH_SHORT).show();
-                            break;
-                        case TGDevice.ERR_MSG_TASKFAMILIARITY:
-                            tv_infor.setText("No Support: Familiarity" + "\n");
-                            Toast.makeText(getApplicationContext(), "No Support: Familiarity", Toast.LENGTH_SHORT).show();
-                            break;
-                        case TGDevice.ERR_MSG_TASKDIFFICULTY:
-                            tv_infor.setText("No Support: Difficulty" + "\n");
-                            Toast.makeText(getApplicationContext(), "No Support: Difficulty", Toast.LENGTH_SHORT).show();
-                            break;
-                        case TGDevice.ERR_MSG_POSITIVITY:
-                            tv_infor.setText("No Support: Positivity" + "\n");
-                            Toast.makeText(getApplicationContext(), "No Support: Positivity", Toast.LENGTH_SHORT).show();
-                            break;
-                        case TGDevice.ERR_MSG_RESPIRATIONRATE:
-                            tv_infor.setText("No Support: Resp Rate" + "\n");
-                            Toast.makeText(getApplicationContext(), "No Support: Resp Rate", Toast.LENGTH_SHORT).show();
-                            break;
-                        default:
-                            tv_infor.setText("No Support: code: " + msg.arg1 + "\n");
-                            Toast.makeText(getApplicationContext(), "No Support: code: " + msg.arg1 + "", Toast.LENGTH_SHORT).show();
-                            break;
-                    }
-                    break;
+//                case TGDevice.MSG_ERR_CFG_OVERRIDE: //用户配置已经被重写
+//                    switch (msg.arg1) {
+//                        case TGDevice.ERR_MSG_BLINK_DETECT:
+//                            tv_infor.setText("Override: blinkDetect" + "\n");
+//                            Toast.makeText(getApplicationContext(), "Override: blinkDetect", Toast.LENGTH_SHORT).show();
+//                            break;
+//                        case TGDevice.ERR_MSG_TASKFAMILIARITY:
+//                            tv_infor.setText("Override: Familiarity" + "\n");
+//                            Toast.makeText(getApplicationContext(), "Override: Familiarity", Toast.LENGTH_SHORT).show();
+//                            break;
+//                        case TGDevice.ERR_MSG_TASKDIFFICULTY:
+//                            tv_infor.setText("Override: Difficulty" + "\n");
+//                            Toast.makeText(getApplicationContext(), "Override: Difficulty", Toast.LENGTH_SHORT).show();
+//                            break;
+//                        case TGDevice.ERR_MSG_POSITIVITY:
+//                            tv_infor.setText("Override: Positivity" + "\n");
+//                            Toast.makeText(getApplicationContext(), "Override: Positivity", Toast.LENGTH_SHORT).show();
+//                            break;
+//                        case TGDevice.ERR_MSG_RESPIRATIONRATE:
+//                            //响应率
+//                            tv_infor.setText("Override: Resp Rate" + "\n");
+//                            Toast.makeText(getApplicationContext(), "Override: Resp Rate", Toast.LENGTH_SHORT).show();
+//                            break;
+//                        default:
+//                            tv_infor.setText("Override: code: " + msg.arg1 + "\n");
+//                            Toast.makeText(getApplicationContext(), "Override: code: " + msg.arg1 + "", Toast.LENGTH_SHORT).show();
+//                            break;
+//                    }
+//                    break;
+//                case TGDevice.MSG_ERR_NOT_PROVISIONED:
+//                    switch (msg.arg1) {
+//                        case TGDevice.ERR_MSG_BLINK_DETECT:
+//                            tv_infor.setText("No Support: blinkDetect" + "\n");
+//                            Toast.makeText(getApplicationContext(), "No Support: blinkDetect", Toast.LENGTH_SHORT).show();
+//                            break;
+//                        case TGDevice.ERR_MSG_TASKFAMILIARITY:
+//                            tv_infor.setText("No Support: Familiarity" + "\n");
+//                            Toast.makeText(getApplicationContext(), "No Support: Familiarity", Toast.LENGTH_SHORT).show();
+//                            break;
+//                        case TGDevice.ERR_MSG_TASKDIFFICULTY:
+//                            tv_infor.setText("No Support: Difficulty" + "\n");
+//                            Toast.makeText(getApplicationContext(), "No Support: Difficulty", Toast.LENGTH_SHORT).show();
+//                            break;
+//                        case TGDevice.ERR_MSG_POSITIVITY:
+//                            tv_infor.setText("No Support: Positivity" + "\n");
+//                            Toast.makeText(getApplicationContext(), "No Support: Positivity", Toast.LENGTH_SHORT).show();
+//                            break;
+//                        case TGDevice.ERR_MSG_RESPIRATIONRATE:
+//                            tv_infor.setText("No Support: Resp Rate" + "\n");
+//                            Toast.makeText(getApplicationContext(), "No Support: Resp Rate", Toast.LENGTH_SHORT).show();
+//                            break;
+//                        default:
+//                            tv_infor.setText("No Support: code: " + msg.arg1 + "\n");
+//                            Toast.makeText(getApplicationContext(), "No Support: code: " + msg.arg1 + "", Toast.LENGTH_SHORT).show();
+//                            break;
+//                    }
+//                    break;
                 default:
                     break;
 
