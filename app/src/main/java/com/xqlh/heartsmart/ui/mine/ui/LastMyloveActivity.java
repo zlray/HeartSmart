@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
@@ -43,11 +44,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import butterknife.BindView;
-
 public class LastMyloveActivity extends PlayBarBaseActivity {
-    @BindView(R.id.titlebar)
-    TitleBar titleBar;
+    private TitleBar titlebar;
     private RelativeLayout playModeRl;
     private ImageView playModeIv;
     private TextView playModeTv;
@@ -67,11 +65,28 @@ public class LastMyloveActivity extends PlayBarBaseActivity {
 
         dbManager = DBManager.getInstance(LastMyloveActivity.this);
         label = getIntent().getStringExtra(Constants.LABEL);
-
         Log.i("lz", "表的名称" + label);
+        if (label.equals(Constants.LABEL_MYLOVE)) {
+            initTtileBar(Constants.LABEL_MYLOVE);
 
+        } else if (label.equals(Constants.LABEL_LAST)) {
+            initTtileBar(Constants.LABEL_LAST);
+        }
         init();
         register();
+    }
+
+    public void initTtileBar(String title) {
+        titlebar = (TitleBar) findViewById(R.id.titlebar);
+        titlebar.setLeftImageResource(R.drawable.return_button);
+        titlebar.setTitle(title);
+        titlebar.setTitleColor(Color.WHITE);
+        titlebar.setLeftClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
     }
 
     private void init() {
@@ -355,6 +370,7 @@ public class LastMyloveActivity extends PlayBarBaseActivity {
         super.onDestroy();
         unRegister();
     }
+
     private void register() {
         try {
             if (mReceiver != null) {

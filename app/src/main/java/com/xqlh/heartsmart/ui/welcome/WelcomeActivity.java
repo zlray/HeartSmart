@@ -15,7 +15,6 @@ import com.xqlh.heartsmart.api.RetrofitHelper;
 import com.xqlh.heartsmart.api.base.BaseObserval;
 import com.xqlh.heartsmart.base.BaseActivity;
 import com.xqlh.heartsmart.bean.EntityWelcome;
-import com.xqlh.heartsmart.ui.guide.activity.GuideActivity;
 import com.xqlh.heartsmart.ui.login.ui.LoginActivity;
 import com.xqlh.heartsmart.utils.Constants;
 import com.xqlh.heartsmart.utils.ContextUtils;
@@ -61,13 +60,13 @@ public class WelcomeActivity extends BaseActivity {
         isFirst = (boolean) sp.getSharedPreference(Constants.IS_FIRST, false);
 
         //首次安装走引导页面
-        if (!isFirst) {
-            finish();
-            sp.put(Constants.IS_FIRST, true);
-            Intent intent = new Intent(this, GuideActivity.class);
-            startActivity(intent);
-            return;
-        }
+//        if (!isFirst) {
+//            finish();
+//            sp.put(Constants.IS_FIRST, true);
+//            Intent intent = new Intent(this, GuideActivity.class);
+//            startActivity(intent);
+//            return;
+//        }
 
         isLogin = (boolean) sp.getSharedPreference(Constants.IS_LOGIN, false);
 

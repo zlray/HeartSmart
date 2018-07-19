@@ -84,7 +84,7 @@ public class Constants {
     //Activity label
 
     public static final String LABEL = "label";
-    public static final String LABEL_MYLOVE = "我喜爱";
+    public static final String LABEL_MYLOVE = "我的喜爱";
     public static final String LABEL_LAST = "最近播放";
     public static final String LABEL_LOCAL = "本地音乐";
 

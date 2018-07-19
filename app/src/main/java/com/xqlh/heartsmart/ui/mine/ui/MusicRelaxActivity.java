@@ -4,6 +4,7 @@ package com.xqlh.heartsmart.ui.mine.ui;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.AlertDialog;
@@ -35,12 +36,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import butterknife.BindView;
-
 public class MusicRelaxActivity extends PlayBarBaseActivity {
     private static final String TAG = MusicRelaxActivity.class.getName();
-    @BindView(R.id.titlebar)
-    TitleBar titlebar;
+    private TitleBar titlebar;
     private DBManager dbManager;
     private LinearLayout localMusicLl;
     private LinearLayout lastPlayLl;
@@ -93,7 +91,21 @@ public class MusicRelaxActivity extends PlayBarBaseActivity {
         adapter.updateDataList();
 
         //
+        initTtileBar();
         initCurPlaying();
+    }
+
+    public void initTtileBar() {
+        titlebar = (TitleBar)findViewById(R.id.titlebar);
+        titlebar.setLeftImageResource(R.drawable.return_button);
+        titlebar.setTitle("音乐放松");
+        titlebar.setTitleColor(Color.WHITE);
+        titlebar.setLeftClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
     }
 
 
@@ -112,7 +124,7 @@ public class MusicRelaxActivity extends PlayBarBaseActivity {
 
                     Cursor cursor = getContentResolver().query(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
                             muiscInfoArray, null, null, null);
-                    Log.i("lz", "歌曲数目" + cursor.getCount()+"--------------");
+                    Log.i("lz", "歌曲数目" + cursor.getCount() + "--------------");
 
                     if (cursor != null && cursor.getCount() != 0) {
                         musicInfoList = new ArrayList<MusicInfo>();
@@ -171,7 +183,6 @@ public class MusicRelaxActivity extends PlayBarBaseActivity {
         }.start();
 
 
-
     }
 
 
@@ -206,6 +217,7 @@ public class MusicRelaxActivity extends PlayBarBaseActivity {
             e.printStackTrace();
         }
     }
+
     public static String replaseUnKnowe(String oldStr) {
         try {
             if (oldStr != null) {
@@ -218,6 +230,7 @@ public class MusicRelaxActivity extends PlayBarBaseActivity {
         }
         return oldStr;
     }
+
     public void initView() {
         localMusicLl = (LinearLayout) findViewById(R.id.home_local_music_ll);
         lastPlayLl = (LinearLayout) findViewById(R.id.home_recently_music_ll);

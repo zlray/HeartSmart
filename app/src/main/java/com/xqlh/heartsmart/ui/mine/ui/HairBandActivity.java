@@ -127,12 +127,15 @@ public class HairBandActivity extends BaseActivity {
                 if (onClick) {
                     tgDevice.close();
                     //跳转到报告页面
-                    finish();
-                    Intent intent = new Intent(HairBandActivity.this, DetectionReportActivity.class);
-                    intent.putIntegerArrayListExtra("attention", attention);
-                    intent.putIntegerArrayListExtra("relaxation", relaxation);
-                    startActivity(intent);
-
+                    if (attention.size() > 0 && relaxation.size() > 0) {
+                        finish();
+                        Intent intent = new Intent(HairBandActivity.this, DetectionReportActivity.class);
+                        intent.putIntegerArrayListExtra("attention", attention);
+                        intent.putIntegerArrayListExtra("relaxation", relaxation);
+                        startActivity(intent);
+                    } else {
+                        Toasty.warning(ContextUtils.getContext(), "尚未收集到专注度和冥想度,请继续测试", Toast.LENGTH_SHORT, true).show();
+                    }
                 } else {
                     tgDevice.connect(true);
                 }

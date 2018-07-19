@@ -105,7 +105,6 @@ public class LoginActivity extends BaseActivity {
     }
 
 
-
     private void initView() {
         screenHeight = this.getResources().getDisplayMetrics().heightPixels; //获取屏幕高度
         keyHeight = screenHeight / 3;//弹起高度为屏幕高度的1/3
@@ -259,8 +258,9 @@ public class LoginActivity extends BaseActivity {
                                 Log.i(TAG, "onSuccess: " + response.getResult());
                                 Log.i(TAG, "存储登录的Token" + response.getResult());
                                 sp_login_token.put(Constants.LOGIN_TOKEN, response.getResult());
-                                sp_login_token.put(Constants.IS_LOGIN,true);
+                                sp_login_token.put(Constants.IS_LOGIN, true);
                                 startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                                finish();
                             }
                         } else {
                             Toasty.warning(ContextUtils.getContext(), "用户名或者密码错误", Toast.LENGTH_SHORT, true).show();

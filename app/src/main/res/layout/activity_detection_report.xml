@@ -5,15 +5,23 @@
     android:layout_height="match_parent"
     tools:context="com.xqlh.heartsmart.ui.mine.ui.DetectionReportActivity">
 
+    <com.xqlh.heartsmart.widget.TitleBar
+        android:id="@+id/titlebar"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/color_title_bar"></com.xqlh.heartsmart.widget.TitleBar>
+
     <com.github.mikephil.charting.charts.LineChart
         android:id="@+id/line_chart"
         android:layout_width="match_parent"
-        android:layout_height="300dp" />
+        android:layout_height="300dp"
+        android:layout_below="@+id/titlebar" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/line_chart"
+        android:layout_marginTop="@dimen/dp_20"
         android:orientation="horizontal">
 
         <RelativeLayout
@@ -30,7 +38,7 @@
                 android:textSize="20sp" />
 
             <LinearLayout
-                android:id="@+id/ll_average"
+                android:id="@+id/ll_attention_average"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/tv_attention"
@@ -43,6 +51,7 @@
                     android:text="均值：" />
 
                 <TextView
+                    android:id="@+id/tv_attention_average"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="67.88" />
@@ -50,10 +59,10 @@
 
 
             <LinearLayout
-                android:id="@+id/ll_max"
+                android:id="@+id/ll_attention_max"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/ll_average"
+                android:layout_below="@+id/ll_attention_average"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="@dimen/dp_10">
 
@@ -63,16 +72,17 @@
                     android:text="最大值：" />
 
                 <TextView
+                    android:id="@+id/tv_attention_max"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="67.88" />
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/ll_min"
+                android:id="@+id/ll_attention_min"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/ll_max"
+                android:layout_below="@+id/ll_attention_max"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="@dimen/dp_10">
 
@@ -82,57 +92,121 @@
                     android:text="最小值：" />
 
                 <TextView
+                    android:id="@+id/tv_attention_min"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="67.88" />
             </LinearLayout>
 
-            <LinearLayout
-                android:id="@+id/ll_square"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/ll_min"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="@dimen/dp_10">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="平方差：" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="67.88" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/ll_standard"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/ll_square"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="@dimen/dp_10">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="标准差：" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="67.88" />
-            </LinearLayout>
-
-            、
 
         </RelativeLayout>
 
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"></LinearLayout>
+            android:layout_weight="1">
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <TextView
+                    android:id="@+id/tv_relax"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:text="放松度参数"
+                    android:textSize="20sp" />
+
+                <LinearLayout
+                    android:id="@+id/ll_relax_average"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv_relax"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="@dimen/dp_10">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="均值：" />
+
+                    <TextView
+                        android:id="@+id/tv_relax_average"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="67.88" />
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:id="@+id/ll_relax_max"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/ll_relax_average"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="@dimen/dp_10">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="最大值：" />
+
+                    <TextView
+                        android:id="@+id/tv_relax_max"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="67.88" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_relax_min"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/ll_relax_max"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="@dimen/dp_10">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="最小值：" />
+
+                    <TextView
+                        android:id="@+id/tv_relax_min"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="67.88" />
+                </LinearLayout>
+            </RelativeLayout>
+        </LinearLayout>
 
     </LinearLayout>
 </RelativeLayout>
+
+
+    <!--<LinearLayout--><!--android:id="@+id/ll_attention_square"--><!--android:layout_width="wrap_content"--><!--android:layout_height="wrap_content"--><!--android:layout_below="@+id/ll_attention_min"--><!--android:layout_centerHorizontal="true"--><!--android:layout_marginTop="@dimen/dp_10">-->
+
+    <!--<TextView--><!--android:layout_width="wrap_content"--><!--android:layout_height="wrap_content"--><!--android:text="平方差：" />-->
+
+    <!--<TextView--><!--android:id="@+id/tv_attention_square"--><!--android:layout_width="wrap_content"--><!--android:layout_height="wrap_content"--><!--android:text="67.88" />--><!--</LinearLayout>-->
+
+    <!--<LinearLayout--><!--android:id="@+id/ll_attention_standard"--><!--android:layout_width="wrap_content"--><!--android:layout_height="wrap_content"--><!--android:layout_below="@+id/ll_attention_square"--><!--android:layout_centerHorizontal="true"--><!--android:layout_marginTop="@dimen/dp_10">-->
+
+    <!--<TextView--><!--android:layout_width="wrap_content"--><!--android:layout_height="wrap_content"--><!--android:text="标准差：" />-->
+
+    <!--<TextView--><!--android:id="@+id/tv_attention_standard"--><!--android:layout_width="wrap_content"--><!--android:layout_height="wrap_content"--><!--android:text="67.88" />--><!--</LinearLayout>-->
+
+
+    <!--<LinearLayout--><!--android:id="@+id/ll_relaxe_square"--><!--android:layout_width="wrap_content"--><!--android:layout_height="wrap_content"--><!--android:layout_below="@+id/ll_relax_min"--><!--android:layout_centerHorizontal="true"--><!--android:layout_marginTop="@dimen/dp_10">-->
+
+    <!--<TextView--><!--android:layout_width="wrap_content"--><!--android:layout_height="wrap_content"--><!--android:text="平方差：" />-->
+
+    <!--<TextView--><!--android:id="@+id/tv_relax_square"--><!--android:layout_width="wrap_content"--><!--android:layout_height="wrap_content"--><!--android:text="67.88" />--><!--</LinearLayout>-->
+
+    <!--<LinearLayout--><!--android:id="@+id/ll_relax_standard"--><!--android:layout_width="wrap_content"--><!--android:layout_height="wrap_content"--><!--android:layout_below="@+id/ll_relaxe_square"--><!--android:layout_centerHorizontal="true"--><!--android:layout_marginTop="@dimen/dp_10">-->
+
+    <!--<TextView--><!--android:layout_width="wrap_content"--><!--android:layout_height="wrap_content"--><!--android:text="标准差：" />-->
+
+    <!--<TextView--><!--android:id="@+id/tv_relax_standard"--><!--android:layout_width="wrap_content"--><!--android:layout_height="wrap_content"--><!--android:text="67.88" />--><!--</LinearLayout>-->

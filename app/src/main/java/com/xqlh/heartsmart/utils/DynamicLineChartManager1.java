@@ -14,7 +14,7 @@ import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DynamicLineChartManager {
+public class DynamicLineChartManager1 {
 
     private LineChart lineChart;
     private YAxis leftAxis;
@@ -26,7 +26,7 @@ public class DynamicLineChartManager {
     private List<String> timeList = new ArrayList<>(); //存储x轴的时间
 
     //一条曲线
-    public DynamicLineChartManager(LineChart mLineChart, String name, int color) {
+    public DynamicLineChartManager1(LineChart mLineChart, String name, int color) {
         this.lineChart = mLineChart;
         leftAxis = lineChart.getAxisLeft();
         rightAxis = lineChart.getAxisRight();
@@ -36,7 +36,7 @@ public class DynamicLineChartManager {
     }
 
     //多条曲线
-    public DynamicLineChartManager(LineChart mLineChart, List<String> names, List<Integer> colors) {
+    public DynamicLineChartManager1(LineChart mLineChart, List<String> names, List<Integer> colors) {
         this.lineChart = mLineChart;
         leftAxis = lineChart.getAxisLeft();
         rightAxis = lineChart.getAxisRight();
@@ -65,7 +65,7 @@ public class DynamicLineChartManager {
         //X轴设置显示位置在底部
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         xAxis.setGranularity(1f);
-        xAxis.setLabelCount(10);
+        xAxis.setLabelCount(5);
 //        xAxis.setValueFormatter(new IAxisValueFormatter() {
 //            @Override
 //            public String getFormattedValue(float value, AxisBase axis) {
@@ -160,11 +160,12 @@ public class DynamicLineChartManager {
         lineChart.notifyDataSetChanged();
 
         //设置在曲线图中显示的最大数量
-        lineChart.setVisibleXRangeMaximum(10);
+        lineChart.setVisibleXRangeMaximum(5);
 
         //移到某个位置
         lineChart.moveViewToX(lineData.getEntryCount() - 5);
     }
+
 
     /**
      * 动态添加数据（多条折线图）

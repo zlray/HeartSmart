@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.res.TypedArray;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -41,8 +42,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import butterknife.BindView;
-
 public class ModelActivity extends PlayBarBaseActivity {
     private static final String TAG = "ModelActivity";
     public static final String KEY_TITLE = "key_title";
@@ -51,8 +50,7 @@ public class ModelActivity extends PlayBarBaseActivity {
     public static final String SINGER_TYPE = "singer_type";
     public static final String ALBUM_TYPE = "album_type";
     public static final String FOLDER_TYPE = "folder_type";
-    @BindView(R.id.titlebar)
-    TitleBar titlebar;
+    private TitleBar titlebar;
     private String type;
     private String title;
     private RecyclerView recyclerView;
@@ -69,6 +67,7 @@ public class ModelActivity extends PlayBarBaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_model);
+        initTtileBar();
         dbManager = DBManager.getInstance(this);
         title = getIntent().getStringExtra(KEY_TITLE);
         type = getIntent().getStringExtra(KEY_TYPE);
@@ -77,11 +76,22 @@ public class ModelActivity extends PlayBarBaseActivity {
         updateView();
         register();
     }
-
     @Override
     protected void onResume() {
         super.onResume();
         initDefaultPlayModeView();
+    }
+    public void initTtileBar() {
+        titlebar = (TitleBar) findViewById(R.id.titlebar);
+        titlebar.setLeftImageResource(R.drawable.return_button);
+        titlebar.setTitle("播放音乐");
+        titlebar.setTitleColor(Color.WHITE);
+        titlebar.setLeftClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
     }
 
     private void init() {
