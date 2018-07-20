@@ -160,12 +160,12 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
      */
     private void doubleColickExit(int keyCode, KeyEvent event) {
         //当用户第一次点击返回钮时
-        if (keyCode == KeyEvent.KEYCODE_BACK && is_exit == false) {
-            is_exit = true;//设置记录标志为true
-            l_firstClickTime = System.currentTimeMillis();//获得第一次点击的时间戳
-            //显示再次点击退出提示
-            Toasty.custom(ContextUtils.getContext(), "双击退出", getResources().getDrawable(R.drawable.beat), Toast.LENGTH_SHORT, false).show();
-        }
+            if (keyCode == KeyEvent.KEYCODE_BACK && is_exit == false) {
+                is_exit = true;//设置记录标志为true
+                l_firstClickTime = System.currentTimeMillis();//获得第一次点击的时间戳
+                //显示再次点击退出提示
+                Toasty.custom(ContextUtils.getContext(), "双击退出", getResources().getDrawable(R.drawable.beat), Toast.LENGTH_SHORT, false).show();
+            }
         //用户第二次点击返回钮
         else if (keyCode == KeyEvent.KEYCODE_BACK && is_exit == true) {
             l_secondClickTime = System.currentTimeMillis();//记录下第二次点击退出的时间

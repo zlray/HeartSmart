@@ -73,7 +73,8 @@
         <receiver
             android:name=".receiver.PlayerManagerReceiver"
             android:enabled="true"
-            android:exported="true" />
+            android:exported="true">
+        </receiver>
 
         <!-- 头像上传功能 -->
         <activity

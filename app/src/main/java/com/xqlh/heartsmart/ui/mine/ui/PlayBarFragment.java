@@ -269,7 +269,6 @@ public class PlayBarFragment extends Fragment {
                 default:
                     break;
             }
-
         }
     }
 }

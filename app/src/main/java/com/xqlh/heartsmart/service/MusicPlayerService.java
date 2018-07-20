@@ -27,6 +27,7 @@ public class MusicPlayerService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
+        Log.i("lz","走service");
         Log.e(TAG, "onCreate: ");
         register();
     }

@@ -42,6 +42,7 @@ public class PlayerManagerReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
+        Log.i("lz", "onReceive: 接受接受接受接受接受");
         int cmd = intent.getIntExtra(Constants.COMMAND, Constants.COMMAND_INIT);
         Log.d(TAG, "cmd = " + cmd);
         switch (cmd) {
@@ -49,8 +50,9 @@ public class PlayerManagerReceiver extends BroadcastReceiver {
                 Log.d(TAG, "COMMAND_INIT");
                 break;
             case Constants.COMMAND_PLAY:
-                Log.d(TAG, "COMMAND_PLAY");
+                Log.d(TAG, "COMMAND_PLAY 正在播放");
                 status = Constants.STATUS_PLAY;
+                //获得播放路径
                 String musicPath = intent.getStringExtra(Constants.KEY_PATH);
                 if (musicPath != null) {
                     playMusic(musicPath);
@@ -59,10 +61,12 @@ public class PlayerManagerReceiver extends BroadcastReceiver {
                 }
                 break;
             case Constants.COMMAND_PAUSE:
+                Log.d(TAG, "COMMAND_PAUSE 暂停");
                 mediaPlayer.pause();
                 status = Constants.STATUS_PAUSE;
                 break;
             case Constants.COMMAND_STOP: //本程序停止状态都是删除当前播放音乐触发
+                Log.d(TAG, "COMMAND_STOP 停止");
                 NumberRandom();
                 status = Constants.STATUS_STOP;
                 if (mediaPlayer != null) {
@@ -124,7 +128,6 @@ public class PlayerManagerReceiver extends BroadcastReceiver {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 
 
@@ -149,10 +152,6 @@ public class PlayerManagerReceiver extends BroadcastReceiver {
 
         Intent intent = new Intent(ACTION_UPDATE_UI_ADAPTER);    //接收广播为所有歌曲列表的adapter
         context.sendBroadcast(intent);
-
-//        Intent widgetIntent = new Intent(Constant.WIDGET_STATUS);//发送更新桌面widget的广播
-//        widgetIntent.putExtra("status", status);
-//        context.sendBroadcast(widgetIntent);
     }
 
 
@@ -181,7 +180,6 @@ public class PlayerManagerReceiver extends BroadcastReceiver {
         Log.d(TAG, "initMediaPlayer status = " + status);
         MyMusicUtil.setShared(Constants.KEY_ID, musicId);
         MyMusicUtil.setShared(Constants.KEY_PATH, path);
-
         UpdateUI();
     }
 

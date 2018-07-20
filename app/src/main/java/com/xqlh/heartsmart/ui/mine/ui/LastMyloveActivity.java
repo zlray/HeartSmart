@@ -64,11 +64,12 @@ public class LastMyloveActivity extends PlayBarBaseActivity {
         setContentView(R.layout.activity_last_mylove);
 
         dbManager = DBManager.getInstance(LastMyloveActivity.this);
+
         label = getIntent().getStringExtra(Constants.LABEL);
         Log.i("lz", "表的名称" + label);
+
         if (label.equals(Constants.LABEL_MYLOVE)) {
             initTtileBar(Constants.LABEL_MYLOVE);
-
         } else if (label.equals(Constants.LABEL_LAST)) {
             initTtileBar(Constants.LABEL_LAST);
         }
@@ -335,7 +336,6 @@ public class LastMyloveActivity extends PlayBarBaseActivity {
                 dialog.dismiss();
             }
         });
-
         builder.show();
     }
 

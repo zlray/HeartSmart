@@ -75,28 +75,29 @@ public class MusicRelaxActivity extends PlayBarBaseActivity {
         //搜索本地歌曲
         startScanLocalMusic();
 
-        count = dbManager.getMusicCount(Constants.LIST_ALLMUSIC);
-        Log.i("lz", ".....................: " + count);
-        localMusicCountTv.setText(count + "");
-
-        count = dbManager.getMusicCount(Constants.LIST_LASTPLAY);
-        lastPlayCountTv.setText(count + "");
-
-        count = dbManager.getMusicCount(Constants.LIST_MYLOVE);
-        myLoveCountTv.setText(count + "");
-
-        count = dbManager.getMusicCount(Constants.LIST_MYPLAY);
-        myPLCountTv.setText("(" + count + ")");
-
-        adapter.updateDataList();
 
         //
         initTtileBar();
         initCurPlaying();
+
+        Intent startIntent = new Intent(MusicRelaxActivity.this, MusicPlayerService.class);
+        startService(startIntent);
     }
+//
+//    @Override
+//    public boolean onKeyDown(int keyCode, KeyEvent event) {
+//        if (keyCode == KeyEvent.KEYCODE_BACK) {
+//            Intent intentBroadcast = new Intent(MusicPlayerService.PLAYER_MANAGER_ACTION);
+//            intentBroadcast.putExtra(Constants.COMMAND, Constants.COMMAND_RELEASE);
+//            sendBroadcast(intentBroadcast);
+//            Intent stopIntent = new Intent(MusicRelaxActivity.this, MusicPlayerService.class);
+//            stopService(stopIntent);
+//        }
+//        return true;
+//    }
 
     public void initTtileBar() {
-        titlebar = (TitleBar)findViewById(R.id.titlebar);
+        titlebar = (TitleBar) findViewById(R.id.titlebar);
         titlebar.setLeftImageResource(R.drawable.return_button);
         titlebar.setTitle("音乐放松");
         titlebar.setTitleColor(Color.WHITE);
@@ -182,7 +183,36 @@ public class MusicRelaxActivity extends PlayBarBaseActivity {
             }
         }.start();
 
+        count = dbManager.getMusicCount(Constants.LIST_ALLMUSIC);
+        Log.i("lz", ".....................: " + count);
+        localMusicCountTv.setText(count + "");
 
+        count = dbManager.getMusicCount(Constants.LIST_LASTPLAY);
+        lastPlayCountTv.setText(count + "");
+
+        count = dbManager.getMusicCount(Constants.LIST_MYLOVE);
+        Log.i("lz", "我喜爱的音乐个数" + count);
+        myLoveCountTv.setText(count + "");
+
+        count = dbManager.getMusicCount(Constants.LIST_MYPLAY);
+        myPLCountTv.setText("(" + count + ")");
+
+        adapter.updateDataList();
+
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        count = dbManager.getMusicCount(Constants.LIST_ALLMUSIC);
+        localMusicCountTv.setText(count + "");
+        count = dbManager.getMusicCount(Constants.LIST_LASTPLAY);
+        lastPlayCountTv.setText(count + "");
+        count = dbManager.getMusicCount(Constants.LIST_MYLOVE);
+        Log.i("lz", "我喜欢的个数" + count);
+        myLoveCountTv.setText(count + "");
+        count = dbManager.getMusicCount(Constants.LIST_MYPLAY);
+        myPLCountTv.setText("(" + count + ")");
+        adapter.updateDataList();
     }
 
 
@@ -325,7 +355,6 @@ public class MusicRelaxActivity extends PlayBarBaseActivity {
             }
         });
 
-
     }
 
     public void updatePlaylistCount() {
@@ -333,9 +362,4 @@ public class MusicRelaxActivity extends PlayBarBaseActivity {
         myPLCountTv.setText("(" + count + ")");
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-    }
 }

@@ -82,6 +82,7 @@ public class ModelActivity extends PlayBarBaseActivity {
         initDefaultPlayModeView();
     }
     public void initTtileBar() {
+
         titlebar = (TitleBar) findViewById(R.id.titlebar);
         titlebar.setLeftImageResource(R.drawable.return_button);
         titlebar.setTitle("播放音乐");
@@ -261,7 +262,6 @@ public class ModelActivity extends PlayBarBaseActivity {
                 updateView();
             }
         });
-
     }
 
     @Override

@@ -203,7 +203,7 @@ public class PlaylistActivity extends BaseActivity {
             }
             mReceiver = new UpdateReceiver();
             IntentFilter intentFilter = new IntentFilter();
-            intentFilter.addAction(PlayerManagerReceiver.ACTION_UPDATE_UI_ADAPTER);
+            intentFilter.addAction(PlayerManagerReceiver.     ACTION_UPDATE_UI_ADAPTER);
             this.registerReceiver(mReceiver, intentFilter);
         }catch (Exception e){
             e.printStackTrace();

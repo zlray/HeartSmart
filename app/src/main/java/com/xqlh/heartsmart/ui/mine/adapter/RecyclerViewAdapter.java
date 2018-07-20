@@ -57,7 +57,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             this.menuIv = (ImageView) itemView.findViewById(R.id.local_music_item_never_menu);
             this.deleteBtn = (Button) itemView.findViewById(R.id.swip_delete_menu_btn);
         }
-
     }
 
     public RecyclerViewAdapter(Context context, List<MusicInfo> musicInfoList) {
@@ -115,7 +114,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
         int appbg = CustomAttrValueUtil.getAttrColorValue(R.attr.colorAccent, 0xFFFA7298, context);
         int defaultTvColor = CustomAttrValueUtil.getAttrColorValue(R.attr.text_color, R.color.grey700, context);
-
 
         if (musicInfo.getId() == MyMusicUtil.getIntShared(Constants.KEY_ID)) {
             holder.musicName.setTextColor(appbg);
