@@ -162,6 +162,8 @@ public class MusicPopMenuWindow extends PopupWindow {
     }
 
     public void deleteOperate(MusicInfo musicInfo, final Context context) {
+
+
         final int curId = musicInfo.getId();
         final int musicId = MyMusicUtil.getIntShared(Constants.KEY_ID);
         final DBManager dbManager = DBManager.getInstance(context);

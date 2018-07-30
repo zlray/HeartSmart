@@ -58,7 +58,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        
         <activity android:name=".ui.login.ui.LoginActivity" />
         <activity android:name=".ui.login.ui.RetrievePasswordActivity" />
         <activity android:name=".ui.login.ui.BindPhoneActivity" />
@@ -73,8 +72,7 @@
         <receiver
             android:name=".receiver.PlayerManagerReceiver"
             android:enabled="true"
-            android:exported="true">
-        </receiver>
+            android:exported="true" />
 
         <!-- 头像上传功能 -->
         <activity
@@ -117,7 +115,9 @@
             android:name=".ui.mine.ui.ModelActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
-        <activity android:name=".ui.mine.ui.DetectionReportActivity"></activity>
+        <activity android:name=".ui.mine.ui.DetectionReportActivity" />
+        <activity android:name=".ui.mine.ui.AboutActivity" />
+        <activity android:name=".ui.appraisal.ui.PayActivity"></activity>
     </application>
 
 </manifest>

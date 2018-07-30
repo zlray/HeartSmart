@@ -62,6 +62,10 @@ public class MineFragment extends BaseLazyFragment {
     RelativeLayout rv_hair_band;
 
 
+    @BindView(R.id.rv_about)
+    RelativeLayout rv_about;
+
+
     private SharedPreferencesHelper sp_login_token;
 
     @Override
@@ -129,7 +133,7 @@ public class MineFragment extends BaseLazyFragment {
 
     }
 
-    @OnClick({R.id.rv_head, R.id.rv_appraisal, R.id.rv_report, R.id.rv_collection, R.id.rv_hair_band, R.id.rv_wallet})
+    @OnClick({R.id.rv_head, R.id.rv_appraisal, R.id.rv_report, R.id.rv_collection, R.id.rv_hair_band, R.id.rv_wallet, R.id.rv_about})
     public void OnClick(View view) {
         switch (view.getId()) {
             case R.id.rv_head:
@@ -147,7 +151,8 @@ public class MineFragment extends BaseLazyFragment {
             case R.id.rv_hair_band:
                 startActivity(new Intent(getActivity(), HairBandActivity.class));
                 break;
-            case R.id.rv_wallet:
+            case R.id.rv_about:
+                startActivity(new Intent(getActivity(), AboutActivity.class));
                 break;
         }
     }

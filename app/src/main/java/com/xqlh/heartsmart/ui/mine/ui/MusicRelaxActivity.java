@@ -74,8 +74,6 @@ public class MusicRelaxActivity extends PlayBarBaseActivity {
 
         //搜索本地歌曲
         startScanLocalMusic();
-
-
         //
         initTtileBar();
         initCurPlaying();
@@ -97,20 +95,23 @@ public class MusicRelaxActivity extends PlayBarBaseActivity {
 //    }
 
     public void initTtileBar() {
+
         titlebar = (TitleBar) findViewById(R.id.titlebar);
         titlebar.setLeftImageResource(R.drawable.return_button);
         titlebar.setTitle("音乐放松");
         titlebar.setTitleColor(Color.WHITE);
-        titlebar.setLeftClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
+        titlebar.setLeftClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        finish();
+                    }
+                });
     }
 
 
     public void startScanLocalMusic() {
+        //
         new Thread() {
             @Override
             public void run() {
@@ -122,16 +123,16 @@ public class MusicRelaxActivity extends PlayBarBaseActivity {
                             MediaStore.Audio.Media.ALBUM,               //歌曲的专辑名
                             MediaStore.Audio.Media.DURATION,            //歌曲时长
                             MediaStore.Audio.Media.DATA};               //歌曲文件的全路径
-
                     Cursor cursor = getContentResolver().query(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
                             muiscInfoArray, null, null, null);
                     Log.i("lz", "歌曲数目" + cursor.getCount() + "--------------");
 
                     if (cursor != null && cursor.getCount() != 0) {
+
+                        //
                         musicInfoList = new ArrayList<MusicInfo>();
                         Log.i(TAG, "歌曲的数目" + cursor.getCount());
                         while (cursor.moveToNext()) {
-
                             String name = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.AudioColumns.TITLE));
                             String singer = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.AudioColumns.ARTIST));
                             String album = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.AudioColumns.ALBUM));
@@ -183,6 +184,7 @@ public class MusicRelaxActivity extends PlayBarBaseActivity {
             }
         }.start();
 
+
         count = dbManager.getMusicCount(Constants.LIST_ALLMUSIC);
         Log.i("lz", ".....................: " + count);
         localMusicCountTv.setText(count + "");
@@ -198,8 +200,8 @@ public class MusicRelaxActivity extends PlayBarBaseActivity {
         myPLCountTv.setText("(" + count + ")");
 
         adapter.updateDataList();
-
     }
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -218,6 +220,7 @@ public class MusicRelaxActivity extends PlayBarBaseActivity {
 
     //初始化当前播放音乐，有可能当前正在播放音乐已经被过滤掉了
     private void initCurPlaying() {
+
         try {
             boolean contain = false;
             int id = 1;
@@ -354,7 +357,6 @@ public class MusicRelaxActivity extends PlayBarBaseActivity {
                 }
             }
         });
-
     }
 
     public void updatePlaylistCount() {

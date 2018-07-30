@@ -141,16 +141,17 @@ public class LastMyloveActivity extends PlayBarBaseActivity {
         });
 
         sideBar = (SideBar) findViewById(R.id.last_mylove_music_siderbar);
-        sideBar.setOnListener(new SideBar.OnTouchingLetterChangedListener() {
-            @Override
-            public void onTouchingLetterChanged(String letter) {
-                //该字母首次出现的位置
-                int position = recyclerViewAdapter.getPositionForSection(letter.charAt(0));
-                if (position != -1) {
-                    recyclerView.smoothScrollToPosition(position);
-                }
-            }
-        });
+        sideBar.setOnListener
+                (new SideBar.OnTouchingLetterChangedListener() {
+                    @Override
+                    public void onTouchingLetterChanged(String letter) {
+                        //该字母首次出现的位置
+                        int position = recyclerViewAdapter.getPositionForSection(letter.charAt(0));
+                        if (position != -1) {
+                            recyclerView.smoothScrollToPosition(position);
+                        }
+                    }
+                });
 
         playModeRl = (RelativeLayout) findViewById(R.id.last_mylove_playmode_rl);
         playModeIv = (ImageView) findViewById(R.id.last_mylove_playmode_iv);

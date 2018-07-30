@@ -17,6 +17,7 @@ public class MusicPlayerService extends Service {
     private PlayerManagerReceiver mReceiver;
 
     public MusicPlayerService() {
+
     }
 
     @Override
@@ -41,23 +42,23 @@ public class MusicPlayerService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+        //打印日志log
         Log.e(TAG, "onStartCommand: ");
         return super.onStartCommand(intent, flags, startId);
     }
 
 
+    //注册
     private void register() {
         mReceiver = new PlayerManagerReceiver(MusicPlayerService.this);
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(PLAYER_MANAGER_ACTION);
         registerReceiver(mReceiver, intentFilter);
     }
-
     private void unRegister() {
         if (mReceiver != null) {
             unregisterReceiver(mReceiver);
         }
     }
-
 }
 
