@@ -138,6 +138,7 @@ public class AppraisalIntroduceActivity extends BaseActivity {
                             public void onSuccess(final EntityCheckUserInfor response) {
                                 if (response.getCode() == 1) {
                                     if (response.isResult()) {
+
                                         //用户的信息完善
                                         Intent intent = new Intent(AppraisalIntroduceActivity.this, AppraisalActivity.class);
                                         intent.putExtra("PsyID", psyID);

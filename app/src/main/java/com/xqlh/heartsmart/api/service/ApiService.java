@@ -241,6 +241,7 @@ public interface ApiService {
 //    topicid	string	题目ID
 
     @GET("api/psychtest/optionbytopicid")
+
     Observable<EntityAppraisalAnswer> getAppraisalAnswer(@Query("topicid") String topicid);
 
 
@@ -287,5 +288,9 @@ public interface ApiService {
                                                     @Query("pageIndex") int pageIndex,
                                                     @Query("pageSize") int pageSize,
                                                     @Query("PsychtestType") int PsychtestType);
+
+//    @GET("api/Pay/unifiedorder ")
+
+//    Observable<>
 
 }

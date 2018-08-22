@@ -106,7 +106,7 @@ public class AppraisalActivity extends BaseActivity {
 
         testRecordId = intent.getStringExtra("TestRecordId");
 
-        Log.i(TAG, "测评记录的id       " + testRecordId);
+        Log.i(TAG, "测评记录的id    " + testRecordId);
 
         name = intent.getStringExtra("name");
         tv_name.setText(name);
@@ -144,7 +144,6 @@ public class AppraisalActivity extends BaseActivity {
                 if (i == 2) {
                     tv_time3.setText(split[2] + "秒");
                 }
-
             }
             if (time > 0) {
                 handler.postDelayed(this, 1000);

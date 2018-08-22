@@ -28,10 +28,11 @@ public class PayActivity extends BaseActivity {
     public void init() {
 
     }
+
     public void initTtileBar() {
         titlebar = (TitleBar) findViewById(R.id.titlebar);
         titlebar.setLeftImageResource(R.drawable.return_button);
-        titlebar.setTitle("关于");
+        titlebar.setTitle("支付方式");
         titlebar.setTitleColor(Color.WHITE);
         titlebar.setLeftClickListener(
                 new View.OnClickListener() {

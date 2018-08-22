@@ -29,10 +29,11 @@ import com.xqlh.heartsmart.api.base.BaseObserval;
 import com.xqlh.heartsmart.base.BaseActivity;
 import com.xqlh.heartsmart.bean.EntityCheckAccount;
 import com.xqlh.heartsmart.bean.EntityLogin;
+import com.xqlh.heartsmart.bean.EntityUserInfor;
 import com.xqlh.heartsmart.utils.Constants;
+import com.xqlh.heartsmart.utils.ContextUtils;
 import com.xqlh.heartsmart.utils.ProgressUtils;
 import com.xqlh.heartsmart.utils.SharedPreferencesHelper;
-import com.xqlh.heartsmart.utils.ContextUtils;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -259,6 +260,24 @@ public class LoginActivity extends BaseActivity {
                                 Log.i(TAG, "存储登录的Token" + response.getResult());
                                 sp_login_token.put(Constants.LOGIN_TOKEN, response.getResult());
                                 sp_login_token.put(Constants.IS_LOGIN, true);
+                                //获得用户的id，进行存储
+                                if (response.getResult() != null) {
+                                    RetrofitHelper.getApiService()
+                                            .getUserInfor(response.getResult())
+                                            .subscribeOn(Schedulers.io())
+                                            .observeOn(AndroidSchedulers.mainThread())
+                                            .subscribe(new BaseObserval<EntityUserInfor>() {
+                                                @Override
+                                                public void onSuccess(EntityUserInfor response) {
+                                                    if (response.getCode() == 1) {
+                                                        if (response.getMsg().equals("OK")) {
+                                                            sp_login_token.put(Constants.USER_ID, response.getResult().getID());
+                                                            Log.i(TAG, "用户的id    " + response.getResult().getID());
+                                                        }
+                                                    }
+                                                }
+                                            });
+                                }
                                 startActivity(new Intent(LoginActivity.this, MainActivity.class));
                                 finish();
                             }
@@ -267,6 +286,10 @@ public class LoginActivity extends BaseActivity {
                         }
                     }
                 });
+    }
+
+    public void getUserInfor() {
+
     }
 
     //    18610977715

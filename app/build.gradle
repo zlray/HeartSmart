@@ -89,4 +89,5 @@ dependencies {
     compile 'com.github.mcxtzhang:SwipeDelMenuLayout:V1.2.5'
     implementation files('libs/ThinkGearBase.jar')
     implementation files('libs/ThinkGearPackX.jar')
+    compile 'com.tencent.mm.opensdk:wechat-sdk-android-with-mta:+'
 }

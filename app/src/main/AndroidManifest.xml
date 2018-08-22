@@ -117,7 +117,9 @@
             android:screenOrientation="portrait" />
         <activity android:name=".ui.mine.ui.DetectionReportActivity" />
         <activity android:name=".ui.mine.ui.AboutActivity" />
-        <activity android:name=".ui.appraisal.ui.PayActivity"></activity>
+        <activity android:name=".ui.appraisal.ui.PayActivity" />
+        <activity android:name=".ui.mine.ui.DownLoadActivity" />
+        <activity android:name=".wxapi.WXPayEntryActivity"></activity>
     </application>
 
 </manifest>

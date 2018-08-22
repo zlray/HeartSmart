@@ -33,6 +33,8 @@ import es.dmoral.toasty.Toasty;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
+import static android.content.ContentValues.TAG;
+
 /**
  * A simple {@link Fragment} subclass.
  */
@@ -118,6 +120,10 @@ public class MineFragment extends BaseLazyFragment {
                         if (response.getCode() == 1) {
                             if (response.getMsg().equals("OK")) {
                                 mine_tv_name.setText(response.getResult().getName());
+
+                                sp_login_token.put(Constants.USER_ID, response.getResult().getID());
+                                Log.i(TAG, "onSuccess: ");
+
                                 ImageLoaderUtil.LoadImage(getActivity(), response.getResult().getHeadimgurl(), mine_iv_head);
                             }
                         } else {

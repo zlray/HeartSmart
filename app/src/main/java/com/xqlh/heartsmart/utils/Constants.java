@@ -46,6 +46,8 @@ public class Constants {
 
     public static final String LOGIN_TOKEN = "loginToken";
 
+    public static final String USER_ID = "userId";
+
     public static final String ACCOUNT = "account";
 
     public static final String GET_PHONE_BY_ACCOUNT_TOKEN = "getPhoneByAccount";
@@ -118,8 +120,11 @@ public class Constants {
     public static final int SCAN_NO_MUSIC = 3;
 
 
+    public static final String APP_ID = "wxcd1027521b897209"; //微信ID
+
+
     //主题
-    public static final String THEME="theme";
+    public static final String THEME = "theme";
 
 
     //最近播放表
@@ -135,10 +140,10 @@ public class Constants {
     private static final int VERSION = 2;
 
     //音乐表建表语句
-    public static final String createMusicTable = "create table if not exists " + MUSIC_TABLE+ "("
-            + ID_COLUMN +" integer PRIMARY KEY ,"
-            + NAME_COLUMN +" text,"
-            + SINGER_COLUMN +" text,"
+    public static final String createMusicTable = "create table if not exists " + MUSIC_TABLE + "("
+            + ID_COLUMN + " integer PRIMARY KEY ,"
+            + NAME_COLUMN + " text,"
+            + SINGER_COLUMN + " text,"
             + ALBUM_COLUMN + " text,"
             + DURATION_COLUMN + " long,"
             + PATH_COLUMN + " text,"
@@ -147,22 +152,22 @@ public class Constants {
             + FIRST_LETTER_COLUMN + " text );";
 
     //创建播放历史表
-    public static final String createLastPlayTable = "create table if not exists " + LAST_PLAY_TABLE +" ("
-            + ID_COLUMN +" integer,"
-            + "FOREIGN KEY(id) REFERENCES "+ MUSIC_TABLE + " (id) ON DELETE CASCADE);";
+    public static final String createLastPlayTable = "create table if not exists " + LAST_PLAY_TABLE + " ("
+            + ID_COLUMN + " integer,"
+            + "FOREIGN KEY(id) REFERENCES " + MUSIC_TABLE + " (id) ON DELETE CASCADE);";
 
 
     //创建歌单表
     public static final String createPlaylistTable = "create table if not exists " + PLAY_LIST_TABLE + " ("
-            + ID_COLUMN +" integer PRIMARY KEY autoincrement,"
+            + ID_COLUMN + " integer PRIMARY KEY autoincrement,"
             + NAME_COLUMN + " text);";
 
     //创建歌单歌曲表
-    public static final String createListinfoTable = "create table if not exists " + PLAY_LISY_MUSIC_TABLE +" ("
+    public static final String createListinfoTable = "create table if not exists " + PLAY_LISY_MUSIC_TABLE + " ("
             + ID_COLUMN + " integer,"
             + MUSIC_ID_COLUMN + " integer,"
             + "FOREIGN KEY(id) REFERENCES " + PLAY_LIST_TABLE + "(id) ON DELETE CASCADE,"
-            + "FOREIGN KEY(music_id) REFERENCES "+ MUSIC_TABLE + " (id) ON DELETE CASCADE) ;";
+            + "FOREIGN KEY(music_id) REFERENCES " + MUSIC_TABLE + " (id) ON DELETE CASCADE) ;";
 
 
     //歌曲列表常量
@@ -171,14 +176,11 @@ public class Constants {
     public static final int LIST_LASTPLAY = 10001;
     public static final int LIST_DOWNLOAD = 10002;
     public static final int LIST_MYPLAY = 10003; //我的歌单列表
-    public static final int LIST_PLAYLIST = 10004;	//歌单音乐列表
+    public static final int LIST_PLAYLIST = 10004;    //歌单音乐列表
 
-    public static final int LIST_SINGER = 10005;	//歌手
-    public static final int LIST_ALBUM = 10006;	    //专辑
-    public static final int LIST_FOLDER = 10007;	//文件夹
-
-
-
+    public static final int LIST_SINGER = 10005;    //歌手
+    public static final int LIST_ALBUM = 10006;        //专辑
+    public static final int LIST_FOLDER = 10007;    //文件夹
 
 
     public static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");

@@ -44,6 +44,7 @@ public class MusicRelaxActivity extends PlayBarBaseActivity {
     private LinearLayout lastPlayLl;
     private LinearLayout myLoveLl;
     private LinearLayout myListTitleLl;
+    private LinearLayout home_my_download_music_ll;
     private TextView localMusicCountTv;
     private TextView lastPlayCountTv;
     private TextView myLoveCountTv;
@@ -269,6 +270,7 @@ public class MusicRelaxActivity extends PlayBarBaseActivity {
         lastPlayLl = (LinearLayout) findViewById(R.id.home_recently_music_ll);
         myLoveLl = (LinearLayout) findViewById(R.id.home_my_love_music_ll);
         myListTitleLl = (LinearLayout) findViewById(R.id.home_my_list_title_ll);
+        home_my_download_music_ll = (LinearLayout) findViewById(R.id.home_my_download_music_ll);
         listView = (ListView) findViewById(R.id.home_my_list_lv);
         localMusicCountTv = (TextView) findViewById(R.id.home_local_music_count_tv);
         lastPlayCountTv = (TextView) findViewById(R.id.home_recently_music_count_tv);
@@ -278,6 +280,13 @@ public class MusicRelaxActivity extends PlayBarBaseActivity {
         myPLAddIv = (ImageView) findViewById(R.id.home_my_pl_add_iv);
 
 
+        home_my_download_music_ll.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MusicRelaxActivity.this, DownLoadActivity.class);
+                startActivity(intent);
+            }
+        });
         localMusicLl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
